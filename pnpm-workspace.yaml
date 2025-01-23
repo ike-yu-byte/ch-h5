@@ -1,0 +1,6 @@
+packages:
+  - "apps/**" # 所有项目目录
+  - "packages/**" # 公共包目录
+  - "!apps/hbuilderx/**" # 不包含hbuilder创建的项目
+
+  - "!**/test/**" # 不包括在 test 文件夹下的 package

@@ -1,0 +1,13 @@
+{
+    "name": "@packages/components",
+    "version": "1.0.0",
+    "description": "pnpm-workspace-common-components",
+    "private": true,
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "main": "index.js",
+    "dependencies": {
+        "@packages/assets": "workspace:***"
+    }
+}

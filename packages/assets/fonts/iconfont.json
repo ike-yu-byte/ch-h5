@@ -1,0 +1,65 @@
+{
+  "id": "4600045",
+  "name": "changhao",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "昌灏h5字体图标",
+  "glyphs": [
+    {
+      "icon_id": "13744081",
+      "name": "在线客服",
+      "font_class": "zaixiankefu",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "29820214",
+      "name": "Instagram",
+      "font_class": "Instagram",
+      "unicode": "e774",
+      "unicode_decimal": 59252
+    },
+    {
+      "icon_id": "1188726",
+      "name": "facebook_facebook52",
+      "font_class": "facebookfacebook52",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "1244200",
+      "name": "linkedin",
+      "font_class": "linkedin",
+      "unicode": "e696",
+      "unicode_decimal": 59030
+    },
+    {
+      "icon_id": "4721349",
+      "name": "social_ins",
+      "font_class": "social_ins",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "10972026",
+      "name": "linkedin",
+      "font_class": "linkedin1",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "12856615",
+      "name": "Youtube",
+      "font_class": "Youtube",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "40576769",
+      "name": "推特x",
+      "font_class": "tuitex",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}
