@@ -10,10 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@packages/assets": "workspace:***",
     "@packages/components": "workspace:***",
-    "@packages/assets": "workspace:***"
-  },
-  "devDependencies": {
-    
+    "wujie-vue3": "^1.0.24"
   }
 }

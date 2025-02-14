@@ -4,10 +4,17 @@ import {
   // createMemoryHistory,
 } from "vue-router";
 import i18n from "@/i18n";
+import webview from '@/pages/webview/index.vue'
+
 export const routes = [
   {
     path: "/",
     redirect: "/index",
+  },
+  {
+    path: '/subapp',
+    name: 'SubApp',
+    component: webview,
   },
   {
     path: "/index",
