@@ -10,7 +10,7 @@
         <div class="innner-item">
           <div
             class="item"
-            v-for="(child, sunIndex) of item.children"
+            v-for="child of item.children"
             :key="child.label"
             @click="handleNavigateTo(child)"
           >
@@ -23,22 +23,21 @@
 </template>
 
 <script setup>
-import { Collapse, CollapseItem } from "vant";
-import { ref } from "vue";
-import { menu } from "@/components/lists/config";
+import { Collapse, CollapseItem } from 'vant'
+import { ref } from 'vue'
+import { menu } from '@/components/lists/config'
 const props = defineProps({
   data: {
     type: Array,
     default: () => menu,
   },
-});
-const activeName = ref([]);
+})
+const activeName = ref([])
 
 function handleNavigateTo(item) {
   // 链接跳转
-  if (item.value.includes("http")) {
-    window.open(item.value);
-  } else {
+  if (item.value.includes('http')) {
+    window.open(item.value)
   }
 }
 </script>

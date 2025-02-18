@@ -1,6 +1,6 @@
 <template>
   <div class="contact">
-    <div class="title">{{ props.title || $t("titles.zimeiti") }}</div>
+    <div class="title">{{ props.title || $t('titles.zimeiti') }}</div>
     <div class="contact-box">
       <span
         :class="`icon iconfont ${item.icon}`"
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { contacts } from "@/components/contact/config.ts";
+import { contacts } from '@/components/contact/config.ts'
 const props = defineProps({
   data: {
     type: Array<any>,
@@ -22,12 +22,12 @@ const props = defineProps({
   },
   title: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 function handleClick(item: any) {
   //   window.open(item.value);
-  location.href = item.value;
+  location.href = item.value
 }
 </script>
 

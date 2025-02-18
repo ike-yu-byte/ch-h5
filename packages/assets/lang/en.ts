@@ -1,6 +1,6 @@
 export default {
-  lang: "English",
+  lang: 'English',
   title: {
-    lang: "Language",
+    lang: 'Language',
   },
-};
+}

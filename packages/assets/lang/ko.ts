@@ -1,7 +1,7 @@
 export default {
-  lang: "한국어",
+  lang: '한국어',
   title: {
-    lang: "언어",
+    lang: '언어',
   },
-};
+}
 // 韩语

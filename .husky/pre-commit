@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# . "$(dirname "$0")/_/h"
+echo "执行husky"
+pnpm run fix

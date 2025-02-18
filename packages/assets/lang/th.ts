@@ -1,7 +1,7 @@
 export default {
-  lang: "ภาษาไทย",
+  lang: 'ภาษาไทย',
   title: {
-    lang: "ภาษา",
+    lang: 'ภาษา',
   },
-};
+}
 // 泰语

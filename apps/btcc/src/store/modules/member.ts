@@ -1,31 +1,31 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const useMemberStore = defineStore(
-  "member",
+  'member',
   () => {
     // composition Api方式
-    const profile = ref();
+    const profile = ref()
 
     const setProfile = (val: any) => {
-      profile.value = val;
-    };
+      profile.value = val
+    }
 
     const clearProfile = () => {
-      profile.value = undefined;
-    };
+      profile.value = undefined
+    }
     return {
       profile,
       setProfile,
       clearProfile,
-    };
+    }
   },
   {
     // persist: true, // 网页端
     persist: {
-      key: "memberStore",
+      key: 'memberStore',
       storage: localStorage,
-      paths: ["profile"], // 指定state中哪些数据需要持久化
+      paths: ['profile'], // 指定state中哪些数据需要持久化
     },
     // persist: { // 小程序端
     //     storage: {
@@ -37,5 +37,5 @@ export const useMemberStore = defineStore(
     //         }
     //     }
     // }
-  }
-);
+  },
+)

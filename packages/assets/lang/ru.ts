@@ -1,7 +1,7 @@
 export default {
-  lang: "Русский",
+  lang: 'Русский',
   title: {
-    lang: "Язык",
+    lang: 'Язык',
   },
-};
+}
 // 俄罗斯

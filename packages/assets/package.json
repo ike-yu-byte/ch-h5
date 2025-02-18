@@ -1,12 +1,12 @@
 {
-    "name": "@packages/assets",
+    "name": "common-assets",
     "version": "1.0.0",
     "description": "",
     "private": true,
     "keywords": [],
     "author": "",
     "license": "MIT",
-    "main": "index.js",
+    "main": "index.ts",
     "dependencies": {
         "vue": "^3.4.19",
         "prop-types": "^15.8.1"

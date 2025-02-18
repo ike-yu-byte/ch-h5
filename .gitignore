@@ -1,5 +1,5 @@
 dist/
 node_modules/
 unpackage/
-
+.husky/_
 *storybook.log

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# . "$(dirname "$0")/h"
+echo "执行msg"
+npx --no-install commitlint --edit

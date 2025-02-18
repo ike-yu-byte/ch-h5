@@ -1,7 +1,7 @@
 export default {
-  lang: "Español",
+  lang: 'Español',
   title: {
-    lang: "Idiomas",
+    lang: 'Idiomas',
   },
-};
+}
 // 西班牙

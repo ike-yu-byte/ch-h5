@@ -7,13 +7,27 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint --fix",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,html,css,scss}\"",
+    "fix": "pnpm prettier && pnpm lint"
   },
   "dependencies": {
-    "@packages/components": "workspace:***",
-    "@packages/assets": "workspace:***"
+    "common-components": "workspace:***",
+    "common-assets": "workspace:***"
   },
   "devDependencies": {
-    
+    "@eslint/js": "^9.15.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.31.0",
+    "globals": "^15.12.0",
+    "typescript-eslint": "^8.16.0",
+    "prettier": "^3.4.1",
+    "husky": "^9.1.7",
+    "vite-plugin-mock": "^3.0.2",
+    "@types/node": "^22.13.4",
+    "@types/postcss-pxtorem": "^6.1.0"
   }
 }

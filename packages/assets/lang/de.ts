@@ -1,7 +1,7 @@
 export default {
-  lang: "Deutsch",
+  lang: 'Deutsch',
   title: {
-    lang: "Sprache",
+    lang: 'Sprache',
   },
-};
+}
 // 德国
