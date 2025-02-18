@@ -1,7 +1,7 @@
 export default {
-  lang: "Português",
+  lang: 'Português',
   title: {
-    lang: "língua",
+    lang: 'língua',
   },
-};
+}
 // 葡萄牙

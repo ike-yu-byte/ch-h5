@@ -12,29 +12,29 @@
 </template>
 
 <script setup>
-import Label from "@/components/label/index.vue";
-import { onMounted, reactive, toRefs } from "vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+import Label from '@/components/label/index.vue'
+import { onMounted, reactive, toRefs } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const props = defineProps({
   title: {
     type: String,
-    default: "",
+    default: '',
   },
   subTitle: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 const data = reactive({
-  defaultTitle: "",
-  defaultSubTitle: "",
-});
-const { defaultTitle, defaultSubTitle } = toRefs(data);
+  defaultTitle: '',
+  defaultSubTitle: '',
+})
+const { defaultTitle, defaultSubTitle } = toRefs(data)
 onMounted(() => {
-  data.defaultTitle = t("poster.fuli");
-  data.defaultSubTitle = t("poster.xingyun");
-});
+  data.defaultTitle = t('poster.fuli')
+  data.defaultSubTitle = t('poster.xingyun')
+})
 </script>
 
 <style lang="scss" scoped>

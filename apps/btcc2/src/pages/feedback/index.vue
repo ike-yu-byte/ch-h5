@@ -22,33 +22,30 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { Popup } from "vant";
-import { langs, cloneDeep } from "@packages/assets";
-import Form from "@packages/components/Form/index.vue";
-import List from "@packages/components/langList/index.vue";
-import Poster from "@/components/poster/index.vue";
-import Header from "@/components/header/index.vue";
-import Footer from "@/components/footer/index.vue";
-import { showToast } from "vant";
-import { tempConfig } from "./config";
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { Popup } from 'vant'
+import { langs, cloneDeep } from '@packages/assets'
+import Form from '@packages/components/Form/index.vue'
+import List from '@packages/components/langList/index.vue'
+import Header from '@/components/header/index.vue'
+import Footer from '@/components/footer/index.vue'
+import { tempConfig } from './config'
 
-const template = ref(cloneDeep(tempConfig));
-const { locale, t } = useI18n();
-const show = ref(false);
-const showPrize = ref(false);
-const langOptions = ref(cloneDeep(langs));
+const template = ref(cloneDeep(tempConfig))
+const { locale } = useI18n()
+const show = ref(false)
+const langOptions = ref(cloneDeep(langs))
 
 const handleClose = (val) => {
-  show.value = val;
-};
+  show.value = val
+}
 
 const handleSelect = (item) => {
-  locale.value = item.value;
-  localStorage.setItem("lang", locale.value);
-  location.reload();
-};
+  locale.value = item.value
+  localStorage.setItem('lang', locale.value)
+  location.reload()
+}
 </script>
 
 <style lang="scss" scoped>

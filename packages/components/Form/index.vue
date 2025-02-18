@@ -1,6 +1,6 @@
 <template>
   <div class="myform-wrap">
-    <template v-for="(group, index) of props.tempConfig">
+    <template v-for="(group, index) of props.tempConfig" :key="index">
       <div class="group" v-if="!group.hidden">
         {{ group.label }}
       </div>
@@ -50,8 +50,8 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from "vue";
-import { ElSelect, ElOption, ElInput, ElUpload } from "element-plus";
+import { defineProps } from 'vue'
+import { ElSelect, ElOption, ElInput, ElUpload } from 'element-plus'
 const props = defineProps({
   tempConfig: {
     type: Array,
@@ -70,7 +70,7 @@ const props = defineProps({
       // }
     ],
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -84,5 +84,5 @@ const props = defineProps({
     }
   }
 }
-@import "@packages/assets/style/element.scss";
+@import '@packages/assets/style/element.scss';
 </style>

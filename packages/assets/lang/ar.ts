@@ -1,7 +1,7 @@
 export default {
-  lang: "العربية",
+  lang: 'العربية',
   title: {
-    lang: "لغة",
+    lang: 'لغة',
   },
-};
+}
 // 阿拉伯

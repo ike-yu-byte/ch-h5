@@ -17,12 +17,12 @@
     </div>
     <div class="tips">
       <p>
-        {{ $t("tips.fengxiantishi") }}
+        {{ $t('tips.fengxiantishi') }}
       </p>
     </div>
     <div class="tips small">
       <p>
-        {{ $t("banquan.info") }}
+        {{ $t('banquan.info') }}
       </p>
     </div>
     <p class="others">
@@ -34,8 +34,8 @@
 </template>
 
 <script setup>
-import List from "@/components/lists/index.vue";
-import Contact from "@/components/contact/index.vue";
+import List from '@/components/lists/index.vue'
+import Contact from '@/components/contact/index.vue'
 </script>
 
 <style lang="scss" scoped>

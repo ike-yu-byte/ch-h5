@@ -1,7 +1,7 @@
 export default {
-  lang: "Français",
+  lang: 'Français',
   title: {
-    lang: "Langue",
+    lang: 'Langue',
   },
-};
+}
 // 法语

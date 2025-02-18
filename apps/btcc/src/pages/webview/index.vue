@@ -16,41 +16,45 @@
 </template>
 
 <script setup lang="ts">
-import { subApps } from "@/config";
-import { reactive, onBeforeUnmount } from "vue";
-import wujieVue from "wujie-vue3";
+import { subApps } from '@/config'
+import { reactive, onBeforeUnmount } from 'vue'
+import wujieVue from 'wujie-vue3'
 
-const { bus } = wujieVue;
+const { bus } = wujieVue
 
 const handleMessage = (arg: any) => {
-  console.log("主应用收到arg", arg);
+  console.log('主应用收到arg', arg)
   // 处理事件...
-};
+}
 
-bus.$on("email", handleMessage);
+bus.$on('email', handleMessage)
 
 const handleSend = () => {
-  bus.$emit("msg", "from parent");
-  console.log('子应用上的window内容', (document.querySelector(`iframe[name=${state.currentChild.name}]`) as any).contentWindow)
-};
+  bus.$emit('msg', 'from parent')
+  console.log(
+    '子应用上的window内容',
+    (document.querySelector(`iframe[name=${state.currentChild.name}]`) as any)
+      .contentWindow,
+  )
+}
 
 const handleChange = () => {
-  if (state.index < (subApps.length - 1)) {
+  if (state.index < subApps.length - 1) {
     state.index++
   } else {
-    state.index = 0;
+    state.index = 0
   }
   state.currentChild = subApps[state.index]
 }
 
 const state = reactive<any>({
   currentChild: {},
-  index: 0
-});
-state.currentChild = subApps[subApps.length - 1];
-state.index = subApps.length - 1;
+  index: 0,
+})
+state.currentChild = subApps[subApps.length - 1]
+state.index = subApps.length - 1
 
 onBeforeUnmount(() => {
-  bus.$off("message", handleMessage);
-});
+  bus.$off('message', handleMessage)
+})
 </script>

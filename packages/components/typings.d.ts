@@ -1,11 +1,10 @@
-declare module '*';
+declare module '*'
 declare module '*.vue' {
-    import { App, defineComponent } from 'vue'
-    const component: ReturnType<typeof defineComponent> & {
-        install(app: App): void
-    }
-    export default component
+  import { App, defineComponent } from 'vue'
+  const component: ReturnType<typeof defineComponent> & {
+    install(app: App): void
+  }
+  export default component
 }
 
-declare module "jquery";
-  
+declare module 'jquery'

@@ -21,14 +21,14 @@
             <img src="@packages/assets/img/icon_count.png" />
             <span
               ><b>{{ restTime }}</b
-              >{{ `  ${$t("poster.daojishi")}` }}</span
+              >{{ `  ${$t('poster.daojishi')}` }}</span
             >
           </div>
           <div>
             <img src="@packages/assets/img/icon_time.png" />
             <span
-              >{{ $t("poster.jinrishengyu") }}
-              <b>{{ restTimes + $t("poster.ci") }}</b></span
+              >{{ $t('poster.jinrishengyu') }}
+              <b>{{ restTimes + $t('poster.ci') }}</b></span
             >
           </div>
         </div>
@@ -37,20 +37,20 @@
   </div>
 </template>
 <script>
-import btc from "@/assets/img/prize/icon_btc.svg";
-import eth from "@/assets/img/prize/icon_eth.svg";
-import usdt from "@/assets/img/prize/icon_usdt.svg";
-import xrp from "@/assets/img/prize/icon_xrp.svg";
+import btc from '@/assets/img/prize/icon_btc.svg'
+import eth from '@/assets/img/prize/icon_eth.svg'
+import usdt from '@/assets/img/prize/icon_usdt.svg'
+import xrp from '@/assets/img/prize/icon_xrp.svg'
 const defaultData = [
-  { text: "0.2", unit: "USDT", src: usdt },
-  { text: "0.5", unit: "USDT", src: usdt },
-  { text: "100", unit: "XRP", src: xrp },
-  { text: "1", unit: "USDT", src: usdt },
-  { text: "5", unit: "USDT", src: usdt },
-  { text: "1", unit: "ETH", src: eth },
-  { text: "1", unit: "BTC", src: btc },
-  { text: "0.1", unit: "USDT", src: usdt },
-];
+  { text: '0.2', unit: 'USDT', src: usdt },
+  { text: '0.5', unit: 'USDT', src: usdt },
+  { text: '100', unit: 'XRP', src: xrp },
+  { text: '1', unit: 'USDT', src: usdt },
+  { text: '5', unit: 'USDT', src: usdt },
+  { text: '1', unit: 'ETH', src: eth },
+  { text: '1', unit: 'BTC', src: btc },
+  { text: '0.1', unit: 'USDT', src: usdt },
+]
 </script>
 <script setup>
 import {
@@ -62,10 +62,10 @@ import {
   watch,
   unref,
   onMounted,
-} from "vue";
-import bg from "@packages/assets/img/circle.png";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+} from 'vue'
+import bg from '@packages/assets/img/circle.png'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const props = defineProps({
   data: {
@@ -79,14 +79,14 @@ const props = defineProps({
   },
   text: {
     type: String,
-    default: "",
+    default: '',
   },
   times: {
     // 剩余抽奖次数
     type: Number,
     default: 1,
   },
-});
+})
 
 // 动态加载前端存储好的奖品图片
 // function getPic(addr) {
@@ -97,25 +97,24 @@ const props = defineProps({
 //     }
 //   }
 // }
-const { times } = props;
-const defaultText = ref("");
-const show = ref(false);
+const defaultText = ref('')
+const show = ref(false)
 onMounted(() => {
-  show.value = false;
+  show.value = false
   setTimeout(() => {
-    defaultText.value = t("poster.lijichoujiang");
-    data.buttons[0].fonts[0].text = defaultText.value;
-    show.value = true;
-  }, 100);
-});
+    defaultText.value = t('poster.lijichoujiang')
+    data.buttons[0].fonts[0].text = defaultText.value
+    show.value = true
+  }, 100)
+})
 
 const propsData = (props.data || []).map((item, index) => ({
   fonts: [
     {
       text: item.text + item.unit,
-      top: "50%",
-      fontSize: "0.13rem",
-      fontColor: item.fontColor || (index % 2 === 0 ? "#fff" : "#18986f"),
+      top: '50%',
+      fontSize: '0.13rem',
+      fontColor: item.fontColor || (index % 2 === 0 ? '#fff' : '#18986f'),
     },
   ],
   imgs: [
@@ -123,32 +122,32 @@ const propsData = (props.data || []).map((item, index) => ({
       src: item.src,
       // getPic(item.unit.toLowerCase()),
       // prizePng[item.unit.toLowerCase()]
-      top: "14%",
-      width: "0.3rem",
-      height: "0.3rem",
+      top: '14%',
+      width: '0.3rem',
+      height: '0.3rem',
     },
   ],
   index,
-}));
+}))
 const data = reactive({
-  restTime: "00:00", // 倒计时,
+  restTime: '00:00', // 倒计时,
   restTimes: props.times, // 剩余抽奖次数
   blocks: [
     {
-      padding: "0.13rem",
-      background: "transparent",
+      padding: '0.13rem',
+      background: 'transparent',
       imgs: [
         {
           // 边框
           src: bg,
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
         },
         {
           // 背景
           src: bg,
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
           rotate: true, // 背景图片跟着旋转
         },
       ],
@@ -157,14 +156,14 @@ const data = reactive({
   prizes: propsData,
   buttons: [
     {
-      radius: "35%",
+      radius: '35%',
       pointer: true,
       fonts: [
         {
           text: props.text,
-          top: "-0.1rem",
-          fontSize: "0.16rem",
-          fontColor: "#cd5c5c",
+          top: '-0.1rem',
+          fontSize: '0.16rem',
+          fontColor: '#cd5c5c',
         },
       ],
     },
@@ -172,60 +171,60 @@ const data = reactive({
   defaultConfig: {
     offsetDegree: 360 / propsData.length / 2,
   },
-});
+})
 
 watch(
   () => props.times,
   (newVal) => {
-    data.restTimes = unref(newVal);
+    data.restTimes = unref(newVal)
   },
   {
     immediate: true,
     deep: true,
-  }
-);
+  },
+)
 
 const { blocks, prizes, buttons, defaultConfig, restTime, restTimes } =
-  toRefs(data);
-const myLucky = ref(null);
+  toRefs(data)
+const myLucky = ref(null)
 
 function startCallback() {
   if (data.restTimes <= 0) {
-    return;
+    return
   }
   // 调用抽奖组件的play方法开始游戏
-  myLucky.value.play();
-  data.restTimes -= 1;
+  myLucky.value.play()
+  data.restTimes -= 1
 
   function timeFormat(seconds) {
-    const minute = parseInt(seconds / 60);
-    const second = seconds % 60;
+    const minute = parseInt(seconds / 60)
+    const second = seconds % 60
     return (
-      minute.toString().padStart(2, "0") +
-      ":" +
-      second.toString().padStart(2, "0")
-    );
+      minute.toString().padStart(2, '0') +
+      ':' +
+      second.toString().padStart(2, '0')
+    )
   }
 
-  let seconds = props.duration / 1000;
-  data.restTime = timeFormat(seconds);
+  let seconds = props.duration / 1000
+  data.restTime = timeFormat(seconds)
   // 模拟调用接口异步抽奖
   const timer = setInterval(() => {
-    seconds = seconds - 1;
-    console.log("走这里");
-    data.restTime = timeFormat(seconds);
+    seconds = seconds - 1
+    console.log('走这里')
+    data.restTime = timeFormat(seconds)
     if (seconds === 0) {
       // 假设后端返回的中奖索引是0
-      const index = parseInt(Math.random() * 10);
+      const index = parseInt(Math.random() * 10)
       // 调用stop停止旋转并传递中奖索引
-      myLucky.value.stop(index);
-      clearTimeout(timer);
+      myLucky.value.stop(index)
+      clearTimeout(timer)
     }
-  }, 1000);
+  }, 1000)
 }
-const emit = defineEmits(["change"]);
+const emit = defineEmits(['change'])
 function endCallback(prize) {
-  emit("change", prize);
+  emit('change', prize)
 }
 </script>
 
@@ -237,7 +236,7 @@ function endCallback(prize) {
     justify-content: center;
     position: relative;
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 50%;
       top: -20px;
