@@ -12,7 +12,7 @@ export const useMemberStore = defineStore(
     }
 
     const clearProfile = () => {
-      profile.value = undefined
+      profile.value = {}
     }
     return {
       profile,
