@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 import { Button, Icon } from 'vant'
 const props = defineProps({
   lists: {

@@ -50,7 +50,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
 import { ElSelect, ElOption, ElInput, ElUpload } from 'element-plus'
 const props = defineProps({
   tempConfig: {

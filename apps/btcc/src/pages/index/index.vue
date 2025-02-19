@@ -1,7 +1,10 @@
 <template>
   <div class="index">
     <Header @right="show = !show" />
-    <div>{{ profile.name }}</div>
+    <div>
+      <div>{{ profile.name }}</div>
+      <SvgIcon name="zaixiankefu" style="font-size: 20px"></SvgIcon>
+    </div>
     <div class="content">
       <Poster class="poster" />
       <div class="luck">

@@ -8,10 +8,21 @@ import Components from 'unplugin-vue-components/vite'
 import { VantResolver } from '@vant/auto-import-resolver'
 import postCssPxToRem from 'postcss-pxtorem'
 import { viteMockServe } from 'vite-plugin-mock'
+import vitePluginStyleToVw from 'vite-plugin-style-to-vw'
 
 export default defineConfig({
   // base: '/',
   plugins: [
+    vitePluginStyleToVw({
+      allReplace: false,
+      unitToConvert: 'px',
+      viewportWidth: 100 * 100, // vw时为设计稿宽度，rem时为设计稿对应尺寸时字体大小的100倍
+      unitPrecision: 5,
+      viewportUnit: 'rem',
+      fontViewportUnit: 'rem',
+      minPixelValue: 1,
+      attributeList: [],
+    }),
     vue(),
     AutoImport({
       resolvers: [VantResolver()],

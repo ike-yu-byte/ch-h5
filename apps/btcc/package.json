@@ -29,6 +29,8 @@
     "husky": "^9.1.7",
     "vite-plugin-mock": "^3.0.2",
     "@types/node": "^22.13.4",
-    "@types/postcss-pxtorem": "^6.1.0"
+    "@types/postcss-pxtorem": "^6.1.0",
+    "mockjs": "^1.1.0",
+    "vite-plugin-style-to-vw": "^1.8.11"
   }
 }
