@@ -10,8 +10,7 @@
   </div>
 </template>
 
-<script setup>
-import { defineEmits } from 'vue'
+<script setup lang="ts">
 const emit = defineEmits(['right'])
 const handleLang = () => {
   emit('right')
