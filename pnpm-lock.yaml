@@ -172,6 +172,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      mockjs:
+        specifier: ^1.1.0
+        version: 1.1.0
       prettier:
         specifier: ^3.4.1
         version: 3.5.1
@@ -181,6 +184,9 @@ importers:
       vite-plugin-mock:
         specifier: ^3.0.2
         version: 3.0.2(esbuild@0.21.5)(mockjs@1.1.0)(vite@5.3.1(@types/node@22.13.4)(sass@1.77.6)(terser@5.31.1))
+      vite-plugin-style-to-vw:
+        specifier: ^1.8.11
+        version: 1.8.11
 
   apps/btcc2:
     dependencies:
@@ -218,6 +224,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      mockjs:
+        specifier: ^1.1.0
+        version: 1.1.0
       prettier:
         specifier: ^3.4.1
         version: 3.5.1
@@ -227,6 +236,9 @@ importers:
       vite-plugin-mock:
         specifier: ^3.0.2
         version: 3.0.2(esbuild@0.21.5)(mockjs@1.1.0)(vite@5.3.1(@types/node@22.13.4)(sass@1.77.6)(terser@5.31.1))
+      vite-plugin-style-to-vw:
+        specifier: ^1.8.11
+        version: 1.8.11
 
   packages/assets:
     dependencies:
@@ -1904,6 +1916,9 @@ packages:
     resolution: {integrity: sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==}
     engines: {node: '>=4.0'}
 
+  estree-walker@0.6.1:
+    resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
+
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
@@ -2506,6 +2521,9 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  rollup-pluginutils@2.8.2:
+    resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
+
   rollup@4.18.0:
     resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -2751,6 +2769,9 @@ packages:
       esbuild: '>=0.17'
       mockjs: '>=1.1.0'
       vite: '>=4.0.0'
+
+  vite-plugin-style-to-vw@1.8.11:
+    resolution: {integrity: sha512-SR8VxsnC9639QXJThCM56E7MV2nPpPy/4OrNCTSUY585AnHRoM8dp8KQ5Mww94nLXTVNXQ5IrFA2iPLQfvd9Yg==}
 
   vite@5.3.1:
     resolution: {integrity: sha512-XBmSKRLXLxiaPYamLv3/hnP/KXDai1NDexN0FpkTaZXTfycHvkRHoenpgl/fvuK/kPbB6xAgoyiryAhQNxYmAQ==}
@@ -4829,6 +4850,8 @@ snapshots:
 
   estraverse@5.3.0: {}
 
+  estree-walker@0.6.1: {}
+
   estree-walker@2.0.2: {}
 
   estree-walker@3.0.3:
@@ -5331,6 +5354,10 @@ snapshots:
 
   reusify@1.0.4: {}
 
+  rollup-pluginutils@2.8.2:
+    dependencies:
+      estree-walker: 0.6.1
+
   rollup@4.18.0:
     dependencies:
       '@types/estree': 1.0.5
@@ -5602,6 +5629,10 @@ snapshots:
       vite: 5.3.1(@types/node@22.13.4)(sass@1.77.6)(terser@5.31.1)
     transitivePeerDependencies:
       - supports-color
+
+  vite-plugin-style-to-vw@1.8.11:
+    dependencies:
+      rollup-pluginutils: 2.8.2
 
   vite@5.3.1(@types/node@22.13.4)(sass@1.77.6)(terser@5.31.1):
     dependencies:

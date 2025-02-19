@@ -14,6 +14,9 @@ import VueLuckyCanvas from '@lucky-canvas/vue'
 import ElementPlus from 'element-plus'
 import WujieVue from 'wujie-vue3' // Vue 3项目请使用 import WujieVue from 'wujie-vue3';
 import { subApps } from '@/config'
+// iconfont的svg精灵图
+import 'common-assets/fonts/iconfont.js'
+import SvgIcon from 'common-components/SvgIcon/index.vue'
 
 const {
   setupApp,
@@ -56,4 +59,5 @@ app.use(vant)
 app.use(ElementPlus)
 app.use(VueLuckyCanvas)
 app.use(WujieVue)
+app.component('SvgIcon', SvgIcon)
 app.mount('#app')

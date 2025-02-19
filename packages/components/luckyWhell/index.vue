@@ -53,16 +53,7 @@ const defaultData = [
 ]
 </script>
 <script setup>
-import {
-  defineEmits,
-  ref,
-  reactive,
-  toRefs,
-  defineProps,
-  watch,
-  unref,
-  onMounted,
-} from 'vue'
+import { ref, reactive, toRefs, watch, unref, onMounted } from 'vue'
 import bg from '@packages/assets/img/circle.png'
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
