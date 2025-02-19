@@ -1,6 +1,7 @@
 <template>
   <div class="index">
     <Header @right="show = !show" />
+    <div>{{ profile.name }}</div>
     <div class="content">
       <Poster class="poster" />
       <div class="luck">
@@ -43,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Popup } from 'vant'
 import { langs, cloneDeep } from 'common-assets'
@@ -55,6 +56,9 @@ import Header from '@/components/header/index.vue'
 import Rules from '@/components/rules/index.vue'
 import Footer from '@/components/footer/index.vue'
 import { showToast } from 'vant'
+import { useMemberStore } from '@/store'
+
+const { profile } = toRefs(useMemberStore())
 
 const { locale, t } = useI18n()
 const show = ref(false)
