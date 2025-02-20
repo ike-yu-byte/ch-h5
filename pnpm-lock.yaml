@@ -135,6 +135,9 @@ importers:
 
   apps/btcc:
     dependencies:
+      '@dcloudio/uni-webview-js':
+        specifier: ^0.0.3
+        version: 0.0.3
       common-assets:
         specifier: workspace:***
         version: link:../../packages/assets
@@ -970,6 +973,9 @@ packages:
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  '@dcloudio/uni-webview-js@0.0.3':
+    resolution: {integrity: sha512-3XDnLXg22QKC/aTLtGim6zbOK+euiDYoRf98BjGDE0lqMm1U4SLFHAvOlAHa0qck91phaceKwo73ScQQgSojQg==}
 
   '@element-plus/icons-vue@2.3.1':
     resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
@@ -3978,6 +3984,8 @@ snapshots:
       chalk: 5.4.1
 
   '@ctrl/tinycolor@3.6.1': {}
+
+  '@dcloudio/uni-webview-js@0.0.3': {}
 
   '@element-plus/icons-vue@2.3.1(vue@3.5.13(typescript@5.5.2))':
     dependencies:

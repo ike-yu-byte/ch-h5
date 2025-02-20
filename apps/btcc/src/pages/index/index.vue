@@ -2,7 +2,7 @@
   <div class="index">
     <Header @right="show = !show" />
     <div>
-      <div>{{ profile.name }}</div>
+      <div @click="handlePostMessage">{{ profile.name }}</div>
       <SvgIcon name="zaixiankefu" style="font-size: 20px"></SvgIcon>
     </div>
     <div class="content">
@@ -93,6 +93,11 @@ const handleViewPrize = () => {
 
 function handleWeelChange(data) {
   console.log('大转盘结果', data)
+}
+
+const handlePostMessage = () => {
+  console.log('发送')
+  window.postMessage({ name: 'ike' }, '*')
 }
 </script>
 
