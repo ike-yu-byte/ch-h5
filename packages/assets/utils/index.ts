@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 // 深拷贝
 export function cloneDeep(obj, hash = new WeakMap()) {
   // number、symbol、boolean、string、undefined、null、function在这直接返回
@@ -24,4 +25,9 @@ export function cloneDeep(obj, hash = new WeakMap()) {
     }
   }
   return cloneObj
+}
+
+// 格式化数据
+export const format = (time: any, str: string = 'YYYY-MM-DD hh:mm:ss A') => {
+  return dayjs(time).format(str)
 }

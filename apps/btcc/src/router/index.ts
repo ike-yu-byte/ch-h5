@@ -6,6 +6,8 @@ import {
 } from 'vue-router'
 import i18n from '@/i18n'
 import webview from '@/pages/webview/index.vue'
+const global: any = i18n.global
+const $t = global.t
 
 export const routes = [
   {
@@ -22,7 +24,7 @@ export const routes = [
     name: 'index',
     component: () => import('@/pages/index/index.vue'),
     meta: {
-      title: i18n.global.t('header.choujiang'),
+      title: $t('header.choujiang'),
     },
   },
   {
@@ -30,7 +32,7 @@ export const routes = [
     name: 'feedback',
     component: () => import('@/pages/feedback/index.vue'),
     meta: {
-      title: i18n.global.t('header.choujiang'),
+      title: $t('header.choujiang'),
     },
   },
   {
