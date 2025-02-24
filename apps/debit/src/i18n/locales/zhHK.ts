@@ -78,5 +78,6 @@ const obj = {
   '精选文章、媒体提及和 Faith 采访': '精选文章、媒体提及和 Faith 采访',
   '与全球交易者一起享受加密货币之旅吧！':
     '与全球交易者一起享受加密货币之旅吧！',
+  '购买': '购买',
 }
 export default Object.assign(obj, lang)

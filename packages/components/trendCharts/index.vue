@@ -85,6 +85,31 @@ const props = defineProps({
   },
 })
 
+function hexToRGBA(hex, alpha = 1) {
+  // 输入验证
+  const hexRegex = /^#([A-Fa-f0-9]{3}){1,2}$/i
+  if (!hexRegex.test(hex)) return null
+
+  // 处理透明度范围
+  const validAlpha = Math.min(1, Math.max(0, alpha))
+
+  // 去除#号并处理缩写格式
+  let hexPart = hex.slice(1)
+  if (hexPart.length === 3) {
+    hexPart = hexPart
+      .split('')
+      .map((c) => c + c)
+      .join('')
+  }
+
+  // 解析颜色分量
+  const r = parseInt(hexPart.substring(0, 2), 16)
+  const g = parseInt(hexPart.substring(2, 4), 16)
+  const b = parseInt(hexPart.substring(4, 6), 16)
+
+  return `rgba(${r}, ${g}, ${b}, ${validAlpha})`
+}
+
 let myChart
 
 const chartDom = ref()
@@ -232,6 +257,19 @@ const initChart = () => {
                 }
               },
             },
+            areaStyle: {
+              opacity: 1,
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: props.color,
+                },
+                {
+                  offset: 1,
+                  color: hexToRGBA(props.color, 0.05),
+                },
+              ]),
+            },
             smooth: true,
             data: data,
           },
@@ -255,7 +293,12 @@ watch(
 )
 
 function getSize(num: number) {
-  return (window.innerWidth / 1920) * num
+  const width = document.documentElement.clientWidth
+  if (width > 1200) {
+    return (window.innerWidth / 1920) * num
+  } else {
+    return (window.innerWidth / 375) * num
+  }
 }
 const emits = defineEmits(['change'])
 

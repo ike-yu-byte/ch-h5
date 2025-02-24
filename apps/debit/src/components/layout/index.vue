@@ -6,20 +6,24 @@
     <div
       class="back-box iconfont icon-backtop"
       @click="handleBack"
-      v-if="show && isPC"
+      v-if="show"
     ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineOptions, ref, toRefs } from 'vue'
+import {
+  defineOptions,
+  ref,
+  // toRefs
+} from 'vue'
 import Header from '@/components/header/index.vue'
 import Footer from '@/components/footer/index.vue'
-import { useDeviceStore } from '@/store'
+// import { useDeviceStore } from '@/store'
 
 const show = ref(false)
 const layout = ref()
-const { isPC } = toRefs(useDeviceStore())
+// const { isPC } = toRefs(useDeviceStore())
 
 const handleScroll = (event: any) => {
   const scrollTop = event.target?.scrollTop
