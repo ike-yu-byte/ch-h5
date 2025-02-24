@@ -28,6 +28,8 @@ declare module 'vue' {
     Rules: typeof import('./src/components/rules/index.vue')['default']
     Sidebar: typeof import('./src/components/sidebar/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanCollapse: typeof import('vant/es')['Collapse']
+    VanCollapseItem: typeof import('vant/es')['CollapseItem']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
     VanPopup: typeof import('vant/es')['Popup']
   }

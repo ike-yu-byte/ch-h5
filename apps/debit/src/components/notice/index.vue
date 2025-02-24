@@ -6,13 +6,16 @@
           <img src="/img/msg.png" class="pic" />
         </div>
         <div class="right">
-          <el-tooltip
+          <!-- <el-tooltip
             effect="light"
             :content="item.title"
             placement="top-start"
           >
             <div class="title one-line">{{ item.title }}</div>
-          </el-tooltip>
+          </el-tooltip> -->
+          <OverflowTip
+            ><span class="title one-line">{{ item.title }}</span></OverflowTip
+          >
           <div class="time">{{ item.time }}</div>
         </div>
       </div>
@@ -25,7 +28,9 @@
 
 <script setup lang="ts">
 import Empty from '@/components/empty/index.vue'
+import OverflowTip from 'common-components/overflowTip/index.vue'
 import { ref } from 'vue'
+
 const mockData = []
 for (let i = 0; i < 10; i++) {
   mockData.push({

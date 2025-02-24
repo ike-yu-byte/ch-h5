@@ -13,7 +13,7 @@
               )
             }}
           </div>
-          <div class="number-box">
+          <div class="number-box" v-show="isPC">
             <div class="left item">
               <div class="value">
                 <CountTo
@@ -52,7 +52,7 @@
               <div class="label">{{ $t('支持的交易对') }}</div>
             </div>
           </div>
-          <div class="use-box">
+          <div class="use-box" v-show="isPC">
             <el-input
               class="my-input"
               :placeholder="$t('邮件/电话')"
@@ -67,7 +67,7 @@
             </el-input>
           </div>
         </div>
-        <div class="right panel" v-if="isPC">
+        <div class="right panel">
           <video
             class="video"
             poster="/img/img_top_poster.jpg"
@@ -81,25 +81,25 @@
           </video>
         </div>
       </div>
+      <div class="btn-box" v-show="!isPC">
+        <div class="btn" @click="handleRegister">{{ $t('立即注册') }}</div>
+      </div>
     </div>
     <div class="market-lists">
-      <Vue3SeamlessScroll
-        :list="state.coinList"
-        :direction="'left' as any"
-        :hover="true as any"
-        :singleLine="true as any"
-      >
-        <template #default="{ data }">
-          <view class="symbol-item">
-            <span class="symbol">{{ data.symbol }}</span>
-            <span class="price"> ({{ Number(data.price).toFixed(8) }}) </span>
-            <span
-              :class="`rate ${parseFloat(data.rate) >= 0 ? 'increase' : 'decrease'}`"
-              >{{ data.rate }}%</span
-            >
-          </view>
-        </template>
-      </Vue3SeamlessScroll>
+      <NoticeScroll>
+        <view
+          class="symbol-item"
+          v-for="(data, index) of state.coinList"
+          :key="index"
+        >
+          <span class="symbol">{{ data.symbol }}</span>
+          <span class="price"> ({{ Number(data.price).toFixed(8) }}) </span>
+          <span
+            :class="`rate ${parseFloat(data.rate) >= 0 ? 'increase' : 'decrease'}`"
+            >{{ data.rate }}%</span
+          >
+        </view>
+      </NoticeScroll>
     </div>
     <div class="step-box">
       <div class="contain-box">
@@ -142,8 +142,10 @@
                 <th>{{ $t('币种') }}</th>
                 <th>{{ $t('价格') }}</th>
                 <th>{{ $t('涨跌幅') }}</th>
-                <th width="264px">{{ $t('趋势图') }}</th>
-                <th>{{ $t('操作') }}</th>
+                <template v-if="isPC">
+                  <th width="264px">{{ $t('趋势图') }}</th>
+                  <th>{{ $t('操作') }}</th>
+                </template>
               </tr>
             </thead>
             <tfoot>
@@ -160,7 +162,10 @@
                 <td
                   :class="`rate ${parseFloat(item.rate) > 0 ? 'rise' : 'decrease'}`"
                 >
-                  <div class="item">
+                  <div
+                    class="item"
+                    :style="{ justifyContent: isPC ? '' : 'right' }"
+                  >
                     {{
                       item.rate && parseFloat(item.rate) > 0
                         ? `+ ${item.rate}`
@@ -168,16 +173,18 @@
                     }}%
                   </div>
                 </td>
-                <td class="trend item">
-                  <div>
-                    <TrendCharts :showAxis="false" :showMenus="false" />
-                  </div>
-                </td>
-                <td>
-                  <div class="action item">
-                    <el-button>{{ $t('交易') }}</el-button>
-                  </div>
-                </td>
+                <template v-if="isPC">
+                  <td class="trend item">
+                    <div>
+                      <TrendCharts :showAxis="false" :showMenus="false" />
+                    </div>
+                  </td>
+                  <td>
+                    <div class="action item">
+                      <el-button>{{ $t('交易') }}</el-button>
+                    </div>
+                  </td>
+                </template>
               </tr>
             </tfoot>
           </table>
@@ -248,7 +255,6 @@ import { reactive, ref, toRefs } from 'vue'
 import { CountTo } from 'vue3-count-to'
 import router from '@/router'
 import { useDeviceStore } from '@/store'
-import { Vue3SeamlessScroll } from 'vue3-seamless-scroll'
 import TrendCharts from 'common-components/trendCharts/index.vue'
 import img1 from '@/assets/img/imgs/community_img_1.png'
 import img2 from '@/assets/img/imgs/community_img_2.png'
@@ -257,6 +263,7 @@ import guide1 from '@/assets/img/guides/index_icon_step1.png'
 import guide2 from '@/assets/img/guides/index_icon_step2.png'
 import guide3 from '@/assets/img/guides/index_icon_step3.png'
 import { $t } from '@/i18n'
+import NoticeScroll from 'common-components/noticeScroll/index.vue'
 
 const { isPC } = toRefs(useDeviceStore())
 
@@ -382,381 +389,481 @@ const handleGuide = (item: any) => {
 </script>
 
 <style lang="scss" scoped>
-.pc {
-  .index-box {
-    .main-box {
-      height: 640px;
-      background-color: var(--dark-bg);
-      .contain-box {
-        width: 1200px;
-        height: 560px;
-        margin: 0 auto;
-        padding-top: 80px;
-        display: flex;
-        gap: 100px;
-        .panel {
-          flex: 1;
-        }
-        .left {
-          // background-color: red;
-          max-width: 500px;
-          .title {
-            font-size: 60px;
-            color: var(--white-color);
-            font-weight: 700;
-            margin-bottom: 20px;
-          }
-          .sub-title {
-            color: var(--text-color);
-            font-size: 18px;
-            line-height: 28px;
-          }
-          .number-box {
-            height: 60px;
-            margin-top: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            column-gap: 50px;
-            .item {
-              .value {
-                font-size: 24px;
-                color: var(--white-color);
-                font-weight: 900;
-                line-height: 38px;
-                .unit {
-                  margin-left: 4px;
-                }
-              }
-              .label {
-                font-size: 14px;
-                color: var(--text-color);
-              }
-            }
-            .middle {
-              .label {
-                text-align: center;
-              }
-            }
-          }
-        }
-        .right {
-          flex: 1;
-          height: 100%;
-          .video {
-            width: 99%;
-            height: 100%;
-            border: none;
-          }
-        }
+.index-box {
+  .main-box {
+    background-color: var(--dark-bg);
+    .contain-box {
+      width: 1200px;
+      height: 560px;
+      margin: 0 auto;
+      padding-top: 80px;
+      display: flex;
+      gap: 100px;
+      .panel {
+        flex: 1;
       }
-      .use-box {
-        height: 50px;
-        margin-top: 50px;
-        .my-input {
-          height: 50px !important;
-          width: 327px !important;
-          :deep(.el-input__wrapper) {
-            background-color: var(--input-bg) !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding-right: 0px !important;
-          }
-        }
-        .register-now {
-          height: 48px;
-          padding: 1px 6px;
-          width: 118px;
-          background-color: var(--white-color);
-          border-radius: 0 6px 6px 0;
-          line-height: 48px;
-          color: var(--dark-color);
-        }
-      }
-    }
-    .market-lists {
-      height: 60px;
-      background-color: #121212;
-      overflow: hidden;
-      .symbol-item {
-        height: 60px;
-        display: inline-block;
-        margin: 0 20px;
-        line-height: 60px;
-        .symbol {
-          color: var(--white-color);
-          margin-right: 4px;
-        }
-        .price {
-          color: rgb(130, 139, 161);
-        }
-        .increase {
-          color: #00b478;
-        }
-        .decrease {
-          color: red;
-        }
-      }
-    }
-    .step-box {
-      padding: 100px 0;
-      height: auto;
-      background-color: var(--white-color);
-      .contain-box {
-        width: 1200px;
-        height: 100%;
-        margin: 0 auto;
+      .left {
+        // background-color: red;
+        max-width: 500px;
         .title {
-          color: var(--dark-bg);
-          font-size: 50px;
-          font-weight: 700;
-          line-height: 60px;
-        }
-        .sub-title {
-          margin: 20px 0 60px;
-          color: rgba(0, 0, 0, 0.56);
-          font-size: 18px;
-          font-family: Figtree-Regular;
-        }
-        .content {
-          display: flex;
-          gap: 21px;
-          .item {
-            flex: 1;
-            padding: 30px;
-            background-color: #f4f5f8;
-            border-radius: 20px 20px 20px 20px;
-            .img {
-              width: 70px;
-              height: 70px;
-            }
-            .title {
-              margin-top: 20px;
-              font-size: 20px;
-              line-height: 30px;
-            }
-            .sub-title {
-              font-size: 14px;
-              color: var(--text-color);
-              line-height: 20px;
-            }
-            .button {
-              margin-top: 50px;
-            }
-          }
-        }
-        .coin {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin: 10px 0;
-          height: 72px;
-          .right {
-            display: inline-block;
-            padding: 0 15px;
-            border: 1px solid var(--border-color);
-            font-size: 16px;
-            border-radius: 5px;
-            height: 44px;
-            line-height: 44px;
-            font-weight: 700;
-            cursor: pointer;
-          }
-          .left {
-            .top {
-              display: flex;
-              height: 30px;
-              .img {
-                width: 30px;
-                height: 30px;
-                margin-right: 10px;
-              }
-              .unit {
-                font-size: 18px;
-                font-weight: bold;
-                line-height: 30px;
-                color: rgb(23, 24, 26);
-              }
-            }
-            .value {
-              height: 32px;
-              padding-top: 10px;
-              .number {
-                font-size: 22px;
-                color: rgb(23, 24, 26);
-                font-weight: 700;
-                font-family: Figtree-Regular;
-              }
-              .rate {
-                color: rgb(18, 179, 125);
-                margin-left: 8px;
-                .iconfont {
-                  margin-left: 6px;
-                }
-                .rotate {
-                  transform: rotate(180deg);
-                  display: inline-block;
-                  font-size: 12px;
-                }
-              }
-            }
-          }
-        }
-        .goods-box {
-          margin-top: 70px;
-          .sub-title {
-            color: var(--dark-bg);
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 30px;
-          }
-          .table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-            thead {
-              th {
-                text-align: left;
-                font-family: Figtree-Regular;
-                font-size: 12px;
-                color: var(--gray-color);
-                font-weight: normal;
-                &:last-child {
-                  text-align: right;
-                }
-              }
-            }
-            tfoot {
-              tr {
-                td {
-                  font-weight: normal;
-                  font-family: Figtree-Regular;
-                  .item {
-                    height: 50px;
-                    line-height: 50px;
-                    padding: 15px 0;
-                    display: flex;
-                    align-items: center;
-                    .img {
-                      width: 22px;
-                      height: 22px;
-                      margin-right: 10px;
-                    }
-                    .text {
-                      font-size: 16px;
-                      color: rgb(23, 24, 26);
-                      margin-top: -4px;
-                    }
-                  }
-                }
-                .rate {
-                  &.rise {
-                    color: rgb(18, 179, 125);
-                  }
-                  &.decrease {
-                    color: red;
-                  }
-                }
-                .trend {
-                  div {
-                    height: 50px;
-                    width: 100%;
-                  }
-                }
-                .action {
-                  justify-content: right;
-                }
-              }
-            }
-          }
-          .item {
-            border-bottom: 1px solid var(--light-border);
-          }
-          .btn {
-            height: 24px;
-            margin-top: 20px;
-            text-align: center;
-            color: var(--menu-color);
-            font-family: Figtree-Regular;
-            cursor: pointer;
-            display: block;
-          }
-        }
-      }
-    }
-    .addr-box {
-      height: 600px;
-      padding: 100px 0;
-      background-color: var(--dark-bg);
-      .container-box {
-        margin: 0 auto;
-        height: 100%;
-        width: 1200px;
-        .header {
-          font-size: 50px;
-          font-weight: 700;
+          font-size: 60px;
           color: var(--white-color);
+          font-weight: 700;
+          margin-bottom: 20px;
         }
         .sub-title {
           color: var(--text-color);
           font-size: 18px;
-          margin-top: 20px;
+          line-height: 28px;
         }
-        .banner-box {
+        .number-box {
+          height: 60px;
+          margin-top: 60px;
           display: flex;
-          margin-top: 44px;
-          gap: 38px;
-          height: 448px;
+          align-items: center;
+          justify-content: space-between;
+          column-gap: 50px;
           .item {
-            flex: 1;
-            img {
-              width: 375px;
-              height: 365px;
-            }
-            .title {
-              text-align: center;
-              margin-top: 30px;
-              font-size: 18px;
+            .value {
+              font-size: 24px;
               color: var(--white-color);
+              font-weight: 900;
+              line-height: 38px;
+              .unit {
+                margin-left: 4px;
+              }
             }
-            .sub-title {
-              text-align: center;
-              color: #5b5d66;
+            .label {
               font-size: 14px;
-              margin-top: 5px;
+              color: var(--text-color);
+            }
+          }
+          .middle {
+            .label {
+              text-align: center;
             }
           }
         }
       }
+      .right {
+        flex: 1;
+        height: 100%;
+        .video {
+          width: 99%;
+          height: 100%;
+          border: none;
+        }
+      }
     }
-    .gray-box {
-      padding: 100px 0;
-      background-color: #f4f5f8;
-      .contain-box {
-        width: 1200px;
-        height: 164px;
-        margin: 0 auto;
-        .text {
-          font-size: 48px;
+    .use-box {
+      height: 50px;
+      margin-top: 50px;
+      .my-input {
+        height: 50px !important;
+        width: 327px !important;
+        :deep(.el-input__wrapper) {
+          background-color: var(--input-bg) !important;
+          border: none !important;
+          box-shadow: none !important;
+          padding-right: 0px !important;
+        }
+      }
+      .register-now {
+        height: 48px;
+        padding: 1px 6px;
+        width: 118px;
+        background-color: var(--white-color);
+        border-radius: 0 6px 6px 0;
+        line-height: 48px;
+        color: var(--dark-color);
+      }
+    }
+  }
+  .market-lists {
+    height: 60px;
+    background-color: #121212;
+    overflow: hidden;
+    .symbol-item {
+      height: 60px;
+      display: inline-block;
+      margin: 0 20px;
+      line-height: 60px;
+      .symbol {
+        color: var(--white-color);
+        margin-right: 4px;
+      }
+      .price {
+        color: rgb(130, 139, 161);
+      }
+      .increase {
+        color: #00b478;
+      }
+      .decrease {
+        color: red;
+      }
+    }
+  }
+  .step-box {
+    padding: 100px 0;
+    height: auto;
+    background-color: var(--white-color);
+    .contain-box {
+      width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+      .title {
+        color: var(--dark-bg);
+        font-size: 50px;
+        font-weight: 700;
+        line-height: 60px;
+      }
+      .sub-title {
+        margin: 20px 0 60px;
+        color: rgba(0, 0, 0, 0.56);
+        font-size: 18px;
+        font-family: Figtree-Regular;
+      }
+      .content {
+        display: flex;
+        gap: 21px;
+        .item {
+          flex: 1;
+          padding: 30px;
+          background-color: #f4f5f8;
+          border-radius: 20px 20px 20px 20px;
+          .img {
+            width: 70px;
+            height: 70px;
+          }
+          .title {
+            margin-top: 20px;
+            font-size: 20px;
+            line-height: 30px;
+          }
+          .sub-title {
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 20px;
+          }
+          .button {
+            margin-top: 50px;
+          }
+        }
+      }
+      .coin {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+        height: 72px;
+        .right {
+          display: inline-block;
+          padding: 0 15px;
+          border: 1px solid var(--border-color);
+          font-size: 16px;
+          border-radius: 5px;
+          height: 44px;
+          line-height: 44px;
           font-weight: 700;
+          cursor: pointer;
+        }
+        .left {
+          .top {
+            display: flex;
+            height: 30px;
+            .img {
+              width: 30px;
+              height: 30px;
+              margin-right: 10px;
+            }
+            .unit {
+              font-size: 18px;
+              font-weight: bold;
+              line-height: 30px;
+              color: rgb(23, 24, 26);
+            }
+          }
+          .value {
+            height: 32px;
+            padding-top: 10px;
+            .number {
+              font-size: 22px;
+              color: rgb(23, 24, 26);
+              font-weight: 700;
+              font-family: Figtree-Regular;
+            }
+            .rate {
+              color: rgb(18, 179, 125);
+              margin-left: 8px;
+              .iconfont {
+                margin-left: 6px;
+              }
+              .rotate {
+                transform: rotate(180deg);
+                display: inline-block;
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+      .goods-box {
+        margin-top: 70px;
+        .sub-title {
+          color: var(--dark-bg);
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 30px;
+        }
+        .table {
+          width: 100%;
+          margin-top: 20px;
+          border-collapse: collapse;
+          thead {
+            th {
+              text-align: left;
+              font-family: Figtree-Regular;
+              font-size: 12px;
+              color: var(--gray-color);
+              font-weight: normal;
+              &:last-child {
+                text-align: right;
+              }
+            }
+          }
+          tfoot {
+            tr {
+              td {
+                font-weight: normal;
+                font-family: Figtree-Regular;
+                .item {
+                  height: 50px;
+                  line-height: 50px;
+                  padding: 15px 0;
+                  display: flex;
+                  align-items: center;
+                  .img {
+                    width: 22px;
+                    height: 22px;
+                    margin-right: 10px;
+                  }
+                  .text {
+                    font-size: 16px;
+                    color: rgb(23, 24, 26);
+                    margin-top: -4px;
+                  }
+                }
+              }
+              .rate {
+                &.rise {
+                  color: rgb(18, 179, 125);
+                }
+                &.decrease {
+                  color: red;
+                }
+              }
+              .trend {
+                div {
+                  height: 50px;
+                  width: 100%;
+                }
+              }
+              .action {
+                justify-content: right;
+              }
+            }
+          }
+        }
+        .item {
+          border-bottom: 1px solid var(--light-border);
+        }
+        .btn {
+          height: 24px;
+          margin-top: 20px;
+          text-align: center;
+          color: var(--menu-color);
+          font-family: Figtree-Regular;
+          cursor: pointer;
+          display: block;
+        }
+      }
+    }
+  }
+  .addr-box {
+    height: 600px;
+    padding: 100px 0;
+    background-color: var(--dark-bg);
+    .container-box {
+      margin: 0 auto;
+      height: 100%;
+      width: 1200px;
+      .header {
+        font-size: 50px;
+        font-weight: 700;
+        color: var(--white-color);
+      }
+      .sub-title {
+        color: var(--text-color);
+        font-size: 18px;
+        margin-top: 20px;
+      }
+      .banner-box {
+        display: flex;
+        margin-top: 44px;
+        gap: 38px;
+        height: 448px;
+        .item {
+          flex: 1;
+          img {
+            width: 375px;
+            height: 365px;
+          }
+          .title {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: var(--white-color);
+          }
+          .sub-title {
+            text-align: center;
+            color: #5b5d66;
+            font-size: 14px;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+  .gray-box {
+    padding: 100px 0;
+    background-color: #f4f5f8;
+    .contain-box {
+      width: 1200px;
+      height: 164px;
+      margin: 0 auto;
+      .text {
+        font-size: 48px;
+        font-weight: 700;
+        text-align: center;
+      }
+      .btn-box {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        .btn {
+          width: 200px;
+          height: 54px;
+          background-color: var(--dark-bg);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+.mobile {
+  .main-box {
+    padding: 0 15px;
+    .contain-box {
+      width: auto;
+      gap: 0px;
+      flex-direction: column;
+      .left {
+        height: 138px;
+        .title {
+          font-size: 28px;
           text-align: center;
         }
-        .btn-box {
-          margin-top: 50px;
-          display: flex;
-          justify-content: center;
-          .btn {
-            width: 200px;
-            height: 54px;
-            background-color: var(--dark-bg);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
+        .sub-title {
+          font-size: 13px;
+          text-align: center;
+          line-height: 18px;
+        }
+      }
+    }
+    .btn-box {
+      padding: 40px 0;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 123px;
+        height: 34px;
+        background-color: var(--white-color);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        color: #000;
+        font-family: Figtree-Regular;
+      }
+    }
+  }
+  .step-box {
+    padding: 50px 15px 0;
+    .contain-box {
+      width: auto;
+      .title {
+        font-size: 30px;
+      }
+      .sub-title {
+        font-size: 14px;
+      }
+      .coin {
+        .right {
+          padding: 0 10px;
+        }
+      }
+      .goods-box {
+        .btn {
+          font-size: 12px;
+        }
+      }
+      .content {
+        flex-direction: column;
+        .item {
+          .img {
+            width: 50px;
+            height: 50px;
+          }
+          .title {
             font-size: 16px;
           }
         }
+      }
+    }
+  }
+  .addr-box {
+    padding: 50px 15px;
+    height: auto;
+    .container-box {
+      width: auto;
+      .header {
+        font-size: 30px;
+        text-align: center;
+      }
+      .sub-title {
+        font-size: 16px;
+        text-align: center;
+      }
+      .banner-box {
+        flex-direction: column;
+        height: auto;
+      }
+    }
+  }
+  .gray-box {
+    padding: 30px 0;
+    .contain-box {
+      width: auto;
+      .text {
+        font-size: 20px;
+        padding: 0 20px;
       }
     }
   }

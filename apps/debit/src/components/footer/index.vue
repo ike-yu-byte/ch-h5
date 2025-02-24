@@ -5,14 +5,40 @@
         <img class="logo" src="@/assets/img/logo_dark.png" />
       </div>
       <div class="footer-top">
-        <div class="item" v-for="item of dataList" :key="item.value">
-          <div class="cate">
-            {{ item.label }}
+        <template v-if="isPC">
+          <div class="item" v-for="item of dataList" :key="item.value">
+            <div class="cate">
+              {{ item.label }}
+            </div>
+            <div
+              class="menu"
+              v-for="menu of item.children"
+              :key="menu.value"
+              @click="handleNavigate"
+            >
+              {{ menu.label }}
+            </div>
           </div>
-          <div class="menu" v-for="menu of item.children" :key="menu.value">
-            {{ menu.label }}
-          </div>
-        </div>
+        </template>
+        <template v-else>
+          <van-collapse style="width: 100%" v-model="opens">
+            <van-collapse-item
+              :title="item.label"
+              :name="item.label"
+              v-for="item of dataList"
+              :key="item.value"
+            >
+              <div
+                class="menu"
+                v-for="menu of item.children"
+                :key="menu.value"
+                @click="handleNavigate"
+              >
+                {{ menu.label }}
+              </div>
+            </van-collapse-item>
+          </van-collapse>
+        </template>
       </div>
       <div class="describe">
         <div class="title">{{ $t('免责声明') }}</div>
@@ -31,13 +57,20 @@
           {{ $t('交易数字资产的决定完全取决于客户自己的独立判断。') }}
         </div>
       </div>
+      <div class="copy-right">
+        Copyright © 2025 Faith Limited. All rights reserved.
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { $t } from '@/i18n'
+import { useDeviceStore } from '@/store'
+const { isPC } = toRefs(useDeviceStore())
+
+const opens = ref([])
 // 打开邮箱
 // location.href = 'mailto:ike_yu@163.com'
 // window.open('mailto:support@faith-bit.com')
@@ -99,6 +132,12 @@ const dataList = ref([
     ],
   },
 ])
+
+const handleNavigate = (item: any) => {
+  if (item.value.includes('mailto')) {
+    location.href = item.value
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -137,7 +176,6 @@ const dataList = ref([
       }
     }
     .describe {
-      height: 56px;
       padding-top: 20px;
       color: var(--gray-color);
       font-size: 14px;
@@ -150,6 +188,61 @@ const dataList = ref([
         line-height: 16px;
       }
     }
+    .copy-right {
+      font-size: 12px;
+      color: var(--gray-color);
+      margin-top: 10px;
+      padding: 10px 0;
+    }
   }
+}
+.mobile {
+  .footer-box {
+    padding: 20px 15px;
+    height: auto;
+    .container {
+      width: auto;
+      text-align: center;
+      .menu {
+        text-align: left;
+        line-height: 30px;
+      }
+    }
+    .footer-top {
+      height: auto;
+    }
+  }
+  .describe {
+    .title {
+      text-align: left;
+    }
+    .content {
+      text-align: left;
+      border-bottom: 1px solid var(--light-border2);
+      padding: 10px 0;
+      font-size: 12px;
+    }
+  }
+}
+:deep(.van-cell) {
+  background-color: transparent !important;
+}
+:deep(.van-collapse-item__content) {
+  background-color: transparent !important;
+}
+:deep(.van-collapse::after) {
+  border: none !important;
+}
+:deep(.van-cell::after) {
+  display: none;
+  border-color: var(--light-border);
+}
+:deep(.van-collapse-item::after) {
+  display: none;
+}
+:deep(.van-cell__title) {
+  text-align: left;
+  color: var(--white-color);
+  font-size: 12px;
 }
 </style>

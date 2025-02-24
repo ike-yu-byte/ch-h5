@@ -86,7 +86,6 @@ function initEcharts() {
       data.push(Math.random() * 1000)
       xData.push(i)
     }
-    console.log('data', data)
     const options = {
       tooltip: {
         trigger: 'axis',
