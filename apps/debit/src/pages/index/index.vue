@@ -131,8 +131,112 @@
           </div>
           <div class="right">{{ $t('立即交易') }}</div>
         </div>
-        <div style="height: 300px">
-          <LineCharts></LineCharts>
+        <div style="height: 370px">
+          <TrendCharts></TrendCharts>
+        </div>
+        <div class="goods-box">
+          <div class="sub-title">{{ $t('现货') }}</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ $t('币种') }}</th>
+                <th>{{ $t('价格') }}</th>
+                <th>{{ $t('涨跌幅') }}</th>
+                <th width="264px">{{ $t('趋势图') }}</th>
+                <th>{{ $t('操作') }}</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr v-for="item of state.tableData.slice(0, 2)" :key="item.type">
+                <td>
+                  <div class="item">
+                    <img class="img" :src="item.symbol" />
+                    <span class="text">{{ item.type }}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="item">{{ item.price }}</div>
+                </td>
+                <td
+                  :class="`rate ${parseFloat(item.rate) > 0 ? 'rise' : 'decrease'}`"
+                >
+                  <div class="item">
+                    {{
+                      item.rate && parseFloat(item.rate) > 0
+                        ? `+ ${item.rate}`
+                        : ''
+                    }}%
+                  </div>
+                </td>
+                <td class="trend item">
+                  <div>
+                    <TrendCharts :showAxis="false" :showMenus="false" />
+                  </div>
+                </td>
+                <td>
+                  <div class="action item">
+                    <el-button>{{ $t('交易') }}</el-button>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="btn" @click="handleViewMore('coin')">
+            {{ $t('查看更多') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addr-box">
+      <div class="container-box">
+        <div class="header">{{ $t('在这里读懂区块链') }}</div>
+        <div class="sub-title">
+          {{ $t('圈内人的精神加油站，让加密投资之旅更精彩') }}
+        </div>
+        <div class="banner-box">
+          <div class="item" v-for="(item, index) of imgs" :key="index">
+            <div>
+              <img :src="item.img" />
+            </div>
+            <div class="title">{{ item.title }}</div>
+            <div class="sub-title">{{ item.subtitle }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="step-box">
+      <div class="contain-box">
+        <div class="title">{{ $t('让加密交易，更容易') }}</div>
+        <div class="sub-title">{{ $t('仅需3步，即可开始') }}</div>
+        <div class="content">
+          <div class="item" v-for="(item, index) of guides" :key="index">
+            <div><img class="img" :src="item.img" /></div>
+            <div class="title">{{ item.text }}</div>
+            <div class="sub-title">{{ item.subtext }}</div>
+            <el-button
+              class="button"
+              :color="item.color"
+              @click="handleGuide(item)"
+              >{{ item.btntext }}</el-button
+            >
+          </div>
+        </div>
+      </div>
+      <div class="contain-box" style="margin-top: 100px">
+        <div class="title">{{ $t('新闻与观点') }}</div>
+        <div class="sub-title">{{ $t('精选文章、媒体提及和 Faith 采访') }}</div>
+        <div class="goods-box">
+          <div class="btn" @click="handleViewMore('news')">
+            {{ $t('查看更多') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="gray-box">
+      <div class="contain-box">
+        <div class="text">{{ $t('与全球交易者一起享受加密货币之旅吧！') }}</div>
+        <div class="btn-box">
+          <div class="btn">{{ $t('立即注册') }}</div>
         </div>
       </div>
     </div>
@@ -145,20 +249,82 @@ import { CountTo } from 'vue3-count-to'
 import router from '@/router'
 import { useDeviceStore } from '@/store'
 import { Vue3SeamlessScroll } from 'vue3-seamless-scroll'
-import LineCharts from 'common-components/LineCharts/index.vue'
+import TrendCharts from 'common-components/trendCharts/index.vue'
+import img1 from '@/assets/img/imgs/community_img_1.png'
+import img2 from '@/assets/img/imgs/community_img_2.png'
+import img3 from '@/assets/img/imgs/community_img_3.png'
+import guide1 from '@/assets/img/guides/index_icon_step1.png'
+import guide2 from '@/assets/img/guides/index_icon_step2.png'
+import guide3 from '@/assets/img/guides/index_icon_step3.png'
+import { $t } from '@/i18n'
 
 const { isPC } = toRefs(useDeviceStore())
 
 const mockCoinList = []
+const mockTableData = []
 for (let i = 0; i < 30; i++) {
   mockCoinList.push({
     symbol: 'BTC/USDT' + i,
     price: 88716.9,
     rate: 4.61,
   })
+  mockTableData.push({
+    type: 'BTC',
+    symbol:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile60590046.png',
+    price: '98,210.1000',
+    rate: 0.42,
+    trend: [],
+  })
 }
 
+const imgs = ref([
+  {
+    img: img1,
+    title: $t('观点'),
+    subtitle: $t('顶级投资人观点'),
+  },
+  {
+    img: img2,
+    title: $t('快讯'),
+    subtitle: $t('行业前沿信息推送, 7*24小时要闻实时更新'),
+  },
+  {
+    img: img3,
+    title: $t('文章'),
+    subtitle: $t('聚合多家财经及科技媒体，提供全面且专业的资讯报道'),
+  },
+])
+
+const guides = ref([
+  {
+    img: guide1,
+    text: $t('第一步：创建账户'),
+    subtext: $t('一键创建您的Faith账户'),
+    btntext: $t('注册'),
+    color: 'var(--dark-bg)',
+    value: 'register',
+  },
+  {
+    img: guide2,
+    text: $t('第二步：购买加密货币'),
+    subtext: $t('通过一键购币或P2P快捷购买加密货币'),
+    btntext: $t('购买'),
+    color: '',
+    value: 'buy',
+  },
+  {
+    img: guide3,
+    text: $t('第三步：开始交易'),
+    subtext: $t('使用高达500倍杠杆交易加密货币衍生品。'),
+    btntext: $t('交易'),
+    color: '',
+    value: 'trade',
+  },
+])
+
 const state = reactive<any>({
+  tableData: mockTableData || [],
   turnover: {
     // 成交量
     startNum: 0, // 数字滚动开始值
@@ -188,6 +354,14 @@ const state = reactive<any>({
   },
 })
 
+const handleViewMore = (type: string) => {
+  if (type === 'coin') {
+    console.log('type', type)
+  } else if (type === 'news') {
+    console.log('type', type)
+  }
+}
+
 state.turnover.endNum = 10000000
 state.users.endNum = 100000
 state.trades.endNum = 10
@@ -200,6 +374,10 @@ const handleCanplay = () => {
 
 const handleRegister = () => {
   router.push({ name: 'register' })
+}
+
+const handleGuide = (item: any) => {
+  console.log('item', item)
 }
 </script>
 
@@ -322,7 +500,7 @@ const handleRegister = () => {
     }
     .step-box {
       padding: 100px 0;
-      height: 800px;
+      height: auto;
       background-color: var(--white-color);
       .contain-box {
         width: 1200px;
@@ -333,6 +511,39 @@ const handleRegister = () => {
           font-size: 50px;
           font-weight: 700;
           line-height: 60px;
+        }
+        .sub-title {
+          margin: 20px 0 60px;
+          color: rgba(0, 0, 0, 0.56);
+          font-size: 18px;
+          font-family: Figtree-Regular;
+        }
+        .content {
+          display: flex;
+          gap: 21px;
+          .item {
+            flex: 1;
+            padding: 30px;
+            background-color: #f4f5f8;
+            border-radius: 20px 20px 20px 20px;
+            .img {
+              width: 70px;
+              height: 70px;
+            }
+            .title {
+              margin-top: 20px;
+              font-size: 20px;
+              line-height: 30px;
+            }
+            .sub-title {
+              font-size: 14px;
+              color: var(--text-color);
+              line-height: 20px;
+            }
+            .button {
+              margin-top: 50px;
+            }
+          }
         }
         .coin {
           display: flex;
@@ -389,6 +600,161 @@ const handleRegister = () => {
                 }
               }
             }
+          }
+        }
+        .goods-box {
+          margin-top: 70px;
+          .sub-title {
+            color: var(--dark-bg);
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 30px;
+          }
+          .table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            thead {
+              th {
+                text-align: left;
+                font-family: Figtree-Regular;
+                font-size: 12px;
+                color: var(--gray-color);
+                font-weight: normal;
+                &:last-child {
+                  text-align: right;
+                }
+              }
+            }
+            tfoot {
+              tr {
+                td {
+                  font-weight: normal;
+                  font-family: Figtree-Regular;
+                  .item {
+                    height: 50px;
+                    line-height: 50px;
+                    padding: 15px 0;
+                    display: flex;
+                    align-items: center;
+                    .img {
+                      width: 22px;
+                      height: 22px;
+                      margin-right: 10px;
+                    }
+                    .text {
+                      font-size: 16px;
+                      color: rgb(23, 24, 26);
+                      margin-top: -4px;
+                    }
+                  }
+                }
+                .rate {
+                  &.rise {
+                    color: rgb(18, 179, 125);
+                  }
+                  &.decrease {
+                    color: red;
+                  }
+                }
+                .trend {
+                  div {
+                    height: 50px;
+                    width: 100%;
+                  }
+                }
+                .action {
+                  justify-content: right;
+                }
+              }
+            }
+          }
+          .item {
+            border-bottom: 1px solid var(--light-border);
+          }
+          .btn {
+            height: 24px;
+            margin-top: 20px;
+            text-align: center;
+            color: var(--menu-color);
+            font-family: Figtree-Regular;
+            cursor: pointer;
+            display: block;
+          }
+        }
+      }
+    }
+    .addr-box {
+      height: 600px;
+      padding: 100px 0;
+      background-color: var(--dark-bg);
+      .container-box {
+        margin: 0 auto;
+        height: 100%;
+        width: 1200px;
+        .header {
+          font-size: 50px;
+          font-weight: 700;
+          color: var(--white-color);
+        }
+        .sub-title {
+          color: var(--text-color);
+          font-size: 18px;
+          margin-top: 20px;
+        }
+        .banner-box {
+          display: flex;
+          margin-top: 44px;
+          gap: 38px;
+          height: 448px;
+          .item {
+            flex: 1;
+            img {
+              width: 375px;
+              height: 365px;
+            }
+            .title {
+              text-align: center;
+              margin-top: 30px;
+              font-size: 18px;
+              color: var(--white-color);
+            }
+            .sub-title {
+              text-align: center;
+              color: #5b5d66;
+              font-size: 14px;
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+    }
+    .gray-box {
+      padding: 100px 0;
+      background-color: #f4f5f8;
+      .contain-box {
+        width: 1200px;
+        height: 164px;
+        margin: 0 auto;
+        .text {
+          font-size: 48px;
+          font-weight: 700;
+          text-align: center;
+        }
+        .btn-box {
+          margin-top: 50px;
+          display: flex;
+          justify-content: center;
+          .btn {
+            width: 200px;
+            height: 54px;
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
           }
         }
       }

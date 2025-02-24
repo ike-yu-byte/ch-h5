@@ -354,6 +354,12 @@ importers:
       common-assets:
         specifier: workspace:***
         version: link:../assets
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
+      echarts:
+        specifier: ^5.6.0
+        version: 5.6.0
 
 packages:
 

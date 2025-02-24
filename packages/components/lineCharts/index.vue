@@ -1,6 +1,6 @@
 <template>
   <div class="circle-wrap">
-    <div ref="dom" class="target-dom" v-if="props.xData.length"></div>
+    <div ref="dom" class="target-dom" v-if="props.data.length"></div>
     <div v-else class="no-data">{{ $t('暂无数据') }}</div>
   </div>
 </template>
@@ -16,44 +16,36 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  xData: {
-    type: Array,
-    default: () => ['1', '2', '3', '4', '5', '6', '7', '8'],
-  },
-  areaStyle: {
-    type: Boolean,
-    default: false,
-  },
   data: {
-    type: Array<any>,
+    type: Array,
     default: () => [
       {
-        label: '数据一',
-        data: [3, 4, 5, 1, 2, 6, 7, 8],
-        color: [
-          {
-            offset: 0,
-            color: 'RGBA(69, 241, 158, 0.6)',
-          },
-          {
-            offset: 1,
-            color: 'RGBA(69, 241, 158, 0)',
-          },
-        ],
+        name: '1',
+        value: 8,
       },
       {
-        label: '数据二',
-        data: [6, 8, 10, 2, 4, 16, 17, 18],
-        color: [
-          {
-            offset: 0,
-            color: 'RGBA(30, 214, 255, 0.6)',
-          },
-          {
-            offset: 1,
-            color: 'RGBA(30, 214, 255, 0)',
-          },
-        ],
+        name: '2',
+        value: 4,
+      },
+      {
+        name: '3',
+        value: 5,
+      },
+      {
+        name: '4',
+        value: 1,
+      },
+      {
+        name: '5',
+        value: 2,
+      },
+      {
+        name: '6',
+        value: 6,
+      },
+      {
+        name: '7',
+        value: 7,
       },
     ],
   },
@@ -81,9 +73,20 @@ function initEcharts() {
       instance.dispose()
       instance = null
     }
-    if (!props.xData?.length) return
+
     instance = echarts.init(dom.value)
-    const tempData = []
+    let data = []
+    let xData = props.data.map((item: any) => {
+      data.push(item.value)
+      return item.name
+    })
+    data = []
+    xData = []
+    for (let i = 0; i < 100; i++) {
+      data.push(Math.random() * 1000)
+      xData.push(i)
+    }
+    console.log('data', data)
     const options = {
       tooltip: {
         trigger: 'axis',
@@ -119,11 +122,12 @@ function initEcharts() {
           fontSize: getSize(12), //更改坐标轴文字大小
           interval: 0,
         },
-        data: props.xData,
+        data: xData,
         alignTicks: true,
         axisTick: {
           show: true,
         },
+        splitNumber: 5,
       },
       yAxis: {
         position: 'right',
@@ -142,47 +146,51 @@ function initEcharts() {
       },
       series: [],
     }
-    props.data.forEach((item) => {
-      tempData.push({
-        name: item.label,
+
+    options.series = [
+      {
+        data,
+        color: [
+          {
+            offset: 0,
+            color: 'RGBA(69, 241, 158, 0.6)',
+          },
+          {
+            offset: 1,
+            color: 'RGBA(69, 241, 158, 0)',
+          },
+        ],
+        name: '',
         type: 'line',
-        // smooth: true,
         symbol: 'circle',
         symbolSize: getSize(6),
         itemStyle: {
           shadowColor: '#fff',
           shadowBlur: 10,
-          color: item.itemColor,
+          color: 'green',
         },
         smooth: true,
-        // label: {
-        //     show: true,
-        //     position: 'right',
-        //     color: '#fff'
-        // },
         areaStyle: {
-          opacity: props.areaStyle ? 1 : 0,
+          opacity: 1,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
-              offset: item.color?.[0]?.offset,
-              color: item.color?.[0]?.color,
+              offset: 0,
+              color: 'RGBA(69, 241, 158, 0.6)',
             },
             {
-              offset: item.color?.[1]?.offset,
-              color: item.color?.[1]?.color,
+              offset: 1,
+              color: 'RGBA(69, 241, 158, 0)',
             },
           ]),
         },
         emphasis: {
           focus: 'series',
         },
-        data: item.data,
         tooltip: {
           show: true,
         },
-      })
-    })
-    options.series = tempData
+      },
+    ]
     instance.setOption(options)
     // instance.dispatchAction({
     //   type: "showTip", // 根据 tooltip 的配置项显示提示框。
