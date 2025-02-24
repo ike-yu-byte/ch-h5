@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+    "paths": {
+			"@/*": ["./*"],
+      "@": ["./"],
+      // "@/components/*": ["src/components/*"]
+		},
+    "baseUrl": "src",
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "experimentalDecorators": true, // 开启装饰器
+    "emitDecoratorMetadata": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["node"]
+  },
+
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "types/*.d.ts", "../../packages/assets/utils/http.ts"],
+  "exclude": ["node_modules", "./*.json", "vite.config.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

@@ -1,13 +1,15 @@
 {
-    "name": "common-components",
-    "version": "1.0.0",
-    "description": "pnpm-workspace-common-components",
-    "private": true,
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "main": "index.ts",
-    "dependencies": {
-        "common-assets": "workspace:***"
-    }
+  "name": "common-components",
+  "version": "1.0.0",
+  "description": "pnpm-workspace-common-components",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "common-assets": "workspace:***",
+    "echarts": "^5.6.0",
+    "dayjs": "^1.11.13"
+  }
 }

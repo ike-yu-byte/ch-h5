@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, version } from 'vue'
 import vconsole from 'vconsole'
 import App from './App.vue'
 import router from '@/router/index'
@@ -17,6 +17,8 @@ import { subApps } from '@/config'
 // iconfont的svg精灵图
 import 'common-assets/fonts/iconfont.js'
 import SvgIcon from 'common-components/SvgIcon/index.vue'
+
+console.log('version', version)
 
 const {
   setupApp,

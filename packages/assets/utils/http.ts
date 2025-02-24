@@ -9,15 +9,19 @@ const defaultConfig = {
   baseurl: '',
 }
 export default class Http {
-  constructor(config) {
+  constructor(config, memberStore?: Function) {
     this.axiosInstance = axios.create(Object.assign({}, defaultConfig, config))
-    this.httpInterceptorsRequest()
-    this.httpInterceptorsResponse()
+    this.memberStore = memberStore
+    this.httpInterceptorsRequest() // 添加请求拦截器
+    this.httpInterceptorsResponse() // 添加响应拦截器
   }
+  private memberStore
   private axiosInstance = axios.create(defaultConfig) // 注意是静态属性
   private httpInterceptorsRequest() {
+    // 请求拦截器
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
+        console.log('this.memberStore', this.memberStore)
         return config
       },
       (err) => {
@@ -26,6 +30,7 @@ export default class Http {
     )
   }
   private httpInterceptorsResponse() {
+    // 响应拦截器
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
         return response

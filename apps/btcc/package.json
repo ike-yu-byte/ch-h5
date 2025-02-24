@@ -13,24 +13,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dcloudio/uni-webview-js": "^0.0.3",
     "common-assets": "workspace:***",
     "common-components": "workspace:***",
     "wujie-vue3": "^1.0.24"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@types/node": "^22.13.4",
+    "@types/postcss-pxtorem": "^6.1.0",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.31.0",
-    "typescript-eslint": "^8.16.0",
     "globals": "^15.12.0",
-    "prettier": "^3.4.1",
     "husky": "^9.1.7",
-    "vite-plugin-mock": "^3.0.2",
-    "@types/node": "^22.13.4",
-    "@types/postcss-pxtorem": "^6.1.0",
     "mockjs": "^1.1.0",
+    "prettier": "^3.4.1",
+    "typescript-eslint": "^8.16.0",
+    "vite-plugin-mock": "^3.0.2",
     "vite-plugin-style-to-vw": "^1.8.11"
   }
 }
