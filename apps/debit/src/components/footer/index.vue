@@ -206,6 +206,7 @@ const handleNavigate = (item: any) => {
       .menu {
         text-align: left;
         line-height: 30px;
+        font-size: 12px;
       }
     }
     .footer-top {
@@ -226,6 +227,8 @@ const handleNavigate = (item: any) => {
 }
 :deep(.van-cell) {
   background-color: transparent !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
 :deep(.van-collapse-item__content) {
   background-color: transparent !important;
