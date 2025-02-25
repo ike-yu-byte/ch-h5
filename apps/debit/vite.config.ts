@@ -12,10 +12,49 @@ import { viteMockServe } from 'vite-plugin-mock'
 import vitePluginStyleToVw from 'vite-plugin-style-to-vw'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { PlusProComponentsResolver } from '@plus-pro-components/resolver'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import path from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
+import compression from 'vite-plugin-compression'
+// import imagemin from 'vite-plugin-imagemin'
+
+const lifeCycle = process.env.npm_lifecycle_event
+const isLocal = lifeCycle?.includes('local') ? true : false
 
 export default defineConfig({
-  base: './',
+  base: isLocal ? '/' : './',
   plugins: [
+    // imagemin({
+    //   gifsicle: { optimizationLevel: 3 }, // GIF 压缩
+    //   mozjpeg: { quality: 75 }, // JPEG 质量
+    //   optipng: { optimizationLevel: 5 }, // PNG 优化
+    //   svgo: {
+    //     // SVG 优化
+    //     plugins: [
+    //       { name: 'removeViewBox' },
+    //       { name: 'removeEmptyAttrs', active: false },
+    //     ],
+    //   },
+    //   webp: { quality: 80 }, // WebP 转换
+    //   filter: (file: any) => {
+    //     return file.size > 1024 // 只压缩大于 1KB 的文件
+    //   },
+    //   disable: true,
+    // }),
+    compression({
+      // 只能生成js、css的.gz文件
+      verbose: true,
+      disable: false,
+      threshold: 10240, // 压缩阈值，小于这个值的文件将不会被压缩（单位为字节）这里就是大于 10kb 菜压缩
+      algorithm: 'gzip', // 压缩算法
+      ext: '.gz', // 压缩文件后缀名
+    }),
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(__dirname, 'src/assets')],
+      symbolId: 'icon-[name]',
+      inject: 'body-first',
+      customDomId: '__svg__icons__dom__', // svg的id
+    }),
     vitePluginStyleToVw({
       allReplace: false,
       unitToConvert: 'px',
@@ -59,6 +98,7 @@ export default defineConfig({
         // 分包
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            // 拆分node_modules里面的包
             return id
               .toString()
               .split('node_modules/')[1]
@@ -67,6 +107,7 @@ export default defineConfig({
           }
         },
         chunkFileNames: (chunkInfo) => {
+          // 增加文件名可靠性
           const facadeModuleId = chunkInfo.facadeModuleId
             ? chunkInfo.facadeModuleId.split('/')
             : []
@@ -74,22 +115,39 @@ export default defineConfig({
           return `js/${fileName}/[name].[hash].js`
         },
       },
+      plugins: [
+        visualizer({
+          // 性能报告分析插件（打包后生成html文件）
+          filename: 'stats.html', // 默认在项目根目录下生成stats.html文件，可自定义
+          open: false, //生成后自动打开浏览器查看
+        }),
+      ],
     },
   },
   resolve: {
     alias: {
-      // "@": path.resolve(__dirname, 'src'),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // '@packages': path.resolve(__dirname, './node_modules/@packages'),
       '@packages/components': 'common-components',
       '@packages/assets': 'common-assets',
     },
+    extensions: [
+      '.js',
+      '.mjs',
+      '.vue',
+      '.json',
+      '.less',
+      '.css',
+      'scss',
+      '.ts',
+      '.mts',
+    ],
   },
   define: {
     // 定义一个全局常量
     // 注意配置类型：declare const __APP_VERSION__: string;
     __APP_VERSION__: JSON.stringify('v1.0.0'),
     __API_URL__: JSON.stringify('window.__backend_api_url'),
+    isLocal: isLocal ? JSON.stringify('true') : JSON.stringify(''),
   },
   css: {
     postcss: {
@@ -99,7 +157,7 @@ export default defineConfig({
           propList: ['*'],
           selectorBlackList: [],
           // exclude: "/node_modules",
-        }),
+        }) as any,
       ],
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="layout-box" @scroll="handleScroll" ref="layout">
-    <Header style="position: fixed; left: 0; right: 0; top: 0; z-index: 2" />
+    <Header style="position: fixed; left: 0; right: 0; top: 0; z-index: 99" />
     <slot></slot>
     <Footer />
     <div
@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import {
-  defineOptions,
   ref,
   // toRefs
 } from 'vue'

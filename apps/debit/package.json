@@ -6,7 +6,9 @@
   "description": "期货抽奖项目",
   "scripts": {
     "dev": "vite --host",
+    "dev:local": "vite --host",
     "build": "vite build",
+    "build:local": "vite build",
     "lint": "eslint --fix",
     "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,html,css,scss}\"",
     "fix": "pnpm prettier && pnpm lint",

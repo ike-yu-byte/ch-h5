@@ -17,3 +17,6 @@ declare interface Window {
 
 declare const __APP_VERSION__: string
 declare const __API_URL__: string
+declare const isLocal: string
+
+declare module 'vite-plugin-imagemin'

@@ -1,13 +1,17 @@
 <template>
-  <svg aria-hidden="true" class="svg-icon">
-    <use :href="`#icon-${name}`" />
+  <svg aria-hidden="true" class="svg-icon" :color="props.color">
+    <use :href="`#icon-${props.name}`" />
   </svg>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  name: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    name: string
+    color: string
+  }>(),
+  { name: '', color: '' },
+)
 </script>
 
 <style scoped lang="scss">

@@ -2,7 +2,7 @@ import {
   createRouter,
   createWebHistory,
   // createMemoryHistory,
-  // createWebHashHistory,
+  createWebHashHistory,
 } from 'vue-router'
 import i18n from '@/i18n'
 import webview from '@/pages/webview/index.vue'
@@ -29,6 +29,38 @@ export const routes = [
     },
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/pages/account/login.vue'),
+    meta: {
+      title: $t('登录'),
+    },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import('@/pages/account/register.vue'),
+    meta: {
+      title: $t('注册'),
+    },
+  },
+  {
+    path: '/condition',
+    name: 'condition',
+    component: () => import('@/pages/condition/index.vue'),
+    meta: {
+      title: $t('注册'),
+    },
+  },
+  {
+    path: '/panel',
+    name: 'panel',
+    component: () => import('@/pages/panel/index.vue'),
+    meta: {
+      title: 'Debit',
+    },
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('@/pages/404/404.vue'),
@@ -45,8 +77,8 @@ export const routes = [
 ]
 const router = createRouter({
   // history: import.meta.env.SSR ? createMemoryHistory(import.meta.env.BASE_URL) : createWebHistory(import.meta.env.BASE_URL),
-  history: createWebHistory(),
-  // history: createWebHashHistory(),
+  // history: createWebHistory(),
+  history: isLocal ? createWebHashHistory() : createWebHistory(),
   routes,
 })
 router.beforeEach((_to, _from, next) => {
