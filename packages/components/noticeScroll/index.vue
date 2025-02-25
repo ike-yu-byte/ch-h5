@@ -29,7 +29,7 @@ import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    speed: number
+    speed?: number
   }>(),
   {
     // 滚动速度（像素/秒）

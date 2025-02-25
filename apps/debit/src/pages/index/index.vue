@@ -353,7 +353,7 @@ const state = reactive<any>({
   inputVal: '',
   coinList: mockCoinList || [],
   coinData: {
-    logo: '/img/BTC.png',
+    logo: new URL('../../assets/crypto/BTC.png', import.meta.url).href,
     title: 'BTC/USDT',
     startNum: 0, // 数字滚动开始值
     endNum: 98265.6, // 数字滚动结束

@@ -1,5 +1,4 @@
 import { createApp, version } from 'vue'
-import vconsole from 'vconsole'
 import App from './App.vue'
 import router from '@/router/index'
 import { callAppMethod } from '@/utils/JSBridge'
@@ -20,6 +19,8 @@ import SvgIcon from 'common-components/SvgIcon/index.vue'
 import vant from 'vant'
 import 'vant/lib/index.css'
 import { format } from 'common-assets/utils'
+// 引入vite插件里面的虚拟模块
+import 'virtual:svg-icons-register'
 
 console.log('version', version)
 
@@ -41,8 +42,12 @@ subApps.forEach((item: any) => {
   // })
 })
 
-if (import.meta.env.MODE === 'development') {
-  new vconsole()
+if (import.meta.env.DEV) {
+  // 动态导入vconsole
+  import('vconsole').then((module) => {
+    const VConsole = module.default
+    new VConsole()
+  })
 }
 function helloCallback(payload: any) {
   console.log('native回调', payload)
