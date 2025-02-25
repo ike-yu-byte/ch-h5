@@ -60,6 +60,7 @@ export default [
       '@typescript-eslint/no-this-alias': 'off',
       'no-undef': 'off',
       'vue/no-v-text-v-html-on-component': 'off',
+      'vue/valid-v-for': 'off',
     },
   },
 ]

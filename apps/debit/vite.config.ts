@@ -18,8 +18,11 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import compression from 'vite-plugin-compression'
 // import imagemin from 'vite-plugin-imagemin'
 
+const lifeCycle = process.env.npm_lifecycle_event
+const isLocal = lifeCycle?.includes('local') ? true : false
+
 export default defineConfig({
-  base: './',
+  base: isLocal ? '/' : './',
   plugins: [
     // imagemin({
     //   gifsicle: { optimizationLevel: 3 }, // GIF 压缩
@@ -144,6 +147,7 @@ export default defineConfig({
     // 注意配置类型：declare const __APP_VERSION__: string;
     __APP_VERSION__: JSON.stringify('v1.0.0'),
     __API_URL__: JSON.stringify('window.__backend_api_url'),
+    isLocal: isLocal ? JSON.stringify('true') : JSON.stringify(''),
   },
   css: {
     postcss: {

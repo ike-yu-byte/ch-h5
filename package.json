@@ -33,7 +33,10 @@
     "vite-plugin-commonjs": "^0.10.1",
     "vue": "^3.5.13",
     "vue-i18n": "^9.13.1",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "vue-grid-layout": "^3.0.0-beta1",
+    "qrcode": "^1.4.4",
+    "@element-plus/icons-vue": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",

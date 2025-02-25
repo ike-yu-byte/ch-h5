@@ -21,6 +21,8 @@ import 'vant/lib/index.css'
 import { format } from 'common-assets/utils'
 // 引入vite插件里面的虚拟模块
 import 'virtual:svg-icons-register'
+import gridLayout from 'vue-grid-layout'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 console.log('version', version)
 
@@ -73,6 +75,10 @@ app.use(ElementPlus)
 app.use(VueLuckyCanvas)
 app.use(WujieVue)
 app.use(vant)
+app.use(gridLayout)
 // app.use(ConfigProvider)
 app.component('SvgIcon', SvgIcon)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 app.mount('#app')
