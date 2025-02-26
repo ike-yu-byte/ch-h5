@@ -33,7 +33,7 @@ import MockCountry from '@/mock/json/country.json'
 const props = defineProps({
   modelValue: {
     type: String,
-    default: '86',
+    default: '',
   },
 })
 const options = shallowRef<any>([])
@@ -68,8 +68,6 @@ const handleChange = (val: string) => {
 </script>
 
 <style scoped lang="scss">
-.phone-wrap {
-}
 .the-item {
   width: 100%;
   display: flex;

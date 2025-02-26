@@ -15,7 +15,6 @@
             </div>
           </div>
           <div class="form-box">
-            <!-- <template v-if="state.currentTab === 'email'"> -->
             <el-form
               ref="formRef"
               :model="formValue"
@@ -71,10 +70,6 @@
                 </template>
               </el-form-item>
             </el-form>
-            <!-- </template> -->
-            <!-- <template v-else>
-              <div></div>
-            </template> -->
           </div>
           <div class="btn-wrap">
             <div class="forget-box" @click="handleForgetPwd">
@@ -85,7 +80,9 @@
             </div>
             <div class="text-box">
               <span class="no-account">{{ $t('没有账号') }}?</span>
-              <span class="register">{{ $t('注册') }}</span>
+              <span class="register" @click="handleRegister">{{
+                $t('注册')
+              }}</span>
             </div>
           </div>
         </div>
@@ -106,6 +103,14 @@
         </div>
       </div>
     </div>
+    <Vcode
+      :show="codeShow"
+      @success="handleSuccess"
+      @close="handleClose"
+      :successText="$t('验证通过')"
+      :failText="$t('验证失败')"
+      :sliderText="$t('拖动滑块完成拼图')"
+    />
   </div>
 </template>
 
@@ -115,8 +120,52 @@ import { $t } from '@/i18n'
 import type { FormInstance } from 'element-plus'
 import SelectCountry from '@/components/selectCountry/index.vue'
 import Erweima from '@/components/erweima/index.vue'
+import Vcode from 'vue3-puzzle-vcode'
+import router from '@/router'
+import { useMemberStore } from '@/store'
+import { ElMessage } from 'element-plus'
+
+const { setProfile } = useMemberStore()
 
 const formRef = ref<FormInstance>()
+
+const codeShow = ref(false)
+
+const handleSuccess = () => {
+  codeShow.value = false
+  // 滑动二维码验证通过以后
+  let data = {}
+  if (state.currentTab === 'phone') {
+    data = {
+      prefix: formValue.prefix,
+      phone: formValue.phone,
+      password: formValue.password,
+    }
+  }
+  if (state.currentTab === 'email') {
+    data = {
+      email: formValue.phone,
+      password: formValue.password,
+    }
+  }
+  console.log('submit!', data)
+  // pinia存储个人信息
+  setProfile({
+    account: '',
+    avatar: '',
+    token: '',
+  })
+  localStorage.setItem('token', 'xxxxxxxxxx')
+  ElMessage({
+    type: 'success',
+    message: $t('登录成功'),
+    duration: 1000,
+  })
+}
+
+const handleClose = () => {
+  codeShow.value = false
+}
 
 const emailForm: Array<any> = [
   {
@@ -197,28 +246,15 @@ const formValue = reactive<{
   email: '',
   password: '',
   phone: '',
-  prefix: '86',
+  prefix: '+86',
 })
 
 const submitForm = () => {
   if (!formRef.value) return
   formRef.value.validate((valid) => {
     if (valid) {
-      let data = {}
-      if (state.currentTab === 'phone') {
-        data = {
-          prefix: formValue.prefix,
-          phone: formValue.phone,
-          password: formValue.password,
-        }
-      }
-      if (state.currentTab === 'email') {
-        data = {
-          email: formValue.phone,
-          password: formValue.password,
-        }
-      }
-      console.log('submit!', data)
+      // 弹出人机安全校验
+      codeShow.value = true
     } else {
       console.log('error submit!')
     }
@@ -249,151 +285,23 @@ const handleChangeItem = (item: any, val: string) => {
   ;(formValue as any)[item.prop] = val
 }
 
-const handleForgetPwd = () => {}
+const handleForgetPwd = () => {
+  router.push({
+    name: 'forgetPwd',
+  })
+}
 
 const handleRefresh = () => {
   state.qrtext = (Math.random() * 100000000).toString()
 }
+
+const handleRegister = () => {
+  router.push({
+    name: 'register',
+  })
+}
 </script>
 
 <style scoped lang="scss">
-.login-box {
-  height: calc(100vh - 60px);
-  .container {
-    width: 1200px;
-    height: auto;
-    margin: 20px auto 0;
-    .title {
-      font-size: 44px;
-      font-weight: 700;
-      height: 70px;
-      line-height: 70px;
-    }
-    .content {
-      display: flex;
-      gap: 120px;
-      justify-content: center;
-      .left {
-        width: 460px;
-        .tab-box {
-          display: flex;
-          flex: 1;
-          gap: 30px;
-          padding: 20px 0;
-          .tab {
-            padding: 0 18px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            color: var(--text-color);
-            cursor: pointer;
-          }
-          .active {
-            color: var(--dark-color);
-            background-color: #f4f4f7;
-            border-radius: 45px;
-            font-family: Figtree-Regular;
-          }
-        }
-        .form-box {
-          :deep(.el-form-item) {
-            display: flex;
-            flex-direction: column;
-          }
-          :deep(.el-form-item__label-wrap) {
-            margin: 0px !important;
-          }
-          :deep(.el-icon) {
-            width: 16px;
-            height: 16px;
-          }
-          .the-item {
-            width: 100%;
-            display: flex;
-            column-gap: 30px;
-            .prefix {
-              width: 134px;
-            }
-            .action {
-              flex: 1;
-            }
-          }
-        }
-        .btn-wrap {
-          .forget-box {
-            height: 22px;
-            margin-bottom: 30px;
-            cursor: pointer;
-          }
-          :deep(.el-button) {
-            width: 100%;
-            height: 40px;
-            border-radius: 8px !important;
-          }
-          padding-bottom: 10px;
-          text-align: right;
-          font-size: 14px;
-          color: var(--dark-color);
-        }
-        .text-box {
-          margin-top: 24px;
-          text-align: center;
-          .no-account {
-            color: var(--text-color);
-          }
-          .register {
-            color: var(--dark-color);
-            margin-left: 10px;
-          }
-        }
-      }
-      .right {
-        width: 305px;
-        font-family: Figtree-Regular;
-        .title {
-          font-size: 32px;
-          line-height: 50px;
-          height: 50px;
-        }
-        .sub-title {
-          font-size: 16px;
-          color: var(--text-color);
-          padding-top: 16px;
-        }
-        .qr-box {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-top: 60px;
-        }
-      }
-    }
-  }
-}
-.mobile {
-  .login-box {
-    height: auto;
-    padding-bottom: 100px;
-    .container {
-      width: auto;
-      padding: 0 20px;
-      .title {
-        font-size: 28px;
-      }
-      .content {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        .left {
-          width: 100%;
-          .tab-box {
-            gap: 10px;
-          }
-        }
-      }
-    }
-  }
-}
+@import './style.scss';
 </style>

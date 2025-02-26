@@ -11,10 +11,18 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick, watch } from 'vue'
 import QRCode from 'qrcode'
+import router from '@/router'
+import { useMemberStore } from '@/store'
+
+const { setProfile } = useMemberStore()
+
+console.log('setProfile', setProfile, router)
+
 const qrcodeCanvas = ref(null)
 
 const wrap = ref()
 const isExpired = ref(false)
+const timer = ref<any>(null)
 const emits = defineEmits(['refresh'])
 
 const props = defineProps({
@@ -53,7 +61,22 @@ const generateQRCode = (text: string) => {
       },
     }).then(() => {
       isExpired.value = false
+      // 定时轮询当前hash值是否被扫码登录使用过
+      timer.value = setInterval(() => {
+        // 将props.text传给后端，后端返回当前登录用户的数据，前端pinia存用户数据后，跳转首页
+        // setProfile({
+        //   phone: '',
+        //   email: '',
+        //   token: ''
+        // })
+        // localStorage.setItem('token', '')
+        // router.push({
+        //   path: '/',
+        // })
+      }, 1000)
+
       setTimeout(() => {
+        // 二维码n秒后过期
         isExpired.value = true
       }, props.timeout)
     })

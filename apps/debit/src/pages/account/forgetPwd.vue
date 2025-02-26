@@ -1,9 +1,10 @@
 <template>
   <div class="login-box">
     <div class="container">
-      <div class="title">{{ $t('登录') }}</div>
       <div class="content">
         <div class="left item">
+          <div class="title">{{ $t('忘记密码') }}</div>
+          <div class="tip">{{ $t('重置密码后，24小时禁止提币和OTC转出') }}</div>
           <div class="tab-box">
             <div
               :class="`tab ${state.currentTab === tab.value ? 'active' : ''}`"
@@ -35,16 +36,6 @@
                 >
                   <div class="the-item">
                     <div class="prefix" v-if="item.prefix">
-                      <!-- 方式一 -->
-                      <!-- <component
-                        :modelValue="(formValue as any)[item.prefix.prop]"
-                        :is="item.prefix.component"
-                        @change="
-                          (val: any) => handleChangeItem(item.prefix, val)
-                        "
-                      >
-                      </component> -->
-                      <!-- 方式二 -->
                       <component
                         :is="
                           item.prefix.render({
@@ -76,29 +67,8 @@
               {{ $t('忘记密码') }}
             </div>
             <div class="submit-box">
-              <el-button @click="submitForm">{{ $t('登录') }}</el-button>
+              <el-button @click="submitForm">{{ $t('下一步') }}</el-button>
             </div>
-            <div class="text-box">
-              <span class="no-account">{{ $t('没有账号') }}?</span>
-              <span class="register" @click="handleRegister">{{
-                $t('注册')
-              }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="right item">
-          <div class="title">{{ $t('使用二维码登录') }}</div>
-          <div class="sub-title">{{ $t('使用手机App扫描二维码') }}</div>
-          <div class="qr-box">
-            <Erweima
-              style="width: 176px; height: 176px"
-              :text="state.qrtext"
-              @refresh="handleRefresh"
-            ></Erweima>
-            <img
-              src="@/assets/img/login-phone.png"
-              style="width: 90px; height: 180px"
-            />
           </div>
         </div>
       </div>
@@ -111,10 +81,17 @@ import { ref, reactive, h } from 'vue'
 import { $t } from '@/i18n'
 import type { FormInstance } from 'element-plus'
 import SelectCountry from '@/components/selectCountry/index.vue'
-import Erweima from '@/components/erweima/index.vue'
+import { Modal } from 'common-components'
+import sendVerify from 'common-components/sendVerify/index.vue'
+import noVerify from 'common-components/noVerify/index.vue'
+import newPassword from 'common-components/newPassword/index.vue'
+import { useMemberStore } from '@/store'
+import { ElMessage } from 'element-plus'
 import router from '@/router'
 
 const formRef = ref<FormInstance>()
+
+const { setProfile } = useMemberStore()
 
 const emailForm: Array<any> = [
   {
@@ -134,19 +111,6 @@ const emailForm: Array<any> = [
       },
     ],
     placeholder: $t('请输入邮箱地址'),
-  },
-  {
-    label: $t('密码'),
-    prop: 'password',
-    type: 'password',
-    placeholder: $t('请输入密码'),
-    rules: [
-      {
-        required: true,
-        message: $t('请输入密码'),
-        trigger: 'blur',
-      },
-    ],
   },
 ]
 
@@ -171,31 +135,16 @@ const phoneForm = [
       },
     },
   },
-  {
-    label: $t('密码'),
-    prop: 'password',
-    type: 'password',
-    placeholder: $t('请输入密码'),
-    rules: [
-      {
-        required: true,
-        message: $t('请输入密码'),
-        trigger: 'blur',
-      },
-    ],
-  },
 ]
 
 const formValue = reactive<{
   email: string
-  password: string
   phone: string
   prefix: string
 }>({
-  email: '',
-  password: '',
+  email: 'ike_yu@qq.com',
   phone: '',
-  prefix: '+86',
+  prefix: '86',
 })
 
 const submitForm = () => {
@@ -207,15 +156,93 @@ const submitForm = () => {
         data = {
           prefix: formValue.prefix,
           phone: formValue.phone,
-          password: formValue.password,
         }
       }
       if (state.currentTab === 'email') {
         data = {
           email: formValue.phone,
-          password: formValue.password,
         }
       }
+      Modal.open({
+        content: h(sendVerify, {
+          type: state.currentTab,
+          onSuccess(obj: any) {
+            // 拿到了验证码后在这里调接口
+            // 注意：弹窗点击了确认且弹窗中表单验证通过后在这里回调
+            console.log('参数', obj)
+            // 在这里调用后端接口
+            ElMessage({
+              message: $t('验证成功'),
+              type: 'success',
+              duration: 1000,
+            })
+            // ElMessage({
+            //   message: $t('验证失败'),
+            //   type: 'error',
+            //   duration: 1000,
+            // })
+            // 成功后
+            Modal.close()
+            // 如果验证码经后台校验发现为真, 则打开输入新密码弹窗
+            Modal.open({
+              content: h(newPassword, {
+                type: state.currentTab,
+                onSuccess: (obj: any) => {
+                  // 拿到了新密码后
+                  console.log('新密码', obj)
+                  // 成功调用接口保存新密码后
+                  ElMessage({
+                    message: $t('密码修改成功'),
+                    type: 'success',
+                    duration: 1000,
+                  })
+                  //   ElMessage({
+                  //     message: $t('密码修改失败'),
+                  //     type: 'success',
+                  //     duration: 1000,
+                  //   })
+                  Modal.close()
+                  //   后端需要返回最新token等个人账号信息，之前token作废
+                  // pinia存储个人信息
+                  setProfile({
+                    account: '',
+                    avatar: '',
+                    token: '',
+                  })
+                  localStorage.setItem('token', 'xxxxxxxxxx')
+                  //   router.push({
+                  //     name: 'login',
+                  //   })
+                },
+              }),
+              title: $t('修改密码'),
+              onConfirm: (obj: any) => {
+                obj.compRef.value.handleVerify()
+              },
+            })
+          },
+          onFail() {
+            console.log('obj')
+            Modal.close()
+            // 打开未收到验证码
+            Modal.open({
+              content: h(noVerify, {}),
+              title: $t('未收到手机/邮箱验证码') + '?',
+              confirmText: $t('安全选项申请'),
+              onConfirm: () => {
+                Modal.close()
+                router.push({
+                  name: 'safe',
+                })
+              },
+            })
+          },
+        }),
+        title: $t('安全验证'),
+        onConfirm: (obj: any) => {
+          obj.compRef.value.handleVerify()
+        },
+      })
       console.log('submit!', data)
     } else {
       console.log('error submit!')
@@ -230,11 +257,11 @@ const state = reactive({
 
 const tabs = ref<any>([
   {
-    label: $t('手机'),
+    label: $t('手机找回'),
     value: 'phone',
   },
   {
-    label: $t('邮箱'),
+    label: $t('邮箱找回'),
     value: 'email',
   },
 ])
@@ -247,23 +274,27 @@ const handleChangeItem = (item: any, val: string) => {
   ;(formValue as any)[item.prop] = val
 }
 
-const handleForgetPwd = () => {
-  router.push({
-    name: 'forgetPwd',
-  })
-}
-
-const handleRefresh = () => {
-  state.qrtext = (Math.random() * 100000000).toString()
-}
-
-const handleRegister = () => {
-  router.push({
-    name: 'register',
-  })
-}
+const handleForgetPwd = () => {}
 </script>
 
 <style scoped lang="scss">
 @import './style.scss';
+.login-box {
+  display: flex;
+  align-items: center;
+  .container {
+    .title {
+      text-align: left;
+    }
+    .tip {
+      margin-top: 14px;
+      padding: 5px 10px;
+      background-color: rgb(255, 249, 232);
+      color: var(--text-color);
+      font-size: 14px;
+      line-height: 22px;
+      border-radius: 4px;
+    }
+  }
+}
 </style>
