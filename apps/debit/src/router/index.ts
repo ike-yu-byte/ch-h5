@@ -45,11 +45,27 @@ export const routes = [
     },
   },
   {
+    path: '/forgetPwd',
+    name: 'forgetPwd',
+    component: () => import('@/pages/account/forgetPwd.vue'),
+    meta: {
+      title: $t('忘记密码'),
+    },
+  },
+  {
+    path: '/safe',
+    name: 'safe',
+    component: () => import('@/pages/account/safe.vue'),
+    meta: {
+      title: $t('安全选项申请'),
+    },
+  },
+  {
     path: '/condition',
     name: 'condition',
     component: () => import('@/pages/condition/index.vue'),
     meta: {
-      title: $t('注册'),
+      title: $t('行情'),
     },
   },
   {

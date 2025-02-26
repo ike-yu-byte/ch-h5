@@ -1,7 +1,11 @@
 <template>
   <div :class="`header-box`">
     <div class="left-box">
-      <img src="@/assets/img/logo_dark.png" class="logo" />
+      <img
+        src="@/assets/img/logo_dark.png"
+        class="logo"
+        @click="handleClickNav({ value: 'index' })"
+      />
       <div class="nav-list" v-if="isPC">
         <template v-for="item of navLists" :key="item.value">
           <template v-if="!item.children?.length">
@@ -173,6 +177,7 @@ defineOptions({
     .logo {
       width: 85px;
       height: 36px;
+      cursor: pointer;
     }
     .nav-list {
       padding: 0 25px;

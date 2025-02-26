@@ -68,6 +68,9 @@ importers:
       vue-router:
         specifier: ^4.3.2
         version: 4.4.0(vue@3.5.13(typescript@5.5.2))
+      vue3-puzzle-vcode:
+        specifier: ^1.1.7
+        version: 1.1.7
     devDependencies:
       '@babel/core':
         specifier: ^7.24.5
@@ -5486,6 +5489,9 @@ packages:
     resolution: {integrity: sha512-C5AvlcGfyM4XvFqPDkni94rqGd5K/+RB+B4xv/1NQx3RrdC+GvXPFzeXW5hWL/jh8ehWLm4LITyK0eMKf4iJbg==}
     peerDependencies:
       vue: '>= 3 < 4'
+
+  vue3-puzzle-vcode@1.1.7:
+    resolution: {integrity: sha512-mW780dz7HKjrElnE60CeYSeHGidKBKHoMjTDYfqF21330rTkFOsfDK1FQKZ22MktgMtTEoS/imfpEDlM1cxY/g==}
 
   vue@3.3.4:
     resolution: {integrity: sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==}
@@ -11766,6 +11772,8 @@ snapshots:
       core-js: 3.37.1
       vue: 3.5.13(typescript@5.5.2)
       vue-count-to: 1.0.13
+
+  vue3-puzzle-vcode@1.1.7: {}
 
   vue@3.3.4:
     dependencies:

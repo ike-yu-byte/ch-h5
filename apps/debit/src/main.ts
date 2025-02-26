@@ -6,7 +6,7 @@ import 'element-plus/dist/index.css'
 import 'common-assets/style/index.scss'
 import '@/assets/style/index.scss'
 import pinia from '@/store'
-import i18n from '@/i18n'
+import i18n, { $t } from '@/i18n'
 import '@/utils/window.ts'
 import VueLuckyCanvas from '@lucky-canvas/vue'
 import ElementPlus from 'element-plus'
@@ -19,6 +19,7 @@ import SvgIcon from 'common-components/SvgIcon/index.vue'
 import vant from 'vant'
 import 'vant/lib/index.css'
 import { format } from 'common-assets/utils'
+import commonComponents from 'common-components'
 // 引入vite插件里面的虚拟模块
 import 'virtual:svg-icons-register'
 import gridLayout from 'vue-grid-layout'
@@ -76,6 +77,7 @@ app.use(VueLuckyCanvas)
 app.use(WujieVue)
 app.use(vant)
 app.use(gridLayout)
+app.use(commonComponents, { $t })
 // app.use(ConfigProvider)
 app.component('SvgIcon', SvgIcon)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
