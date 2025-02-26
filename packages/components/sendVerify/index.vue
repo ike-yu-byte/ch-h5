@@ -44,7 +44,7 @@
                         :placeholder="item.placeholder || ''"
                       >
                         <template #suffix>
-                          <TimeBtn></TimeBtn>
+                          <TimeBtn @send="handleSendCode"></TimeBtn>
                         </template>
                       </el-input>
                     </div>
@@ -69,10 +69,18 @@ const $t = (window as any).$t
 
 const emits = defineEmits(['success', 'fail'])
 
+const handleSendCode = () => {
+  console.log('调用接口获取验证码')
+  props?.api?.()
+}
+
 const props = defineProps({
   type: {
     type: String,
     default: 'phone',
+  },
+  api: {
+    type: Function,
   },
 })
 

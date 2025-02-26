@@ -79,7 +79,7 @@ const handleVerify = () => {
   })
 }
 
-const phoneForm = [
+const phoneForm: Array<any> = [
   {
     label: $t('新密码'),
     prop: 'code',
