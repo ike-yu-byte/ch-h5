@@ -1,9 +1,9 @@
 <template>
   <div class="login-box">
     <div class="container">
-      <div class="title">{{ $t('登录') }}</div>
       <div class="content">
         <div class="left item">
+          <div class="title">{{ $t('注册') }}</div>
           <div class="tab-box">
             <div
               :class="`tab ${state.currentTab === tab.value ? 'active' : ''}`"
@@ -35,16 +35,6 @@
                 >
                   <div class="the-item">
                     <div class="prefix" v-if="item.prefix">
-                      <!-- 方式一 -->
-                      <!-- <component
-                        :modelValue="(formValue as any)[item.prefix.prop]"
-                        :is="item.prefix.component"
-                        @change="
-                          (val: any) => handleChangeItem(item.prefix, val)
-                        "
-                      >
-                      </component> -->
-                      <!-- 方式二 -->
                       <component
                         :is="
                           item.prefix.render({
@@ -64,6 +54,9 @@
                         :clearable="true"
                         :placeholder="item.placeholder || ''"
                       >
+                        <template #suffix v-if="item.code">
+                          <TimeBtn @send="handleSendCode"></TimeBtn>
+                        </template>
                       </el-input>
                     </div>
                   </div>
@@ -72,33 +65,22 @@
             </el-form>
           </div>
           <div class="btn-wrap">
-            <div class="forget-box" @click="handleForgetPwd">
-              {{ $t('忘记密码') }}
+            <div class="forget-box">
+              <el-checkbox v-model="formValue.agreed">{{
+                $t('注册即同意交易所用户协议')
+              }}</el-checkbox>
             </div>
             <div class="submit-box">
-              <el-button @click="submitForm">{{ $t('登录') }}</el-button>
+              <el-button @click="submitForm" :disabled="!formValue.agreed">{{
+                $t('注册')
+              }}</el-button>
             </div>
             <div class="text-box">
-              <span class="no-account">{{ $t('没有账号') }}?</span>
+              <span class="no-account">{{ $t('已有账号') }}?</span>
               <span class="register" @click="handleRegister">{{
-                $t('注册')
+                $t('立即登录')
               }}</span>
             </div>
-          </div>
-        </div>
-        <div class="right item">
-          <div class="title">{{ $t('使用二维码登录') }}</div>
-          <div class="sub-title">{{ $t('使用手机App扫描二维码') }}</div>
-          <div class="qr-box">
-            <Erweima
-              style="width: 176px; height: 176px"
-              :text="state.qrtext"
-              @refresh="handleRefresh"
-            ></Erweima>
-            <img
-              src="@/assets/img/login-phone.png"
-              style="width: 90px; height: 180px"
-            />
           </div>
         </div>
       </div>
@@ -111,10 +93,14 @@ import { ref, reactive, h } from 'vue'
 import { $t } from '@/i18n'
 import type { FormInstance } from 'element-plus'
 import SelectCountry from '@/components/selectCountry/index.vue'
-import Erweima from '@/components/erweima/index.vue'
 import router from '@/router'
+import TimeBtn from 'common-components/timeBtn/index.vue'
 
 const formRef = ref<FormInstance>()
+
+const handleSendCode = () => {
+  console.log('调用接口获取验证码')
+}
 
 const emailForm: Array<any> = [
   {
@@ -136,6 +122,20 @@ const emailForm: Array<any> = [
     placeholder: $t('请输入邮箱地址'),
   },
   {
+    label: $t('验证码'),
+    prop: 'code',
+    type: 'input',
+    placeholder: $t('请输入验证码'),
+    rules: [
+      {
+        required: true,
+        message: $t('请输入验证码'),
+        trigger: 'blur',
+      },
+    ],
+    code: true,
+  },
+  {
     label: $t('密码'),
     prop: 'password',
     type: 'password',
@@ -144,6 +144,19 @@ const emailForm: Array<any> = [
       {
         required: true,
         message: $t('请输入密码'),
+        trigger: 'blur',
+      },
+    ],
+  },
+  {
+    label: $t('推荐人ID'),
+    prop: 'invited',
+    type: 'input',
+    placeholder: $t('请输入推荐人ID'),
+    rules: [
+      {
+        required: false,
+        message: $t('请输入推荐人ID'),
         trigger: 'blur',
       },
     ],
@@ -172,6 +185,20 @@ const phoneForm = [
     },
   },
   {
+    label: $t('验证码'),
+    prop: 'code',
+    type: 'input',
+    placeholder: $t('请输入验证码'),
+    rules: [
+      {
+        required: true,
+        message: $t('请输入验证码'),
+        trigger: 'blur',
+      },
+    ],
+    code: true,
+  },
+  {
     label: $t('密码'),
     prop: 'password',
     type: 'password',
@@ -184,6 +211,19 @@ const phoneForm = [
       },
     ],
   },
+  {
+    label: $t('推荐人ID'),
+    prop: 'invited',
+    type: 'input',
+    placeholder: $t('请输入推荐人ID'),
+    rules: [
+      {
+        required: false,
+        message: $t('请输入推荐人ID'),
+        trigger: 'blur',
+      },
+    ],
+  },
 ]
 
 const formValue = reactive<{
@@ -191,11 +231,17 @@ const formValue = reactive<{
   password: string
   phone: string
   prefix: string
+  code: string
+  agreed: boolean
+  invited: string
 }>({
   email: '',
   password: '',
   phone: '',
   prefix: '+86',
+  code: '',
+  invited: '',
+  agreed: false,
 })
 
 const submitForm = () => {
@@ -205,15 +251,20 @@ const submitForm = () => {
       let data = {}
       if (state.currentTab === 'phone') {
         data = {
-          prefix: formValue.prefix,
-          phone: formValue.phone,
-          password: formValue.password,
+          password: '',
+          phone: '',
+          prefix: '+86',
+          code: '',
+          invited: '',
         }
       }
       if (state.currentTab === 'email') {
         data = {
-          email: formValue.phone,
-          password: formValue.password,
+          email: '',
+          password: '',
+          prefix: '+86',
+          code: '',
+          invited: '',
         }
       }
       console.log('submit!', data)
@@ -230,11 +281,11 @@ const state = reactive({
 
 const tabs = ref<any>([
   {
-    label: $t('手机'),
+    label: $t('手机注册'),
     value: 'phone',
   },
   {
-    label: $t('邮箱'),
+    label: $t('邮箱注册'),
     value: 'email',
   },
 ])
@@ -247,23 +298,16 @@ const handleChangeItem = (item: any, val: string) => {
   ;(formValue as any)[item.prop] = val
 }
 
-const handleForgetPwd = () => {
-  router.push({
-    name: 'forgetPwd',
-  })
-}
-
-const handleRefresh = () => {
-  state.qrtext = (Math.random() * 100000000).toString()
-}
-
 const handleRegister = () => {
   router.push({
-    name: 'register',
+    name: 'login',
   })
 }
 </script>
 
 <style scoped lang="scss">
 @import './style.scss';
+.forget-box {
+  text-align: left;
+}
 </style>

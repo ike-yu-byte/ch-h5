@@ -6,6 +6,8 @@
 
 <script setup lang="ts">
 import { ref, onBeforeUnmount } from 'vue'
+
+const emits = defineEmits(['send'])
 const timer = ref<number>(-1)
 let intervaler = null
 const $t = (window as any).$t
@@ -14,6 +16,8 @@ const handleClick = () => {
     return
   }
   timer.value = 60
+  // 通知父组件开始发送
+  emits('send')
   intervaler = setInterval(() => {
     timer.value--
   }, 1000)
