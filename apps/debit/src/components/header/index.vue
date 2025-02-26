@@ -24,7 +24,7 @@
                 <div
                   class="content-item"
                   v-for="item2 of item.children"
-                  @click="handleClickNav(item)"
+                  @click="handleClickNav(item2)"
                   :key="item2.value"
                 >
                   <div class="line first">
@@ -116,11 +116,11 @@ const show = ref(false)
 const navLists = ref<any>([
   {
     label: '行情',
-    value: '',
+    value: 'condition',
   },
   {
     label: '快捷交易',
-    value: '',
+    value: 'pay',
   },
   {
     label: '交易',
@@ -130,27 +130,28 @@ const navLists = ref<any>([
         label: '现货交易',
         icon: 'icon-trade',
         text: '使用完整交易功能，买卖数字货币',
-        value: '',
+        value: 'panel',
       },
       {
         label: '闪兑交易',
         icon: 'icon-flash',
         text: '现货兑换，一键完成交易',
-        value: '',
+        value: 'exchange',
       },
     ],
   },
   {
     label: '盘前现货交易',
-    value: '',
+    value: 'ieo',
   },
   {
     label: 'Debit卡',
-    value: '',
+    value: 'card',
   },
 ])
 
 const handleClickNav = (item: any) => {
+  if (item.children) return
   router.push({ name: item.value })
 }
 
