@@ -195,7 +195,7 @@ const formValue = reactive<{
   email: '',
   password: '',
   phone: '',
-  prefix: '86',
+  prefix: '+86',
 })
 
 const submitForm = () => {

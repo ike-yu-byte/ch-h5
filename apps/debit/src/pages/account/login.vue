@@ -103,6 +103,14 @@
         </div>
       </div>
     </div>
+    <Vcode
+      :show="codeShow"
+      @success="handleSuccess"
+      @close="handleClose"
+      :successText="$t('验证通过')"
+      :failText="$t('验证失败')"
+      :sliderText="$t('拖动滑块完成拼图')"
+    />
   </div>
 </template>
 
@@ -112,12 +120,52 @@ import { $t } from '@/i18n'
 import type { FormInstance } from 'element-plus'
 import SelectCountry from '@/components/selectCountry/index.vue'
 import Erweima from '@/components/erweima/index.vue'
+import Vcode from 'vue3-puzzle-vcode'
 import router from '@/router'
 import { useMemberStore } from '@/store'
+import { ElMessage } from 'element-plus'
 
 const { setProfile } = useMemberStore()
 
 const formRef = ref<FormInstance>()
+
+const codeShow = ref(false)
+
+const handleSuccess = () => {
+  codeShow.value = false
+  // 滑动二维码验证通过以后
+  let data = {}
+  if (state.currentTab === 'phone') {
+    data = {
+      prefix: formValue.prefix,
+      phone: formValue.phone,
+      password: formValue.password,
+    }
+  }
+  if (state.currentTab === 'email') {
+    data = {
+      email: formValue.phone,
+      password: formValue.password,
+    }
+  }
+  console.log('submit!', data)
+  // pinia存储个人信息
+  setProfile({
+    account: '',
+    avatar: '',
+    token: '',
+  })
+  localStorage.setItem('token', 'xxxxxxxxxx')
+  ElMessage({
+    type: 'success',
+    message: $t('登录成功'),
+    duration: 1000,
+  })
+}
+
+const handleClose = () => {
+  codeShow.value = false
+}
 
 const emailForm: Array<any> = [
   {
@@ -198,35 +246,15 @@ const formValue = reactive<{
   email: '',
   password: '',
   phone: '',
-  prefix: '86',
+  prefix: '+86',
 })
 
 const submitForm = () => {
   if (!formRef.value) return
   formRef.value.validate((valid) => {
     if (valid) {
-      let data = {}
-      if (state.currentTab === 'phone') {
-        data = {
-          prefix: formValue.prefix,
-          phone: formValue.phone,
-          password: formValue.password,
-        }
-      }
-      if (state.currentTab === 'email') {
-        data = {
-          email: formValue.phone,
-          password: formValue.password,
-        }
-      }
-      console.log('submit!', data)
-      // pinia存储个人信息
-      setProfile({
-        account: '',
-        avatar: '',
-        token: '',
-      })
-      localStorage.setItem('token', 'xxxxxxxxxx')
+      // 弹出人机安全校验
+      codeShow.value = true
     } else {
       console.log('error submit!')
     }
