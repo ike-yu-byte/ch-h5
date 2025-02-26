@@ -60,7 +60,7 @@
               v-model="state.inputVal"
             >
               <template #suffix>
-                <span class="register-now" @click="handleRegister">{{
+                <span class="register-now" @click="handleTo('register')">{{
                   $t('立即注册')
                 }}</span>
               </template>
@@ -82,7 +82,9 @@
         </div>
       </div>
       <div class="btn-box" v-show="!isPC">
-        <div class="btn" @click="handleRegister">{{ $t('立即注册') }}</div>
+        <div class="btn" @click="handleTo('register')">
+          {{ $t('立即注册') }}
+        </div>
       </div>
     </div>
     <div class="market-lists">
@@ -129,7 +131,9 @@
               </span>
             </div>
           </div>
-          <div class="right">{{ $t('立即交易') }}</div>
+          <div class="right" @click="handleTo('panel')">
+            {{ $t('立即交易') }}
+          </div>
         </div>
         <div style="height: 370px">
           <TrendCharts></TrendCharts>
@@ -231,7 +235,7 @@
       </div>
       <div class="contain-box" style="margin-top: 100px">
         <div class="title">{{ $t('新闻与观点') }}</div>
-        <div class="sub-title">{{ $t('精选文章、媒体提及和 Faith 采访') }}</div>
+        <div class="sub-title">{{ $t('精选文章、媒体提及和采访') }}</div>
         <div class="goods-box">
           <div class="btn" @click="handleViewMore('news')">
             {{ $t('查看更多') }}
@@ -243,7 +247,9 @@
       <div class="contain-box">
         <div class="text">{{ $t('与全球交易者一起享受加密货币之旅吧！') }}</div>
         <div class="btn-box">
-          <div class="btn">{{ $t('立即注册') }}</div>
+          <div class="btn" @click="handleTo('register')">
+            {{ $t('立即注册') }}
+          </div>
         </div>
       </div>
     </div>
@@ -256,6 +262,7 @@ import { CountTo } from 'vue3-count-to'
 import router from '@/router'
 import { useDeviceStore } from '@/store'
 import TrendCharts from 'common-components/trendCharts/index.vue'
+import logo from '@/assets/img/BTC.png'
 import img1 from '@/assets/img/imgs/community_img_1.png'
 import img2 from '@/assets/img/imgs/community_img_2.png'
 import img3 from '@/assets/img/imgs/community_img_3.png'
@@ -307,7 +314,7 @@ const guides = ref([
   {
     img: guide1,
     text: $t('第一步：创建账户'),
-    subtext: $t('一键创建您的Faith账户'),
+    subtext: $t('一键创建您的账户'),
     btntext: $t('注册'),
     color: 'var(--dark-bg)',
     value: 'register',
@@ -318,7 +325,7 @@ const guides = ref([
     subtext: $t('通过一键购币或P2P快捷购买加密货币'),
     btntext: $t('购买'),
     color: '',
-    value: 'buy',
+    value: 'pay',
   },
   {
     img: guide3,
@@ -326,7 +333,7 @@ const guides = ref([
     subtext: $t('使用高达500倍杠杆交易加密货币衍生品。'),
     btntext: $t('交易'),
     color: '',
-    value: 'trade',
+    value: 'panel',
   },
 ])
 
@@ -353,7 +360,7 @@ const state = reactive<any>({
   inputVal: '',
   coinList: mockCoinList || [],
   coinData: {
-    logo: new URL('../../assets/crypto/BTC.png', import.meta.url).href,
+    logo: logo,
     title: 'BTC/USDT',
     startNum: 0, // 数字滚动开始值
     endNum: 98265.6, // 数字滚动结束
@@ -363,9 +370,9 @@ const state = reactive<any>({
 
 const handleViewMore = (type: string) => {
   if (type === 'coin') {
-    console.log('type', type)
+    handleTo('condition')
   } else if (type === 'news') {
-    console.log('type', type)
+    handleTo('news')
   }
 }
 
@@ -379,12 +386,12 @@ const handleCanplay = () => {
   videoRef.value?.play()
 }
 
-const handleRegister = () => {
-  router.push({ name: 'register' })
+const handleTo = (name: string) => {
+  router.push({ name })
 }
 
 const handleGuide = (item: any) => {
-  console.log('item', item)
+  handleTo(item.value)
 }
 </script>
 
@@ -476,6 +483,7 @@ const handleGuide = (item: any) => {
         border-radius: 0 6px 6px 0;
         line-height: 48px;
         color: var(--dark-color);
+        cursor: pointer;
       }
     }
   }
@@ -760,6 +768,7 @@ const handleGuide = (item: any) => {
           justify-content: center;
           color: #fff;
           font-size: 16px;
+          cursor: pointer;
         }
       }
     }
@@ -801,6 +810,7 @@ const handleGuide = (item: any) => {
         font-size: 12px;
         color: #000;
         font-family: Figtree-Regular;
+        cursor: pointer;
       }
     }
   }

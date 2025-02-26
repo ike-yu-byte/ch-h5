@@ -15,6 +15,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-shoucang1:before {
+  content: '\e8b9';
+}
+
+.icon-shoucang2:before {
+  content: '\e8c6';
+}
+
 .icon-31huidaodingbu:before {
   content: '\e620';
 }

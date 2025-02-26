@@ -14,11 +14,29 @@
 <script setup lang="ts">
 import {
   ref,
+  computed,
+  watch,
+  nextTick,
   // toRefs
 } from 'vue'
 import Header from '@/components/header/index.vue'
 import Footer from '@/components/footer/index.vue'
+import { useRoute } from 'vue-router'
 // import { useDeviceStore } from '@/store'
+
+const route = computed(() => {
+  return useRoute()
+})
+
+watch(
+  route,
+  () => {
+    handleBack()
+  },
+  {
+    deep: true,
+  },
+)
 
 const show = ref(false)
 const layout = ref()
@@ -34,11 +52,16 @@ const handleScroll = (event: any) => {
   }
 }
 
-const handleBack = () => {
-  layout.value.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  })
+const handleBack = async () => {
+  await nextTick()
+  setTimeout(() => {
+    console.dir(layout.value)
+    layout.value.scrollTo({
+      top: -100,
+      behavior: 'smooth',
+    })
+  }, 100)
+  // layout.value.scrollTop = -100
 }
 
 defineOptions({

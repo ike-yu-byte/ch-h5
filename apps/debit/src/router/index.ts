@@ -69,11 +69,51 @@ export const routes = [
     },
   },
   {
+    path: '/pay',
+    name: 'pay',
+    component: () => import('@/pages/pay/index.vue'),
+    meta: {
+      title: $t('购买'),
+    },
+  },
+  {
     path: '/panel',
     name: 'panel',
     component: () => import('@/pages/panel/index.vue'),
     meta: {
-      title: 'Debit',
+      title: $t('交易'),
+    },
+  },
+  {
+    path: '/news',
+    name: 'news',
+    component: () => import('@/pages/news/index.vue'),
+    meta: {
+      title: $t('新闻'),
+    },
+  },
+  {
+    path: '/exchange',
+    name: 'exchange',
+    component: () => import('@/pages/exchange/index.vue'),
+    meta: {
+      title: $t('兑换'),
+    },
+  },
+  {
+    path: '/ieo',
+    name: 'ieo',
+    component: () => import('@/pages/IEO/index.vue'),
+    meta: {
+      title: $t('兑换'),
+    },
+  },
+  {
+    path: '/card',
+    name: 'card',
+    component: () => import('@/pages/card/index.vue'),
+    meta: {
+      title: $t('信用卡'),
     },
   },
   {

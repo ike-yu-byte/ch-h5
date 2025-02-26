@@ -116,6 +116,7 @@ const chartDom = ref()
 const initChart = () => {
   nextTick(() => {
     setTimeout(() => {
+      if (!chartDom.value) return
       if (myChart) {
         myChart.dispose()
       }

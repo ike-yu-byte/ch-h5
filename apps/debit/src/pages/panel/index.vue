@@ -39,6 +39,11 @@ import Order from './components/detail.vue'
 import Realtime from './components/realtime.vue'
 import action from './components/action.vue'
 import detail from './components/detail.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+console.log('query', route.query)
 
 const layout = [
   { x: 0, y: 0, w: 24, h: 4, i: 0, name: 'header', static: false },
