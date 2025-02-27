@@ -1,5 +1,10 @@
 <template>
-  <div class="line-box">折线图</div>
+  <div class="line-box">
+    <iframe
+      src="/html/index.html"
+      style="border: none; width: 100%; height: 100%"
+    ></iframe>
+  </div>
 </template>
 
 <script setup lang="ts"></script>
