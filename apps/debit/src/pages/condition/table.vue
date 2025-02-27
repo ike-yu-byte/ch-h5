@@ -60,6 +60,13 @@ import { mockData } from './mock'
 import router from '@/router'
 import { useDeviceStore } from '@/store'
 import { Search } from '@element-plus/icons-vue'
+import { useSocket, closeSocket } from 'common-assets/utils/socket'
+
+useSocket()
+
+setTimeout(() => {
+  closeSocket()
+}, 2000)
 
 const { isPC } = toRefs(useDeviceStore())
 
@@ -191,11 +198,16 @@ if (isPC.value) {
 
 const handleSortChange = (event: any) => {
   const { order, prop } = event
-  console.log('排序改变', order, prop)
+  if (order === 'descending') {
+    // 降序
+    tableData.value = tableData.value.slice().sort((a, b) => b[prop] - a[prop])
+  } else {
+    tableData.value = tableData.value.slice().sort((a, b) => a[prop] - b[prop])
+  }
 }
 
 const handleRowClick = (row: any) => {
-  router.push({ name: 'panel', params: { symbol: row.Symbol } })
+  router.push({ name: 'panel', query: { symbol: row.Symbol } })
 }
 
 const handleCateChange = (item: any) => {
