@@ -39,7 +39,8 @@ export default [
     ignores: [
       'node_modules',
       'dist',
-      'public',
+      'public/**/html',
+      'apps/**/public',
       'apps/**/dist',
       'apps/**/static',
       'apps/**/node_modules',
