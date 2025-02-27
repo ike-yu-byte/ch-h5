@@ -117,6 +117,14 @@ export const routes = [
     },
   },
   {
+    path: '/order',
+    name: 'order',
+    component: () => import('@/pages/order/index.vue'),
+    meta: {
+      title: $t('买币订单'),
+    },
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('@/pages/404/404.vue'),

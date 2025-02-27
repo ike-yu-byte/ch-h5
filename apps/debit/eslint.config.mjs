@@ -40,6 +40,7 @@ export default [
       'node_modules',
       'dist',
       'public',
+      'public/**/html',
       'apps/**/dist',
       'apps/**/static',
       'apps/**/node_modules',

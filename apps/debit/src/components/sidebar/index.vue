@@ -112,15 +112,29 @@ const tabs = ref([
 const lists = ref([
   {
     label: '行情',
-    value: '',
+    value: 'condition',
   },
   {
     label: '快捷买币',
-    value: '',
+    value: 'pay',
   },
   {
     label: '交易',
-    value: '',
+    value: 'trade',
+    children: [
+      {
+        label: '现货交易',
+        icon: 'icon-trade',
+        text: '使用完整交易功能，买卖数字货币',
+        value: 'panel',
+      },
+      {
+        label: '闪兑交易',
+        icon: 'icon-flash',
+        text: '现货兑换，一键完成交易',
+        value: 'exchange',
+      },
+    ],
   },
   {
     label: '盘前现货交易',
@@ -138,6 +152,9 @@ const lists = ref([
 ])
 
 const handleMenuClick = (item: any) => {
+  if (item.children.length) {
+    return
+  }
   if (item.value === 'lang') {
     show.value = true
   } else {
@@ -148,6 +165,8 @@ const handleMenuClick = (item: any) => {
 
 const handleSelectCoin = (item: any) => {
   currentCoin.value = item.value
+  show.value = false
+  handleClose()
 }
 
 const handleClose = () => {

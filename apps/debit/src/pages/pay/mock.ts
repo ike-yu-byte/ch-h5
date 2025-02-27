@@ -1,0 +1,137 @@
+export const currency = [
+  {
+    Symbol: 'USDT/NGN',
+    Currency: 'NGN',
+    Coin: 'USDT',
+    CurrencyIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile86803735.png',
+    CoinIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile82085057.png',
+    CurrencyPrecision: 2,
+    CoinPrecision: 6,
+    BuyRate: 1497.761763025,
+    BuyFeeRate: 0,
+    SellRate: 1497.761763025,
+    SellFeeRate: 0,
+    SellAdditionalQuantity: 0,
+    BuyAdditionalQuantity: 0,
+    Sort: 0,
+    PayEnable: true,
+    RemitEnable: true,
+    IsSupportMemo: null,
+  },
+  {
+    Symbol: 'BTC/NGN',
+    Currency: 'NGN',
+    Coin: 'BTC',
+    CurrencyIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile86803735.png',
+    CoinIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile60590046.png',
+    CurrencyPrecision: 2,
+    CoinPrecision: 8,
+    BuyRate: 127457315.40005,
+    BuyFeeRate: 0,
+    SellRate: 127457315.40005,
+    SellFeeRate: 0,
+    SellAdditionalQuantity: 0,
+    BuyAdditionalQuantity: 0,
+    Sort: 1,
+    PayEnable: true,
+    RemitEnable: true,
+    IsSupportMemo: null,
+  },
+  {
+    Symbol: 'ETH/NGN',
+    Currency: 'NGN',
+    Coin: 'ETH',
+    CurrencyIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile86803735.png',
+    CoinIcon:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile98701808.png',
+    CurrencyPrecision: 2,
+    CoinPrecision: 8,
+    BuyRate: 3484605.1466,
+    BuyFeeRate: 0,
+    SellRate: 3484605.1466,
+    SellFeeRate: 0,
+    SellAdditionalQuantity: 0,
+    BuyAdditionalQuantity: 0,
+    Sort: 2,
+    PayEnable: true,
+    RemitEnable: true,
+    IsSupportMemo: null,
+  },
+]
+
+export const bank = [
+  {
+    isBuy: true,
+    currency: 'NGN',
+    PayType: 'BANK',
+    PayTypeIco:
+      'https://img.idcs.io/tenants/12A9904584E555B10EA2ED6258D7C1EE/OtherFile86803735.png',
+    MaxAmount: 500000,
+    MinAmount: 380,
+    FeeRate: 0.01,
+    AdditionalQuantity: 50,
+    Sort: 10,
+    CreationTime: '2025-02-19 16:08:18.234551',
+    PaymentListLanguages: [
+      {
+        Id: '6800833175265402887a13',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'zh-cn',
+        Description: '银行转账',
+      },
+      {
+        Id: '680083317526540289a336',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'zh-hant',
+        Description: '',
+      },
+      {
+        Id: '68008331753073459253a5',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'en',
+        Description: 'BANK',
+      },
+      {
+        Id: '680083317530734593a4a8',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'ja',
+        Description: '',
+      },
+      {
+        Id: '6800833175307345942752',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'ko',
+        Description: '',
+      },
+      {
+        Id: '680083317530734595773d',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'fr',
+        Description: '',
+      },
+      {
+        Id: '680083317530734596e4a6',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'nl',
+        Description: '',
+      },
+      {
+        Id: '680083317530734597e540',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'vi',
+        Description: '',
+      },
+      {
+        Id: '68008331753492889666d4',
+        PaymentListId: '68008331752234598444d5',
+        LanguageCode: 'tr',
+        Description: '',
+      },
+    ],
+  },
+]

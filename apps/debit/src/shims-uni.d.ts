@@ -8,7 +8,7 @@ declare module 'vue' {
 declare module 'vue' {
   // 提供全局属性 `$t`
   interface ComponentCustomProperties {
-    $t: (message: string) => string
+    $t: (message: string, fun?: object) => string
     $format: (time: any, str?: string) => string
   }
 }

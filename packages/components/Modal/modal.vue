@@ -11,6 +11,7 @@ const props = defineProps<{
   showBtn?: boolean
   content?: string | Component
   draggable?: boolean
+  className?: string
 }>()
 
 const emit = defineEmits(['close', 'confirm'])
@@ -128,8 +129,10 @@ const handleResize = () => {
 }
 
 onMounted(() => {
-  initPosition()
-  window.addEventListener('resize', handleResize)
+  if (props.draggable) {
+    initPosition()
+    window.addEventListener('resize', handleResize)
+  }
 })
 
 onBeforeUnmount(() => {
@@ -139,11 +142,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="modal-overlay">
+  <div :class="`modal-overlay ${props.draggable ? '' : 'fixed'}`">
     <div
-      class="modal-container"
+      :class="`modal-container ${props.className} ${dragState.isDragging ? 'is-dragging' : ''}`"
       ref="modalContainer"
-      :class="{ 'is-dragging': dragState.isDragging }"
     >
       <div
         class="modal-header"
@@ -185,6 +187,12 @@ onBeforeUnmount(() => {
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   z-index: 999;
+}
+
+.fixed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-container {

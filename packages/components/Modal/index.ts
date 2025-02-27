@@ -9,6 +9,7 @@ interface ModalOptions {
   showBtn?: boolean
   defaultClose?: boolean
   draggable?: boolean
+  className?: string
   onClose?: (obj?: any) => void
   onConfirm?: (obj?: any) => void
 }

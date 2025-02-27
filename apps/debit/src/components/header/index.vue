@@ -93,7 +93,7 @@
           class="menu iconfont icon-yidongduan_caidan"
           @click="handleOpenMenu"
         ></span>
-        <van-popup v-model:show="show" position="right">
+        <van-popup v-model:show="show" position="right" v-if="show">
           <Sidebar @close="handlePopClose" />
         </van-popup>
       </template>

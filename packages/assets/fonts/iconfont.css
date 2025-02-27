@@ -15,6 +15,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-tishi-tanhao:before {
+  content: '\e72b';
+}
+
+.icon-tishi-yiwen:before {
+  content: '\e657';
+}
+
 .icon-shoucang1:before {
   content: '\e8b9';
 }
