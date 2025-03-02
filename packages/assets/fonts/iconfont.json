@@ -6,6 +6,76 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "666885",
+      "name": "设置",
+      "font_class": "shezhi1",
+      "unicode": "e68f",
+      "unicode_decimal": 59023
+    },
+    {
+      "icon_id": "915624",
+      "name": "邀请好友",
+      "font_class": "yaoqinghaoyou",
+      "unicode": "e67f",
+      "unicode_decimal": 59007
+    },
+    {
+      "icon_id": "1311634",
+      "name": "账户",
+      "font_class": "zhanghu1",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "1977512",
+      "name": "账户信息",
+      "font_class": "zhanghuxinxi",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "18170187",
+      "name": "退出,出",
+      "font_class": "exit",
+      "unicode": "e97f",
+      "unicode_decimal": 59775
+    },
+    {
+      "icon_id": "18582789",
+      "name": "api",
+      "font_class": "api",
+      "unicode": "eea0",
+      "unicode_decimal": 61088
+    },
+    {
+      "icon_id": "29756162",
+      "name": "充币",
+      "font_class": "chongbi1",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "29756170",
+      "name": "提币",
+      "font_class": "tibi1",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "8102716",
+      "name": "卡片",
+      "font_class": "icon-test",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "21105900",
+      "name": "美元",
+      "font_class": "meiyuan",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
       "icon_id": "577317",
       "name": "提示",
       "font_class": "tishi-tanhao",

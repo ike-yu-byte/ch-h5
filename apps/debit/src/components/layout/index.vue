@@ -56,7 +56,7 @@ const handleBack = async () => {
   await nextTick()
   setTimeout(() => {
     console.dir(layout.value)
-    layout.value.scrollTo({
+    layout.value?.scrollTo({
       top: -100,
       behavior: 'smooth',
     })

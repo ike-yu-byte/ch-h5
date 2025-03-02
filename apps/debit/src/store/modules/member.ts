@@ -13,7 +13,7 @@ export const useMemberStore = defineStore(
     }
 
     const clearProfile = () => {
-      profile.value = {}
+      profile.value = null
     }
 
     const handleLoginFail = () => {
