@@ -160,3 +160,15 @@ p {
     padding: 0px 20px !important;
   }
 }
+
+// 去掉右侧小按钮
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
