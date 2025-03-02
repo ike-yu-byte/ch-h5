@@ -5,7 +5,7 @@ import {
   createWebHashHistory,
 } from 'vue-router'
 import i18n from '@/i18n'
-import webview from '@/pages/webview/index.vue'
+import { ElMessage } from 'element-plus'
 
 const global: any = i18n.global
 const $t = global.t
@@ -18,7 +18,7 @@ export const routes = [
   {
     path: '/subapp',
     name: 'SubApp',
-    component: webview,
+    component: () => import('@/pages/webview/index.vue'),
   },
   {
     path: '/index',
@@ -34,6 +34,7 @@ export const routes = [
     component: () => import('@/pages/account/login.vue'),
     meta: {
       title: $t('登录'),
+      permission: true,
     },
   },
   {
@@ -42,6 +43,7 @@ export const routes = [
     component: () => import('@/pages/account/register.vue'),
     meta: {
       title: $t('注册'),
+      permission: true,
     },
   },
   {
@@ -147,7 +149,22 @@ const router = createRouter({
 })
 router.beforeEach((_to, _from, next) => {
   // 校验权限
-  next()
+  if (_to.meta.permission) {
+    // 不需要登录的
+    next()
+  } else {
+    // 需要登录的
+    if (localStorage.getItem('token')) {
+      next()
+    } else {
+      next({ name: 'login' })
+      ElMessage({
+        message: $t('请先登录'),
+        type: 'warning',
+        duration: 2000,
+      } as any)
+    }
+  }
 })
 router.afterEach((to: any) => {
   // 全局路由守卫

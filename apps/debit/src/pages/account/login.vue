@@ -125,7 +125,9 @@ import router from '@/router'
 import { useMemberStore } from '@/store'
 import { ElMessage } from 'element-plus'
 
-const { setProfile } = useMemberStore()
+const { setProfile, clearProfile } = useMemberStore()
+clearProfile()
+localStorage.removeItem('token')
 
 const formRef = ref<FormInstance>()
 
@@ -151,7 +153,7 @@ const handleSuccess = () => {
   console.log('submit!', data)
   // pinia存储个人信息
   setProfile({
-    account: '',
+    account: 'test@qq.com',
     avatar: '',
     token: '',
   })
@@ -160,6 +162,9 @@ const handleSuccess = () => {
     type: 'success',
     message: $t('登录成功'),
     duration: 1000,
+  })
+  router.push({
+    name: 'index',
   })
 }
 
@@ -292,6 +297,7 @@ const handleForgetPwd = () => {
 }
 
 const handleRefresh = () => {
+  // 这里要请求后端获取真实的二维码id
   state.qrtext = (Math.random() * 100000000).toString()
 }
 

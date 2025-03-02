@@ -11,7 +11,7 @@ for (let i = 0; i < 33; i++) {
   })
 }
 export default {
-  url: '/login', // 接口
+  url: '/mock_login', // 接口
   method: 'get', // 请求类型
   timeout: 500, // 超时时间
   statusCode: 200,

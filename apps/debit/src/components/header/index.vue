@@ -51,16 +51,58 @@
     </div>
     <div class="right-box">
       <template v-if="isPC">
-        <el-button
-          color="#FFFFFF"
-          @click="handleClickNav({ value: 'login' })"
-          >{{ $t('登录') }}</el-button
-        >
-        <el-button
-          color="#2F3031"
-          @click="handleClickNav({ value: 'register' })"
-          >{{ $t('注册') }}</el-button
-        >
+        <template v-if="!!profile">
+          <template v-for="(item, index) of rightMenus" :key="index"
+            ><el-popover placement="top-start" trigger="hover">
+              <template #reference>
+                <span class="menu-item" :key="index">{{ item.label }}</span>
+              </template>
+              <template #default>
+                <div class="pop-content">
+                  <div
+                    class="pop-item"
+                    v-for="(item2, index2) of item.children"
+                    :key="index2"
+                    @click="handleTo(item2.value)"
+                  >
+                    <span :class="`icon iconfont ${item2.icon}`"></span
+                    ><span>{{ item2.label }}</span>
+                  </div>
+                </div>
+              </template>
+            </el-popover></template
+          >
+          <el-popover placement="top-start" trigger="hover">
+            <template #reference>
+              <span class="menu-item">{{ profile.account }}</span>
+            </template>
+            <template #default>
+              <div class="pop-content">
+                <div
+                  class="pop-item"
+                  v-for="(item2, index2) of accountMenus"
+                  :key="index2"
+                  @click="handleTo(item2.value)"
+                >
+                  <span :class="`icon iconfont ${item2.icon}`"></span
+                  ><span>{{ item2.label }}</span>
+                </div>
+              </div>
+            </template>
+          </el-popover>
+        </template>
+        <template v-else>
+          <el-button
+            color="#FFFFFF"
+            @click="handleClickNav({ value: 'login' })"
+            >{{ $t('登录') }}</el-button
+          >
+          <el-button
+            color="#2F3031"
+            @click="handleClickNav({ value: 'register' })"
+            >{{ $t('注册') }}</el-button
+          >
+        </template>
         <el-popover
           placement="top-start"
           title=""
@@ -103,11 +145,14 @@
 
 <script setup lang="ts">
 import { ref, toRefs } from 'vue'
-import { useDeviceStore } from '@/store'
+import { useDeviceStore, useMemberStore } from '@/store'
 import router from '@/router'
 import Notice from '@/components/notice/index.vue'
 import Lang from '@/components/lang/index.vue'
 import Sidebar from '@/components/sidebar/index.vue'
+import { $t } from '@/i18n'
+
+const { profile } = toRefs(useMemberStore())
 
 const { isPC } = toRefs(useDeviceStore())
 
@@ -150,6 +195,89 @@ const navLists = ref<any>([
   },
 ])
 
+const accountMenus = ref<any>([
+  {
+    label: $t('账户安全'),
+    value: 'safe',
+    icon: 'icon-zhanghu1',
+  },
+  {
+    label: $t('身份认证'),
+    value: 'identity',
+    icon: 'icon-zhanghuxinxi',
+  },
+  {
+    label: $t('邀请好友'),
+    value: 'invite',
+    icon: 'icon-yaoqinghaoyou',
+  },
+  {
+    label: $t('API管理'),
+    value: 'invite',
+    icon: 'icon-api',
+  },
+  {
+    label: $t('偏好设置'),
+    value: 'prefer',
+    icon: 'icon-shezhi1',
+  },
+  {
+    label: $t('退出'),
+    value: 'login',
+    icon: 'icon-exit',
+  },
+])
+
+const rightMenus = ref<any>([
+  {
+    label: $t('资产'),
+    value: 'asset',
+    children: [
+      {
+        label: $t('我的资产'),
+        value: 'asset',
+        icon: 'icon-meiyuan',
+      },
+      {
+        label: $t('Debit卡'),
+        value: 'card',
+        icon: 'icon-icon-test',
+      },
+      {
+        label: $t('充币'),
+        value: 'recharge',
+        icon: 'icon-chongbi1',
+      },
+      {
+        label: $t('提币'),
+        value: 'withdraw',
+        icon: 'icon-tibi1',
+      },
+    ],
+  },
+  {
+    label: $t('订单'),
+    value: 'order',
+    children: [
+      {
+        label: $t('买币订单'),
+        value: 'payOrder',
+        icon: 'icon-dengdaidingdan',
+      },
+      {
+        label: $t('闪兑订单'),
+        value: 'exchangeOrder',
+        icon: 'icon-dengdaidingdan',
+      },
+      {
+        label: $t('现货订单'),
+        value: 'sportOrder',
+        icon: 'icon-dengdaidingdan',
+      },
+    ],
+  },
+])
+
 const handleClickNav = (item: any) => {
   if (item.children) return
   router.push({ name: item.value })
@@ -164,12 +292,34 @@ const handlePopClose = () => {
   show.value = false
 }
 
+const handleTo = (name: string) => {
+  router.push({
+    name,
+  })
+}
+
 defineOptions({
   name: 'TopHeader',
 })
 </script>
 
 <style scoped lang="scss">
+.pop-content {
+  font-family: Figtree-Regular;
+  .pop-item {
+    width: 130px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--light-border);
+    cursor: pointer;
+    color: var(--text-color);
+    .icon {
+      margin-right: 10px;
+      color: var(--text-color);
+    }
+  }
+}
 .pc {
   .left-box {
     height: 100%;
@@ -211,6 +361,12 @@ defineOptions({
       &:last-child {
         margin-right: 13px;
       }
+    }
+    .menu-item {
+      color: var(--white-color);
+      padding: 0 16px;
+      font-size: 14px;
+      cursor: pointer;
     }
   }
 }
