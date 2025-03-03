@@ -74,7 +74,13 @@
           >
           <el-popover placement="top-start" trigger="hover" width="auto">
             <template #reference>
-              <span class="menu-item">{{ profile.account }}</span>
+              <span class="menu-item"
+                ><span
+                  class="iconfont icon-zhanghu1"
+                  style="margin-right: 4px"
+                ></span
+                >{{ profile.account }}</span
+              >
             </template>
             <template #default>
               <div class="pop-content">

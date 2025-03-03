@@ -98,7 +98,6 @@ import TimeBtn from 'common-components/timeBtn/index.vue'
 import { useRoute } from 'vue-router'
 
 const { query }: any = useRoute()
-console.log('query', query)
 
 const formRef = ref<FormInstance>()
 
