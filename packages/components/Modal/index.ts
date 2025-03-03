@@ -7,9 +7,11 @@ interface ModalOptions {
   confirmText?: string
   cancelText?: string
   showBtn?: boolean
+  showHeader?: boolean
   defaultClose?: boolean
   draggable?: boolean
   className?: string
+  closeOnClickModal?: boolean
   onClose?: (obj?: any) => void
   onConfirm?: (obj?: any) => void
 }
@@ -26,6 +28,8 @@ export const Modal = {
     modalInstance = createApp({
       render() {
         return h(ModalComponent, {
+          closeOnClickModal: false,
+          showHeader: true,
           showBtn: true,
           draggable: true,
           ...options,
