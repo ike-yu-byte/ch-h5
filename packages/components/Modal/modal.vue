@@ -12,6 +12,8 @@ const props = defineProps<{
   content?: string | Component
   draggable?: boolean
   className?: string
+  showHeader?: boolean
+  closeOnClickModal?: boolean
 }>()
 
 const emit = defineEmits(['close', 'confirm'])
@@ -22,6 +24,13 @@ const handleClose = () => {
 
 const handleConfirm = () => {
   emit('confirm', { compRef })
+}
+
+const handleClickOverlay = () => {
+  if (!props.closeOnClickModal) {
+    return
+  }
+  handleClose()
 }
 
 const modalContainer = ref<HTMLElement>()
@@ -142,12 +151,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div :class="`modal-overlay ${props.draggable ? '' : 'fixed'}`">
+  <div
+    :class="`modal-overlay ${props.draggable ? '' : 'fixed'}`"
+    @click="handleClickOverlay"
+  >
     <div
       :class="`modal-container ${props.className} ${dragState.isDragging ? 'is-dragging' : ''}`"
       ref="modalContainer"
     >
       <div
+        v-if="props.showHeader"
         class="modal-header"
         @mousedown="handleMouseDown"
         @touchstart.passive="handleTouchStart"
