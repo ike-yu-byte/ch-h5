@@ -127,6 +127,46 @@ export const routes = [
     },
   },
   {
+    path: '/notice',
+    name: 'notice',
+    component: () => import('@/pages/notice/index.vue'),
+    meta: {
+      title: $t('公告中心'),
+    },
+  },
+  {
+    path: '/feerate',
+    name: 'feerate',
+    component: () => import('@/pages/feerate/index.vue'),
+    meta: {
+      title: $t('费率'),
+    },
+  },
+  {
+    path: '/degit',
+    name: 'degit',
+    component: () => import('@/pages/degit/index.vue'),
+    meta: {
+      title: $t('数字资产介绍'),
+    },
+  },
+  {
+    path: '/help',
+    name: 'help',
+    component: () => import('@/pages/help/index.vue'),
+    meta: {
+      title: $t('帮助中心'),
+    },
+  },
+  {
+    path: '/invite',
+    name: 'invite',
+    component: () => import('@/pages/invite/index.vue'),
+    meta: {
+      title: $t('邀请好友'),
+    },
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('@/pages/404/404.vue'),
