@@ -53,7 +53,7 @@
       <template v-if="isPC">
         <template v-if="!!profile">
           <template v-for="(item, index) of rightMenus" :key="index"
-            ><el-popover placement="top-start" trigger="hover">
+            ><el-popover placement="top-start" trigger="hover" width="auto">
               <template #reference>
                 <span class="menu-item" :key="index">{{ item.label }}</span>
               </template>
@@ -72,7 +72,7 @@
               </template>
             </el-popover></template
           >
-          <el-popover placement="top-start" trigger="hover">
+          <el-popover placement="top-start" trigger="hover" width="auto">
             <template #reference>
               <span class="menu-item">{{ profile.account }}</span>
             </template>
@@ -307,7 +307,7 @@ defineOptions({
 .pop-content {
   font-family: Figtree-Regular;
   .pop-item {
-    width: 130px;
+    width: auto;
     height: 40px;
     display: flex;
     align-items: center;

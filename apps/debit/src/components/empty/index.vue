@@ -28,6 +28,9 @@ const props = defineProps({
     width: 140px;
     height: 140px;
   }
+  .text {
+    color: var(--gray-color);
+  }
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -14,7 +14,7 @@
               class="menu"
               v-for="menu of item.children"
               :key="menu.value"
-              @click="handleNavigate"
+              @click="handleNavigate(menu)"
             >
               {{ menu.label }}
             </div>
@@ -32,7 +32,7 @@
                 class="menu"
                 v-for="menu of item.children"
                 :key="menu.value"
-                @click="handleNavigate"
+                @click="handleNavigate(menu)"
               >
                 {{ menu.label }}
               </div>
@@ -68,6 +68,8 @@
 import { ref, toRefs } from 'vue'
 import { $t } from '@/i18n'
 import { useDeviceStore } from '@/store'
+import router from '@/router'
+
 const { isPC } = toRefs(useDeviceStore())
 
 const opens = ref([])
@@ -85,11 +87,11 @@ const dataList = ref([
     children: [
       {
         label: $t('公告中心'),
-        value: '',
+        value: 'notice',
       },
       {
         label: $t('邀请好友'),
-        value: '',
+        value: 'invite',
       },
     ],
   },
@@ -99,7 +101,7 @@ const dataList = ref([
     children: [
       {
         label: $t('费率'),
-        value: '',
+        value: 'feerate',
       },
     ],
   },
@@ -109,11 +111,11 @@ const dataList = ref([
     children: [
       {
         label: $t('帮助中心'),
-        value: '',
+        value: 'help',
       },
       {
         label: $t('数字资产介绍'),
-        value: '',
+        value: 'degit',
       },
     ],
   },
@@ -134,8 +136,13 @@ const dataList = ref([
 ])
 
 const handleNavigate = (item: any) => {
+  console.log('item', item)
   if (item.value.includes('mailto')) {
     location.href = item.value
+  } else {
+    router.push({
+      name: item.value,
+    })
   }
 }
 </script>
@@ -169,6 +176,7 @@ const handleNavigate = (item: any) => {
         .menu {
           font-size: 14px;
           margin: 10px 0;
+          cursor: pointer;
           &:first-child {
             margin-top: 0px;
           }

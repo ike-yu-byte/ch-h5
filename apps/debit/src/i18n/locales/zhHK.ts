@@ -215,5 +215,7 @@ const obj = {
   '如何为我的Debit卡充值？': '如何为我的Debit卡充值？',
   '您可以在应用程序中使用加密货币兑换成USD，比如使用USDT兑换USD至Debit卡中，即可开启全球消费。':
     '您可以在应用程序中使用加密货币兑换成USD，比如使用USDT兑换USD至Debit卡中，即可开启全球消费。',
+  '公告': '公告',
+  '输入搜索关键词': '输入搜索关键词',
 }
 export default Object.assign(obj, lang)
