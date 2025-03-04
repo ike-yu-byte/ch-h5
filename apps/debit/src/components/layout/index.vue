@@ -1,8 +1,12 @@
 <template>
-  <div class="layout-box" @scroll="handleScroll" ref="layout">
-    <Header style="position: fixed; left: 0; right: 0; top: 0; z-index: 99" />
+  <div
+    :class="`layout-box ${currentRoute.value.meta?.noHeader ? 'no-header' : ''}`"
+    @scroll="handleScroll"
+    ref="layout"
+  >
+    <Header class="header-fixed" v-if="!currentRoute.value.meta?.noHeader" />
     <slot></slot>
-    <Footer />
+    <Footer v-if="!currentRoute.value.meta?.noFooter" />
     <div
       class="back-box iconfont icon-backtop"
       @click="handleBack"
@@ -21,11 +25,16 @@ import {
 } from 'vue'
 import Header from '@/components/header/index.vue'
 import Footer from '@/components/footer/index.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 // import { useDeviceStore } from '@/store'
 
 const route = computed(() => {
   return useRoute()
+})
+const router = useRouter()
+
+const currentRoute: any = computed(() => {
+  return router.currentRoute
 })
 
 watch(
@@ -74,6 +83,13 @@ defineOptions({
   padding-top: 60px;
   height: 100vh;
   overflow: scroll;
+  .header-fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 99;
+  }
   .back-box {
     width: 40px;
     height: 40px;
@@ -90,5 +106,8 @@ defineOptions({
       color: #687492;
     }
   }
+}
+.no-header {
+  padding: 0px;
 }
 </style>

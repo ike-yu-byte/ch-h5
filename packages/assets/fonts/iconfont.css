@@ -15,6 +15,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-xianshiqi:before {
+  content: '\e9c3';
+}
+
+.icon-qukuailian:before {
+  content: '\e63b';
+}
+
+.icon-wendang:before {
+  content: '\e63c';
+}
+
 .icon-shezhi1:before {
   content: '\e68f';
 }

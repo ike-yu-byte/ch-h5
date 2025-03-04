@@ -57,9 +57,7 @@
           {{ $t('交易数字资产的决定完全取决于客户自己的独立判断。') }}
         </div>
       </div>
-      <div class="copy-right">
-        Copyright © 2025 Faith Limited. All rights reserved.
-      </div>
+      <div class="copy-right">{{ copyRight }}</div>
     </div>
   </div>
 </template>
@@ -69,6 +67,7 @@ import { ref, toRefs } from 'vue'
 import { $t } from '@/i18n'
 import { useDeviceStore } from '@/store'
 import router from '@/router'
+import { copyRight, supportEmail, businessEmail } from '@/config'
 
 const { isPC } = toRefs(useDeviceStore())
 
@@ -76,10 +75,7 @@ const opens = ref([])
 // 打开邮箱
 // location.href = 'mailto:ike_yu@163.com'
 // window.open('mailto:support@faith-bit.com')
-const contactInfo = ref({
-  businessEmail: 'business@debit.com',
-  supportEmail: 'support@debit.com',
-})
+
 const dataList = ref([
   {
     label: $t('关于'),
@@ -124,12 +120,12 @@ const dataList = ref([
     value: 'contact',
     children: [
       {
-        label: $t('商务合作') + ': ' + contactInfo.value.businessEmail,
-        value: 'mailto:' + contactInfo.value.businessEmail,
+        label: $t('商务合作') + ': ' + businessEmail,
+        value: 'mailto:' + businessEmail,
       },
       {
-        label: $t('联系我们') + ': ' + contactInfo.value.supportEmail,
-        value: 'mailto:' + contactInfo.value.supportEmail,
+        label: $t('联系我们') + ': ' + supportEmail,
+        value: 'mailto:' + supportEmail,
       },
     ],
   },

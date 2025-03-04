@@ -58,3 +58,9 @@ export const langList = [
     value: 'de',
   },
 ]
+
+export const supportEmail = 'support@debit.com'
+
+export const businessEmail = 'business@debit.com'
+
+export const copyRight = 'Copyright © 2025 Debit Limited. All rights reserved.'
