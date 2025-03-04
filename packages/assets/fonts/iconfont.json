@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7577333",
+      "name": "xianshiqi",
+      "font_class": "xianshiqi",
+      "unicode": "e9c3",
+      "unicode_decimal": 59843
+    },
+    {
+      "icon_id": "12296953",
+      "name": "区块链",
+      "font_class": "qukuailian",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "14830389",
+      "name": "wendang",
+      "font_class": "wendang",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
       "icon_id": "666885",
       "name": "设置",
       "font_class": "shezhi1",

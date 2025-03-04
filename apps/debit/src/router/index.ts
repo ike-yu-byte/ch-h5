@@ -167,6 +167,16 @@ export const routes = [
     },
   },
   {
+    path: '/update',
+    name: 'update',
+    component: () => import('@/pages/update/index.vue'),
+    meta: {
+      title: $t('系统更新'),
+      noHeader: true,
+      noFooter: true,
+    },
+  },
+  {
     path: '/404',
     name: '404',
     component: () => import('@/pages/404/404.vue'),
