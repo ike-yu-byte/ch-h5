@@ -1,30 +1,30 @@
 <template>
   <div class="degit-box">
+    <van-popup
+      position="left"
+      v-model:show="state.show"
+      :style="{
+        padding: '0px',
+        width: '100vw',
+        height: '100vh',
+        margin: '0px',
+      }"
+      ><Select :options="state.list" @change="handleSelectChange"></Select
+    ></van-popup>
     <div class="contain">
-      <div class="left">
-        <div class="header">
-          <div class="title">{{ $t('数字资产列表') }}</div>
-          <el-input
-            v-model="state.inputVal"
-            :suffix-icon="Search"
-            clearable
-          ></el-input>
-        </div>
-        <div class="content">
-          <div
-            :class="`item ${item.FullName === state.currentItem.FullName ? 'active' : ''}`"
-            v-for="(item, index) of state.list"
-            :key="index"
-            @click="handleSelect(item)"
-          >
-            {{ item.FullName }}
-          </div>
-        </div>
+      <div class="left" v-show="isPC">
+        <Select :options="state.list" @change="handleSelectChange"></Select>
+      </div>
+      <div class="overlay" v-show="!isPC">
+        <span
+          class="icon iconfont icon-yidongduan_caidan"
+          @click="state.show = true"
+        ></span>
       </div>
       <div class="right">
         <div class="header">
-          <span>{{ state.currentItem.FullName || '  ' }}</span>
-          <div class="btn" @click="handleTo('panel', item)">
+          <span>{{ state.currentItem.label || '  ' }}</span>
+          <div class="btn" @click="handleTo('panel', state.currentItem)">
             {{ $t('去交易') }}
           </div>
         </div>
@@ -32,67 +32,99 @@
           <div class="zuo">
             <div class="item">
               <div class="label">{{ $t('名称') }}</div>
-              <div class="value">{{ state.currentItem.FullName || '' }}</div>
+              <div class="value">{{ state.currentItem.label || '' }}</div>
             </div>
             <div class="item">
               <div class="label">{{ $t('发行时间') }}</div>
-              <div class="value">{{ state.currentItem.ReleaseTime || '' }}</div>
+              <div class="value">{{ state.currentItem.releaseTime || '' }}</div>
             </div>
             <div class="item">
               <div class="label">{{ $t('流通总量') }}</div>
-              <div class="value">{{ state.currentItem.FlowAmount || '' }}</div>
+              <div class="value">{{ state.currentItem.flowAmount || '' }}</div>
             </div>
             <div class="item">
               <div class="label">{{ $t('总量') }}</div>
-              <div class="value">{{ state.currentItem.TotalAmount || '' }}</div>
+              <div class="value">{{ state.currentItem.totalAmount || '' }}</div>
             </div>
           </div>
           <div class="you">
             <div class="title">{{ $t('图片和社区链接') }}</div>
             <div class="links">
-              <a class="link" :href="state.currentItem.BlockChainUrl">
+              <a
+                class="link"
+                :href="state.currentItem.blockChainUrl"
+                target="_blank"
+                v-show="state.currentItem.blockChainUrl"
+              >
                 <i class="iconfont icon-xianshiqi"></i>
                 <span>{{ $t('区块查询') }}</span>
               </a>
-              <a class="link" :href="state.currentItem.BlockChainUrl">
+              <a
+                class="link"
+                :href="state.currentItem.whitePaperUrl"
+                target="_blank"
+                v-show="state.currentItem.whitePaperUrl"
+              >
                 <i class="iconfont icon-qukuailian"></i>
-                <span>{{ $t('区块查询') }}</span>
+                <span>{{ $t('白皮书') }}</span>
               </a>
-              <a class="link" :href="state.currentItem.BlockChainUrl">
+              <a
+                class="link"
+                :href="state.currentItem.siteUrl"
+                target="_blank"
+                v-show="state.currentItem.siteUrl"
+              >
                 <i class="iconfont icon-wendang"></i>
                 <span>{{ $t('官网') }}</span>
               </a>
             </div>
           </div>
         </div>
+        <div class="richtext" v-html="state.currentItem.Context"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Search } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
+import { reactive, toRefs } from 'vue'
 import { mockData } from './mock'
 import router from '@/router'
+import Select from './select.vue'
+import { useDeviceStore } from '@/store'
+
+const { isPC } = toRefs(useDeviceStore())
 
 const state = reactive<any>({
-  inputVal: '',
+  show: false,
   list: [],
   currentItem: {},
 })
 
-state.list = mockData
+state.list = mockData.map((item: any) => {
+  return {
+    ...item,
+    label: item.Name,
+    context: item.Context,
+    releaseTime: item.ReleaseTime,
+    flowAmount: item.FlowAmount,
+    totalAmount: item.TotalAmount,
+    blockChainUrl: item.BlockChainUrl,
+    whitePaperUrl: item.WhitePaperUrl,
+    siteUrl: item.SiteUrl,
+  }
+})
 
-const handleSelect = (item: any) => {
+const handleSelectChange = (item: any) => {
   state.currentItem = item
+  state.show = false
 }
 
 const handleTo = (name: string, item: any) => {
   router.push({
     name,
     query: {
-      symbol: item.FullName,
+      symbol: item.label,
     },
   })
 }
@@ -111,32 +143,6 @@ const handleTo = (name: string, item: any) => {
       width: 300px;
       border: 1px solid var(--light-border3);
       box-sizing: border-box;
-      .header {
-        padding: 20px;
-        .title {
-          font-size: 18px;
-          font-weight: 700;
-          color: var(--text-color);
-          margin-bottom: 5px;
-        }
-      }
-      .content {
-        .item {
-          height: 30px;
-          padding: 10px 20px;
-          line-height: 30px;
-          cursor: pointer;
-          border-top: 1px solid var(--light-border3);
-          color: var(--gray-color);
-          &:hover {
-            background-color: var(--hover-bg);
-          }
-        }
-        .active {
-          background-color: var(--hover-bg);
-          color: var(--dark-color);
-        }
-      }
     }
     .right {
       flex: 1;
@@ -187,8 +193,66 @@ const handleTo = (name: string, item: any) => {
               flex-direction: column;
               justify-content: center;
               align-items: center;
+              i {
+                width: 30px;
+                height: 30px;
+                display: inline-block;
+                background-color: var(--dark-color);
+                color: var(--white-color);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 16px;
+              }
+              span {
+                padding-top: 10px;
+                font-size: 14px;
+                color: var(--menu-color);
+              }
             }
           }
+        }
+      }
+      .richtext {
+        padding-top: 50px;
+      }
+    }
+  }
+}
+.mobile {
+  .degit-box {
+    position: relative;
+    .contain {
+      width: auto;
+      padding: 0 16px;
+      display: block;
+      .overlay {
+        padding-top: 20px;
+        .icon {
+          color: var(--text-color);
+          font-size: 18px;
+        }
+      }
+      .right {
+        width: auto;
+        .list {
+          flex-direction: column;
+          .zuo {
+            flex-wrap: wrap;
+            .item {
+              width: 50%;
+              min-width: unset;
+              height: auto;
+              margin-bottom: 10px;
+            }
+          }
+          .you {
+            width: auto;
+          }
+        }
+        .richtext {
+          padding: 10px 0 20px;
         }
       }
     }

@@ -4,7 +4,13 @@
  * @param {any} value 存储值
  * @param {number} maxAge 有效期（秒）
  */
-export function setItem(key, value, maxAge) {
+
+// 设置缓存过期时间（注意：设置了过期时间，读取也只能用这里的方法读取）
+export function setItem(
+  key: string,
+  value: string,
+  maxAge: number = 24 * 60 * 60,
+) {
   const now = Date.now()
   const item = {
     value,
@@ -18,7 +24,7 @@ export function setItem(key, value, maxAge) {
  * @param {string} key 存储键
  * @returns {any|null} 未过期返回数据，过期返回 null
  */
-export function getItem(key) {
+export function getItem(key: string) {
   const raw = localStorage.getItem(key)
   if (!raw) return null
 
