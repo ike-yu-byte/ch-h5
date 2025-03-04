@@ -35,6 +35,7 @@ html {
   --light-border3: rgba(205, 214, 235, 0.3);
   --hover-bg: #f7f7f7;
   --red-color: #ff4d4f;
+  --body-color: #f8f8f8;
   // Color Palette
   --van-black: #000;
   --van-white: #fff;
@@ -124,6 +125,7 @@ html {
       Microsoft YaHei,
       Arial,
       sans-serif;
+    background-color: var(--body-color);
   }
 }
 p {

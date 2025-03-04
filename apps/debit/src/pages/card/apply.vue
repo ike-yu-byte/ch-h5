@@ -1,5 +1,5 @@
 <template>
-  <div>充币</div>
+  <div class="apply-box">申请开卡</div>
 </template>
 
 <script setup lang="ts"></script>
