@@ -193,3 +193,11 @@ input[type='number'] {
     width: auto !important;
   }
 }
+
+.richtext {
+  p {
+    color: var(--menu-color);
+    line-height: 30px;
+    font-size: 14px;
+  }
+}
