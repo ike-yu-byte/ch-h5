@@ -182,6 +182,8 @@ export const routes = [
     component: () => import('@/pages/404/404.vue'),
     meta: {
       title: '404',
+      noHeader: true,
+      noFooter: true,
     },
   },
   {

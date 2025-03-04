@@ -52,4 +52,11 @@ import { supportEmail } from '@/config'
     }
   }
 }
+.mobile {
+  .update-box {
+    .box {
+      width: 300px;
+    }
+  }
+}
 </style>
