@@ -271,6 +271,12 @@ import guide2 from '@/assets/img/guides/index_icon_step2.png'
 import guide3 from '@/assets/img/guides/index_icon_step3.png'
 import { $t } from '@/i18n'
 import NoticeScroll from 'common-components/noticeScroll/index.vue'
+import { getCurrencyMarket } from '@/api'
+
+// 这里是演示接口怎么用
+getCurrencyMarket({ type: 1 }).then((res) => {
+  console.log('res', res)
+})
 
 const { isPC } = toRefs(useDeviceStore())
 

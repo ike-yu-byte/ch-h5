@@ -17,6 +17,18 @@ import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import compression from 'vite-plugin-compression'
 // import imagemin from 'vite-plugin-imagemin'
+import fs from 'fs'
+
+const envContent = fs.readFileSync(`./.env.${process.env.NODE_ENV}`, 'utf-8')
+// 将 .env 内容解析为 JSON
+const envJson = envContent
+  .split('\n') // 按行分割
+  .filter((line) => line.trim() !== '' && !line.startsWith('#')) // 过滤空行和注释
+  .reduce((acc: any, line) => {
+    const [key, value] = line.split('=') // 按等号分割键值对
+    acc[key.trim()] = value.trim() // 去除空格并添加到对象中
+    return acc
+  }, {})
 
 const lifeCycle = process.env.npm_lifecycle_event
 const isLocal = lifeCycle?.includes('local') ? true : false
@@ -89,6 +101,21 @@ export default defineConfig({
   ],
   server: {
     port: 5000,
+    proxy: {
+      '/api': {
+        // 解决跨域
+        target: envJson['VITE_BASE_URL'],
+        changeOrigin: true, //
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        configure: (proxy) => {
+          // 修改请求头
+          proxy.on('proxyReq', (proxyReq) => {
+            // web3后台设置了access-control-allow-origin：'localhost'
+            proxyReq.setHeader('Origin', 'localhost')
+          })
+        },
+      },
+    },
   },
   build: {
     assetsDir: 'assets',
