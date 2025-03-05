@@ -14,30 +14,60 @@
           <span> BTC</span>
         </span>
         <span class="right">
-          <span>≈ $</span>
+          <span> ≈ $</span>
           <span>{{ state.visible ? state.totalDollar : '****' }}</span>
         </span>
       </div>
       <div class="content">
         <Tab
-          :bg="'var(--dark-bg)'"
+          :bg="isPC ? 'var(--dark-bg)' : 'transparent'"
+          :color="isPC ? '' : 'var(--gray-color)'"
           :options="tabs"
           v-model="state.currentTab"
         ></Tab>
+        <component
+          :is="currentComp"
+          :totalInfo="state.totalInfo"
+          :column="
+            state.currentTab.value === 'stock' ? tableColumn : tableColumn2
+          "
+          :data="state.tableData"
+        ></component>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive, watch, shallowRef, toRefs } from 'vue'
 import Tab from 'common-components/tab/index.vue'
 import { $t } from '@/i18n'
 import { useRoute } from 'vue-router'
+import { useDeviceStore } from '@/store'
+
+const { isPC } = toRefs(useDeviceStore())
+
+const mockData = []
+for (let i = 0; i < 10; i++) {
+  mockData.push({
+    id: i,
+    symbol: 'USDT' + i,
+    assetName: 'Bitcoin',
+    availableAmount: '0.00',
+    freeAmount: '0.00',
+    netAmount: '0.00',
+    number: 'xdda12233A' + i,
+    time: '2025-12-24 13:06:03',
+    status: i % 2 === 0 ? 1 : 2, // 1正常，2冻结
+  })
+}
 
 const route = useRoute()
 
+const currentComp = shallowRef(null)
+
 const tabs = [
+  // 现货账户对应的表单的字段
   {
     label: $t('现货账户'),
     value: 'stock',
@@ -48,12 +78,83 @@ const tabs = [
   },
 ]
 
+const tableColumn = [
+  {
+    label: $t('币种'),
+    prop: 'symbol',
+    slot: 'symbol',
+  },
+  {
+    label: $t('可用'),
+    prop: 'availableAmount',
+  },
+  {
+    label: $t('冻结'),
+    prop: 'freeAmount',
+  },
+  {
+    label: $t('折合') + '(USD)',
+    prop: 'netAmount',
+  },
+  {
+    label: $t('操作'),
+    prop: 'action',
+    align: 'right',
+    options: [
+      {
+        label: $t('充币'),
+        value: 'recharge',
+      },
+      {
+        label: $t('提币'),
+        value: 'withdraw',
+      },
+    ],
+  },
+]
+
+const tableColumn2 = [
+  // 银行卡对应表单的字段
+  {
+    label: $t('卡号'),
+    prop: 'number',
+  },
+  {
+    label: $t('申请时间'),
+    prop: 'time',
+  },
+  {
+    label: $t('状态'),
+    prop: 'status',
+    slot: 'status',
+  },
+  {
+    label: $t('可用'),
+    prop: 'availableAmount',
+  },
+  {
+    label: $t('冻结'),
+    prop: 'freeAmount',
+  },
+  {
+    label: $t('折合') + '(USD)',
+    prop: 'netAmount',
+  },
+]
+
 const state = reactive<any>({
+  tableData: [],
+  totalInfo: {
+    totalBTC: '0.00',
+    totalDollar: '0.00',
+  },
   visible: true,
   totalBTC: 0,
   totalDollar: 0,
   currentTab: {},
 })
+
+state.tableData = mockData
 
 watch(
   route,
@@ -63,6 +164,17 @@ watch(
       : tabs[0]
   },
   { immediate: true, deep: true },
+)
+
+watch(
+  () => state.currentTab,
+  async () => {
+    const module = await import(
+      `@/components/${state.currentTab.value}/index.vue`
+    )
+    currentComp.value = module.default
+  },
+  { deep: true, immediate: true },
 )
 </script>
 
@@ -102,6 +214,12 @@ watch(
     .content {
       margin-top: 30px;
     }
+  }
+}
+.mobile {
+  .asset-wrap {
+    padding: 10px;
+    border-radius: 4px;
   }
 }
 </style>

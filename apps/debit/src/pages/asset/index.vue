@@ -110,4 +110,24 @@ const handleMenu = (item: any) => {
     }
   }
 }
+.mobile {
+  .wrap {
+    .contain {
+      flex-direction: column;
+      padding: 0 16px;
+      width: auto;
+      .left {
+        display: flex;
+        width: auto;
+        column-gap: 40px;
+        .menu-item {
+        }
+      }
+      .right {
+        flex: unset;
+        width: auto;
+      }
+    }
+  }
+}
 </style>

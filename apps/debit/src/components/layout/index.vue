@@ -100,6 +100,7 @@ defineOptions({
     cursor: pointer;
     font-size: 40px;
     color: #8c8c8c;
+    z-index: 99999;
     &:hover {
       // background-color: #687492;
       color: #687492;

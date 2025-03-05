@@ -15,6 +15,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-youshang:before {
+  content: '\e640';
+}
+
+.icon-youxia:before {
+  content: '\e642';
+}
+
+.icon-xiangyou:before {
+  content: '\e645';
+}
+
 .icon-mima_kejian:before {
   content: '\e63d';
 }

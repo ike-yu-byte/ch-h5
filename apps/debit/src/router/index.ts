@@ -176,6 +176,14 @@ export const routes = [
     },
   },
   {
+    path: '/assetRecord',
+    name: 'assetRecord',
+    component: () => import('@/pages/asset/record.vue'),
+    meta: {
+      title: $t('财务明细'),
+    },
+  },
+  {
     path: '/recharge',
     name: 'recharge',
     component: () => import('@/pages/asset/index.vue'),
@@ -213,6 +221,14 @@ export const routes = [
     component: () => import('@/pages/order/index.vue'),
     meta: {
       title: $t('现货订单'),
+    },
+  },
+  {
+    path: '/applyCard',
+    name: 'applyCard',
+    component: () => import('@/pages/card/apply.vue'),
+    meta: {
+      title: $t('开卡申请'),
     },
   },
   {

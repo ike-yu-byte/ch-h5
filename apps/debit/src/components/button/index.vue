@@ -33,6 +33,8 @@ const handleClick = () => {
 
 <style scoped lang="scss">
 .btn-wrap {
+  min-width: 180px;
+  box-sizing: border-box;
   height: 48px;
   border-radius: 48px;
   display: flex;
