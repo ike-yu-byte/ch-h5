@@ -1,7 +1,7 @@
 import axios, {
-  AxiosRequestConfig,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from 'axios'
 
 const defaultConfig = {
@@ -51,7 +51,7 @@ export default class Http {
           }
         } else if (response.status === 401) {
           // 登录失效，清理用户信息等操作在pinia里面的clearProfile里面操作
-          this.memberStore?.clearProfile?.()
+          this.memberStore?.handleLoginExpired?.()
         } else {
           return Promise.reject(this.$t('网络错误，换个网络试试'))
         }
