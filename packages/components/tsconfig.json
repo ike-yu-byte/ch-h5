@@ -1,19 +1,19 @@
 {
-    "compilerOptions": {
-        "strict": false,
-        "noImplicitAny": false, // 是否在表达式和声明上有隐含的any类型时报错
-        "jsx": "preserve",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "noEmit": true,
-        "isolatedModules": true,
-        "types": ["node", "vue"]
-    },
-    "exclude": ["node_modules"],
-    "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"]
+  "compilerOptions": {
+    "strict": false,
+    "noImplicitAny": false, // 是否在表达式和声明上有隐含的any类型时报错
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "types": ["node", "vue", "./typings.d.ts"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue"]
 }

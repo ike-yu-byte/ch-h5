@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 import router from '@/router'
+import { Modal, NeedLogin } from 'common-components'
+import { h, ref } from 'vue'
 
 export const useMemberStore = defineStore(
   'memberStore',
@@ -14,6 +15,16 @@ export const useMemberStore = defineStore(
 
     const clearProfile = () => {
       profile.value = null
+      Modal.open({
+        showHeader: false,
+        showBtn: false,
+        draggable: false,
+        content: h(NeedLogin, {
+          onClick: () => {
+            handleLoginFail()
+          },
+        }),
+      })
     }
 
     const handleLoginFail = () => {

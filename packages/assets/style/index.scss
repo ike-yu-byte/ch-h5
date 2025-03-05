@@ -1,6 +1,8 @@
-@import url('../fonts/iconfont.css');
+@import '../fonts/iconfont.css';
+@import './element.scss';
+@import './font.scss';
 ::-webkit-scrollbar {
-  display: none; /* WebKit-based browsers */
+  display: none; // 隐藏滚动条
 }
 
 * {

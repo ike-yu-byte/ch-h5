@@ -19,16 +19,23 @@
         </span>
       </div>
       <div class="content">
-        <Tab :bg="'var(--dark-bg)'" :options="tabs"></Tab>
+        <Tab
+          :bg="'var(--dark-bg)'"
+          :options="tabs"
+          v-model="state.currentTab"
+        ></Tab>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 import Tab from 'common-components/tab/index.vue'
 import { $t } from '@/i18n'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const tabs = [
   {
@@ -37,7 +44,7 @@ const tabs = [
   },
   {
     label: $t('Debit卡'),
-    value: 'stock',
+    value: 'card',
   },
 ]
 
@@ -45,7 +52,18 @@ const state = reactive<any>({
   visible: true,
   totalBTC: 0,
   totalDollar: 0,
+  currentTab: {},
 })
+
+watch(
+  route,
+  () => {
+    state.currentTab = route.query.tab
+      ? tabs.find((item: any) => item.value === route.query.tab)
+      : tabs[0]
+  },
+  { immediate: true, deep: true },
+)
 </script>
 
 <style scoped lang="scss">

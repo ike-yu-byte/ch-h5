@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="right">
-        <component :is="currentComp" :route="route"></component>
+        <component :is="currentComp" :key="route"></component>
       </div>
     </div>
   </div>

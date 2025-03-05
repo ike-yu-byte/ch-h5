@@ -28,5 +28,9 @@ declare interface Window {
   $format: (time: any, str?: string) => string
   $t: (message: string) => string
 }
+
+declare interface globalThis {
+  $t: (message: string) => string
+}
 declare module 'jquery'
 declare module 'vue'

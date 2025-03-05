@@ -9,3 +9,4 @@ const plugin: Plugin = {
 export default plugin
 
 export * from './Modal'
+export * from './needLogin'
