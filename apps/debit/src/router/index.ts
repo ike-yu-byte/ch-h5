@@ -167,6 +167,54 @@ export const routes = [
     },
   },
   {
+    path: '/asset',
+    name: 'asset',
+    component: () => import('@/pages/asset/index.vue'),
+    meta: {
+      title: $t('我的资产'),
+    },
+  },
+  {
+    path: '/recharge',
+    name: 'recharge',
+    component: () => import('@/pages/asset/index.vue'),
+    meta: {
+      title: $t('充币'),
+    },
+  },
+  {
+    path: '/withdraw',
+    name: 'withdraw',
+    component: () => import('@/pages/asset/index.vue'),
+    meta: {
+      title: $t('提币'),
+    },
+  },
+  {
+    path: '/payOrder',
+    name: 'payOrder',
+    component: () => import('@/pages/order/index.vue'),
+    meta: {
+      title: $t('买币订单'),
+    },
+  },
+  {
+    path: '/exchangeOrder',
+    name: 'exchangeOrder',
+    component: () => import('@/pages/order/index.vue'),
+    meta: {
+      title: $t('闪兑订单'),
+    },
+  },
+  {
+    path: '/sportOrder',
+    name: 'sportOrder',
+    component: () => import('@/pages/order/index.vue'),
+    meta: {
+      title: $t('现货订单'),
+    },
+  },
+  {
     path: '/update',
     name: 'update',
     component: () => import('@/pages/update/index.vue'),

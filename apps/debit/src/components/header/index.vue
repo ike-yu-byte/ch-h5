@@ -63,7 +63,7 @@
                     class="pop-item"
                     v-for="(item2, index2) of item.children"
                     :key="index2"
-                    @click="handleTo(item2.value)"
+                    @click="handleTo(item2.value, item2.query || {})"
                   >
                     <span :class="`icon iconfont ${item2.icon}`"></span
                     ><span>{{ item2.label }}</span>
@@ -88,7 +88,7 @@
                   class="pop-item"
                   v-for="(item2, index2) of accountMenus"
                   :key="index2"
-                  @click="handleTo(item2.value)"
+                  @click="handleTo(item2.value, item2.query || {})"
                 >
                   <span :class="`icon iconfont ${item2.icon}`"></span
                   ><span>{{ item2.label }}</span>
@@ -246,8 +246,11 @@ const rightMenus = ref<any>([
       },
       {
         label: $t('Debit卡'),
-        value: 'card',
+        value: 'asset',
         icon: 'icon-icon-test',
+        query: {
+          tab: 'card',
+        },
       },
       {
         label: $t('充币'),
@@ -298,9 +301,10 @@ const handlePopClose = () => {
   show.value = false
 }
 
-const handleTo = (name: string) => {
+const handleTo = (name: string, query: any = {}) => {
   router.push({
     name,
+    query,
   })
 }
 
