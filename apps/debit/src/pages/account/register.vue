@@ -101,8 +101,10 @@ const { query }: any = useRoute()
 
 const formRef = ref<FormInstance>()
 
-const handleSendCode = () => {
+const handleSendCode = ({ start }: { start: Function }) => {
   console.log('调用接口获取验证码')
+  // 注意：调用接口发送二维码成功后，再调用start方法开启倒计时
+  start()
 }
 
 const emailForm: Array<any> = [

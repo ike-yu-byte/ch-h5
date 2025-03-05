@@ -124,6 +124,9 @@ import Vcode from 'vue3-puzzle-vcode'
 import router from '@/router'
 import { useMemberStore } from '@/store'
 import { ElMessage } from 'element-plus'
+import { Modal } from 'common-components'
+import sendVerify from 'common-components/sendVerify/index.vue'
+import noVerify from 'common-components/noVerify/index.vue'
 
 const { setProfile, clearProfile } = useMemberStore()
 clearProfile()
@@ -133,38 +136,79 @@ const formRef = ref<FormInstance>()
 
 const codeShow = ref(false)
 
+// 滑动二维码验证通过
 const handleSuccess = () => {
   codeShow.value = false
-  // 滑动二维码验证通过以后
-  let data = {}
-  if (state.currentTab === 'phone') {
-    data = {
-      prefix: formValue.prefix,
-      phone: formValue.phone,
-      password: formValue.password,
-    }
-  }
-  if (state.currentTab === 'email') {
-    data = {
-      email: formValue.phone,
-      password: formValue.password,
-    }
-  }
-  console.log('submit!', data)
-  // pinia存储个人信息
-  setProfile({
-    account: 'test@qq.com',
-    avatar: '',
-    token: '',
-  })
-  localStorage.setItem('token', 'xxxxxxxxxx')
-  ElMessage({
-    type: 'success',
-    message: $t('登录成功'),
-    duration: 1000,
-  })
-  router.push({
-    name: 'index',
+  // 开启验证码验证
+  Modal.open({
+    content: h(sendVerify, {
+      type: state.currentTab,
+      api: () => {}, // 这个api是传给组件发送验证码的
+      onSuccess(obj: any) {
+        // 拿到了验证码后在这里调接口
+        // 注意：弹窗点击了确认且弹窗中表单验证通过后在这里回调
+        console.log('验证码', obj.code)
+
+        // 注意： 在这里需要调用接口验证验证码正确性，逻辑需要自己处理
+        // ElMessage({
+        //   message: $t('验证成功'),
+        //   type: 'success',
+        //   duration: 1000,
+        // })
+        Modal.close()
+        let data = {}
+        if (state.currentTab === 'phone') {
+          data = {
+            prefix: formValue.prefix,
+            phone: formValue.phone,
+            password: formValue.password,
+          }
+        }
+        if (state.currentTab === 'email') {
+          data = {
+            email: formValue.phone,
+            password: formValue.password,
+          }
+        }
+        console.log('submit!', data)
+        // pinia存储个人信息
+        setProfile({
+          account: 'test@qq.com',
+          avatar: '',
+          token: '',
+        })
+        localStorage.setItem('token', 'xxxxxxxxxx')
+        ElMessage({
+          type: 'success',
+          message: $t('登录成功'),
+          duration: 1000,
+        })
+        router.push({
+          name: 'index',
+        })
+      },
+      onFail() {
+        // 处理点击无法获取
+        Modal.close()
+        // 打开未收到验证码
+        Modal.open({
+          content: h(noVerify, {}),
+          title: $t('未收到手机/邮箱验证码') + '?',
+          confirmText: $t('安全选项申请'),
+          onConfirm: () => {
+            Modal.close()
+            router.push({
+              name: 'safe',
+            })
+          },
+        })
+      },
+    }),
+    draggable: false,
+    title: $t('安全验证'),
+    onConfirm: (obj: any) => {
+      obj.compRef.value.handleVerify()
+    },
   })
 }
 

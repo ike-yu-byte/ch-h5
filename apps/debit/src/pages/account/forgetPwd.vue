@@ -169,7 +169,7 @@ const submitForm = () => {
           onSuccess(obj: any) {
             // 拿到了验证码后在这里调接口
             // 注意：弹窗点击了确认且弹窗中表单验证通过后在这里回调
-            console.log('参数', obj)
+            console.log('验证码', obj.code)
             // 在这里调用后端接口
             ElMessage({
               message: $t('验证成功'),
@@ -222,7 +222,7 @@ const submitForm = () => {
             })
           },
           onFail() {
-            console.log('obj')
+            // 处理点击无法获取
             Modal.close()
             // 打开未收到验证码
             Modal.open({
