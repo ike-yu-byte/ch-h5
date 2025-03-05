@@ -159,6 +159,7 @@ const handleTo = (name: string, item: any) => {
           background-color: var(--dark-color);
           color: var(--white-color);
           border-radius: 4px;
+          cursor: pointer;
         }
       }
       .list {

@@ -4,6 +4,7 @@
       :class="`tab-item ${modelValue.value === item.value ? 'active' : ''}`"
       v-for="(item, index) of props.options"
       :key="index"
+      :style="{ color: props.color }"
       @click="handleChange(item)"
     >
       {{ item.label }}
@@ -18,6 +19,10 @@ const props = defineProps({
     default: () => [],
   },
   bg: {
+    type: String,
+    default: '',
+  },
+  color: {
     type: String,
     default: '',
   },
@@ -37,7 +42,7 @@ const handleChange = (item: any) => {
 
 <style scoped lang="scss">
 .tab-box {
-  height: 38px;
+  height: 40px;
   border-radius: 5px;
   display: flex;
   justify-content: space-around;
@@ -51,7 +56,7 @@ const handleChange = (item: any) => {
   }
   .active {
     background-color: var(--white-color);
-    color: var(--dark-color);
+    color: var(--dark-color) !important;
   }
 }
 </style>

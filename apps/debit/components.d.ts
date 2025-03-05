@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/button/index.vue')['default']
+    Card: typeof import('./src/components/card/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
@@ -20,6 +21,7 @@ declare module 'vue' {
     ElRadio: typeof import('element-plus/es')['ElRadio']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
@@ -39,6 +41,7 @@ declare module 'vue' {
     SelectCountry: typeof import('./src/components/selectCountry/index.vue')['default']
     SelectPhone: typeof import('./src/components/selectPhone/index.vue')['default']
     Sidebar: typeof import('./src/components/sidebar/index.vue')['default']
+    Stock: typeof import('./src/components/stock/index.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanCollapse: typeof import('vant/es')['Collapse']
     VanCollapseItem: typeof import('vant/es')['CollapseItem']

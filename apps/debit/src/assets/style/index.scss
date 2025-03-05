@@ -16,6 +16,7 @@ html {
   --hover-bg: #f7f7f7;
   --red-color: #ff4d4f;
   --body-color: #f8f8f8;
+
   // Color Palette
   --van-black: #000;
   --van-white: #fff;
@@ -182,4 +183,9 @@ input[type='number'] {
     line-height: 30px;
     font-size: 14px;
   }
+}
+
+.el-switch.is-checked .el-switch__core {
+  background-color: var(--dark-color) !important;
+  border: none !important;
 }
