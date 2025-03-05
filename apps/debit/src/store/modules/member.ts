@@ -15,26 +15,26 @@ export const useMemberStore = defineStore(
 
     const clearProfile = () => {
       profile.value = null
+    }
+
+    const handleLoginExpired = () => {
       Modal.open({
         showHeader: false,
         showBtn: false,
         draggable: false,
         content: h(NeedLogin, {
           onClick: () => {
-            handleLoginFail()
+            clearProfile()
+            router.push({ name: 'login' })
           },
         }),
       })
-    }
-
-    const handleLoginFail = () => {
-      router.push({ name: 'login' })
     }
     return {
       profile,
       setProfile,
       clearProfile,
-      handleLoginFail,
+      handleLoginExpired,
     }
   },
   {
