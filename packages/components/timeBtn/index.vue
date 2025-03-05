@@ -12,16 +12,36 @@ const timer = ref<number>(-1)
 let intervaler = null
 const $t = (window as any).$t
 const handleClick = () => {
+  // 开始倒计时
+  if (timer.value >= 0) {
+    return
+  }
+  // 通知父组件开始调用接口发送验证码
+  emits('send', { start, close })
+}
+
+const start = () => {
+  // 开始倒计时
   if (timer.value >= 0) {
     return
   }
   timer.value = 60
-  // 通知父组件开始发送
-  emits('send')
+  clearInterval(intervaler)
   intervaler = setInterval(() => {
     timer.value--
   }, 1000)
 }
+
+const close = () => {
+  // 停止倒计时
+  timer.value = -1
+  clearInterval(intervaler)
+}
+
+defineExpose({
+  start,
+  close,
+})
 
 onBeforeUnmount(() => {
   clearInterval(intervaler)

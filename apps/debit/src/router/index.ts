@@ -52,6 +52,7 @@ export const routes = [
     component: () => import('@/pages/account/forgetPwd.vue'),
     meta: {
       title: $t('忘记密码'),
+      permission: true,
     },
   },
   {

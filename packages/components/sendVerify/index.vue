@@ -64,14 +64,23 @@
 import { ref, reactive } from 'vue'
 import type { FormInstance } from 'element-plus'
 import TimeBtn from '../timeBtn/index.vue'
+import { ElMessage } from 'element-plus'
 
 const $t = (window as any).$t
 
 const emits = defineEmits(['success', 'fail'])
 
-const handleSendCode = () => {
+const handleSendCode = ({ start }) => {
   console.log('调用接口获取验证码')
-  props?.api?.()
+  props?.api?.()?.then((res: any) => {
+    console.log('res', res)
+    start() // 开始倒计时
+    ElMessage({
+      type: 'success',
+      message: $t('验证码发送成功'),
+    })
+  })
+  start() // 接口走通后记得把这个去掉
 }
 
 const props = defineProps({
