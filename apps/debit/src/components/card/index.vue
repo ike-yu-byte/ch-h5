@@ -29,7 +29,7 @@
               size="default"
             />
           </div>
-          <div class="text">{{ $t('表单可左右滑动') }}</div>
+          <div class="text" v-if="!isPC">{{ $t('表单可左右滑动') }}</div>
         </div>
       </div>
       <div class="content">
@@ -62,8 +62,11 @@
 import Button from '@/components/button/index.vue'
 import router from '@/router'
 import Table from 'common-components/table/table.vue'
-import { reactive, computed } from 'vue'
+import { reactive, computed, toRefs } from 'vue'
 import { Search } from '@element-plus/icons-vue'
+import { useDeviceStore } from '@/store'
+
+const { isPC } = toRefs(useDeviceStore())
 
 const props = defineProps({
   totalInfo: {
