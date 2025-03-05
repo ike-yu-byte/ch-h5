@@ -195,6 +195,7 @@ const handleDetail = (item: any) => {
       .text {
         color: var(--dark-color);
         text-align: right;
+        cursor: pointer;
       }
     }
   }
