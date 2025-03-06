@@ -192,6 +192,30 @@ export const routes = [
     },
   },
   {
+    path: '/identity',
+    name: 'identity',
+    component: () => import('@/pages/account/identity.vue'),
+    meta: {
+      title: $t('身份认证'),
+    },
+  },
+  {
+    path: '/apiManage',
+    name: 'apiManage',
+    component: () => import('@/pages/api/index.vue'),
+    meta: {
+      title: $t('API管理'),
+    },
+  },
+  {
+    path: '/prefer',
+    name: 'prefer',
+    component: () => import('@/pages/prefer/index.vue'),
+    meta: {
+      title: $t('偏好设置'),
+    },
+  },
+  {
     path: '/addr',
     name: 'addr',
     component: () => import('@/pages/asset/addr.vue'),

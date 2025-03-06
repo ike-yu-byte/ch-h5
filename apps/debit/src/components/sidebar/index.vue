@@ -1,34 +1,70 @@
 <template>
   <div class="sidebar-box">
     <div class="header">
-      <img src="@/assets/img/logo_dark.png" class="logo" />
+      <img
+        src="@/assets/img/logo_dark.png"
+        class="logo"
+        v-if="props.type === 'sidebar'"
+      />
+      <span
+        v-else-if="props.type === 'profile'"
+        style="color: var(--white-color)"
+      >
+        <span
+          class="icon iconfont icon-zhanghu1"
+          style="margin-right: 4px"
+        ></span>
+        <span>{{ profile.account }}</span>
+      </span>
       <span class="close iconfont icon-cha" @click="handleClose"></span>
     </div>
-    <div class="btn">
-      <van-button class="mobile-btn" color="transparent">{{
-        $t('登录')
-      }}</van-button>
-    </div>
-    <div class="btn register-btn">
-      <van-button class="mobile-btn" color="#FFFFFF">{{
-        $t('注册')
-      }}</van-button>
-    </div>
-    <div
-      class="menu-item"
-      v-for="item of lists"
-      :key="item.label"
-      @click="handleMenuClick(item)"
-    >
-      <div class="left">
-        <span
-          :class="`icon iconfont ${item.icon || ''}`"
-          v-if="item.icon"
-        ></span>
-        <span class="text">{{ $t(`${item.label}`) }}</span>
+    <template v-if="!profile">
+      <div class="btn">
+        <van-button class="mobile-btn" color="transparent">{{
+          $t('登录')
+        }}</van-button>
       </div>
-      <span class="right iconfont icon-you"></span>
-    </div>
+      <div class="btn register-btn">
+        <van-button class="mobile-btn" :color="'var(--white-color)'">{{
+          $t('注册')
+        }}</van-button>
+      </div>
+    </template>
+    <template
+      v-for="item of props.type === 'sidebar' ? lists : profileList"
+      :key="item.label"
+    >
+      <div class="menu-item" @click="handleMenuClick(item)">
+        <div class="left">
+          <span
+            :class="`icon iconfont ${item.icon || ''}`"
+            v-if="item.icon"
+          ></span>
+          <span class="text">{{ $t(`${item.label}`) }}</span>
+        </div>
+        <span class="right iconfont icon-you"></span>
+      </div>
+      <template v-if="item?.children?.length">
+        <template v-if="item.expand">
+          <div
+            class="sub-menu"
+            v-for="(subItem, index2) of item.children"
+            :key="index2"
+            @click="handleMenuClick(subItem)"
+          >
+            <div class="left">
+              <span :class="`iconfont ${subItem.icon}`"></span>
+            </div>
+            <div class="right">
+              <p class="top">{{ $t(`${subItem.label}`) }}</p>
+              <p class="bottom">{{ $t(`${subItem.text}`) }}</p>
+            </div>
+          </div>
+        </template>
+      </template>
+    </template>
+
+    <!-- 语言设置 -->
     <van-popup v-model:show="show" position="right">
       <div class="lang-box">
         <div class="header-box">
@@ -82,11 +118,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { langList } from '@/config'
 import router from '@/router'
 import { useCoin } from '@/hooks'
+import { useMemberStore } from '@/store'
+
+const props = defineProps({
+  type: {
+    type: String,
+    default: 'sidebar',
+  },
+})
+
+const { profile } = toRefs(useMemberStore())
 
 const emits = defineEmits(['close'])
 
@@ -109,6 +155,110 @@ const tabs = ref([
     value: 2,
   },
 ])
+
+const profileList = ref([
+  {
+    label: '资产',
+    value: 'asset',
+    expand: true,
+    children: [
+      {
+        label: '我的资产',
+        icon: '',
+        text: '',
+        value: 'asset',
+      },
+      {
+        label: 'Debit卡',
+        icon: '',
+        text: '',
+        value: 'asset',
+        query: {
+          tab: 'card',
+        },
+      },
+      {
+        label: '充币',
+        icon: '',
+        text: '',
+        value: 'recharge',
+      },
+      {
+        label: '提币',
+        icon: '',
+        text: '',
+        value: 'withdraw',
+      },
+    ],
+  },
+  {
+    label: '订单',
+    value: 'order',
+    expand: true,
+    children: [
+      {
+        label: '买币订单',
+        icon: '',
+        text: '',
+        value: 'payOrder',
+      },
+      {
+        label: '闪兑订单',
+        icon: '',
+        text: '',
+        value: 'exchangeOrder',
+      },
+      {
+        label: '现货订单',
+        icon: '',
+        text: '',
+        value: 'sportOrder',
+      },
+    ],
+  },
+  {
+    label: '账户总览',
+    value: 'order',
+    expand: true,
+    children: [
+      {
+        label: '账户安全',
+        icon: '',
+        text: '',
+        value: 'safe',
+      },
+      {
+        label: '身份认证',
+        icon: '',
+        text: '',
+        value: 'identity',
+      },
+      {
+        label: '邀请好友',
+        icon: '',
+        text: '',
+        value: 'invite',
+      },
+      {
+        label: 'API管理',
+        icon: '',
+        text: '',
+        value: 'apiManage',
+      },
+      {
+        label: '偏好设置',
+        icon: '',
+        text: '',
+        value: 'prefer',
+      },
+    ],
+  },
+  {
+    label: '退出',
+    value: 'login',
+  },
+])
+
 const lists = ref([
   {
     label: '行情',
@@ -121,6 +271,7 @@ const lists = ref([
   {
     label: '交易',
     value: 'trade',
+    expand: true,
     children: [
       {
         label: '现货交易',
@@ -152,14 +303,16 @@ const lists = ref([
 ])
 
 const handleMenuClick = (item: any) => {
-  if (item.children.length) {
+  if (item?.children?.length) {
+    // 有子列表的
+    item.expand = !item.expand
     return
   }
   if (item.value === 'lang') {
     show.value = true
   } else {
     handleClose()
-    router.push({ name: item.value })
+    router.push({ name: item.value, query: item.query })
   }
 }
 
@@ -214,7 +367,8 @@ defineOptions({
 }
 .sidebar-box {
   width: 258px;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 40px;
   background-color: var(--white-color);
   background-color: var(--dark-bg);
   .header {
@@ -274,6 +428,25 @@ defineOptions({
     .right {
       color: var(--menu-color);
       font-size: 14px;
+    }
+  }
+  .sub-menu {
+    color: var(--menu-color);
+    display: flex;
+    padding: 12px 10px;
+    margin: 0 13px;
+    gap: 10px;
+    cursor: pointer;
+    .left {
+      .iconfont {
+        font-size: 14px;
+      }
+    }
+    .right {
+      font-size: 14px;
+      .bottom {
+        margin-top: 5px !important;
+      }
     }
   }
 }

@@ -21,6 +21,7 @@ export function useCoin() {
   const currentCoin = ref<string>('')
 
   const getCoinData = () => {
+    // 这里的mockData在真实情况下要换成调用接口获取的数据
     coinList.value = mockData.map((item: any) => ({
       label: item.Code,
       value: item.Code,
