@@ -80,6 +80,7 @@ const handleMenu = (item: any) => {
 
 <style scoped lang="scss">
 .wrap {
+  min-height: 600px;
   .contain {
     display: flex;
     width: 1200px;
@@ -114,6 +115,7 @@ const handleMenu = (item: any) => {
 }
 .mobile {
   .wrap {
+    min-height: 620px;
     .contain {
       flex-direction: column;
       padding: 0 16px;

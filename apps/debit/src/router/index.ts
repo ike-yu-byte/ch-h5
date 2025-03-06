@@ -192,6 +192,14 @@ export const routes = [
     },
   },
   {
+    path: '/addr',
+    name: 'addr',
+    component: () => import('@/pages/asset/addr.vue'),
+    meta: {
+      title: $t('地址管理'),
+    },
+  },
+  {
     path: '/withdraw',
     name: 'withdraw',
     component: () => import('@/pages/asset/index.vue'),

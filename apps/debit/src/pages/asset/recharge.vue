@@ -39,7 +39,9 @@
             </div>
           </div>
         </div>
-        <div class="right richtext" v-html="state.currentRichText"></div>
+        <div class="right">
+          <div class="richtext" v-html="state.currentRichText"></div>
+        </div>
       </div>
       <div class="footer">
         <el-tabs v-model="state.currentTab" class="demo-tabs">
@@ -150,6 +152,26 @@ const tabs = [
   },
 ]
 
+const schemes = [
+  {
+    label: '选择币种',
+    type: 'select',
+    optionKey: 'coinOptions',
+    valueKey: 'currentCoin',
+  },
+  {
+    label: '链名称',
+    type: 'radio',
+    optionKey: 'chainOptions',
+    valueKey: 'currentChain',
+  },
+  {
+    label: '充币地址',
+    type: 'code',
+    valueKey: 'addr',
+  },
+]
+
 const state = reactive<any>({
   coinOptions: [], // 币种可选项
   currentCoin: {}, // 当前选中的币种
@@ -183,26 +205,6 @@ function getData() {
   // 在这里根据选中的链id后端查充币地址
   state.addr = 'TGeGoNrsTFgo4xUriPx2P6xshWrw7xMfcB'
 }
-
-const schemes = [
-  {
-    label: '选择币种',
-    type: 'select',
-    optionKey: 'coinOptions',
-    valueKey: 'currentCoin',
-  },
-  {
-    label: '链名称',
-    type: 'radio',
-    optionKey: 'chainOptions',
-    valueKey: 'currentChain',
-  },
-  {
-    label: '充币地址',
-    type: 'code',
-    valueKey: 'addr',
-  },
-]
 
 const handleCoinChange = (item: any) => {
   state.currentCoin = item
@@ -300,8 +302,10 @@ const filteredData = computed(() => {
       }
       .right {
         flex: 1;
-        padding: 10px 30px;
-        background-color: rgb(255, 249, 232);
+        .richtext {
+          padding: 10px 30px;
+          background-color: rgb(255, 249, 232);
+        }
       }
     }
     .footer {
@@ -314,7 +318,6 @@ const filteredData = computed(() => {
   }
 }
 :deep(.search-select) {
-  // padding: 0px !important;
   box-sizing: border-box;
 }
 .mobile {

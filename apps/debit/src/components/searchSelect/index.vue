@@ -23,6 +23,7 @@
           v-model="state.inputVal"
           :placeholder="$t('搜索')"
           :suffix-icon="Search"
+          clearable
         ></el-input>
         <div class="options">
           <div
@@ -105,6 +106,7 @@ const lists = computed(() => {
 const emits = defineEmits(['update:modelValue', 'change'])
 
 const handleClick = (item: any) => {
+  if (props.modelValue[props.labelKey] === item[props.labelKey]) return
   emits('update:modelValue', item)
   emits('change', item)
   document.body.click()
