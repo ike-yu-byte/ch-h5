@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
 <template>
   <div
     :class="`modal-overlay ${props.draggable ? '' : 'fixed'}`"
-    @click="handleClickOverlay"
+    @click.self="handleClickOverlay"
   >
     <div
       :class="`modal-container ${props.className} ${dragState.isDragging ? 'is-dragging' : ''}`"

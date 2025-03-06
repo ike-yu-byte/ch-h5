@@ -34,3 +34,4 @@ export const format = (time: any, str: string = 'YYYY-MM-DD hh:mm:ss A') => {
 
 export * from './socket'
 export * from './storage'
+export * from './copy'
