@@ -137,12 +137,21 @@
         </el-popover>
       </template>
       <template v-else>
-        <span
-          class="menu iconfont icon-yidongduan_caidan"
-          @click="handleOpenMenu"
-        ></span>
+        <div style="color: var(--white-color)">
+          <span style="margin: 0 10px" @click="handleOpenMenu('profile')">
+            <span
+              class="icon iconfont icon-zhanghu1"
+              style="margin-right: 2px"
+            ></span>
+            <span>{{ profile.account }}</span>
+          </span>
+          <span
+            class="menu iconfont icon-yidongduan_caidan"
+            @click="handleOpenMenu('sidebar')"
+          ></span>
+        </div>
         <van-popup v-model:show="show" position="right" v-if="show">
-          <Sidebar @close="handlePopClose" />
+          <Sidebar @close="handlePopClose" :type="currentType" />
         </van-popup>
       </template>
     </div>
@@ -163,6 +172,7 @@ const { profile } = toRefs(useMemberStore())
 const { isPC } = toRefs(useDeviceStore())
 
 const show = ref(false)
+const currentType = ref('')
 
 const navLists = ref<any>([
   {
@@ -219,7 +229,7 @@ const accountMenus = ref<any>([
   },
   {
     label: $t('API管理'),
-    value: 'invite',
+    value: 'apiManage',
     icon: 'icon-api',
   },
   {
@@ -292,8 +302,8 @@ const handleClickNav = (item: any) => {
   router.push({ name: item.value })
 }
 
-const handleOpenMenu = () => {
-  console.log('点击菜单')
+const handleOpenMenu = (type: string) => {
+  currentType.value = type
   show.value = true
 }
 
