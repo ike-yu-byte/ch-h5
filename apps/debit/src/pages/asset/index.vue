@@ -87,6 +87,7 @@ const handleMenu = (item: any) => {
     padding: 50px 0;
     .left {
       width: 200px;
+      min-width: 200px;
       .menu-item {
         line-height: 60px;
         font-size: 14px;
@@ -107,6 +108,7 @@ const handleMenu = (item: any) => {
     }
     .right {
       flex: 1;
+      max-width: 1000px;
     }
   }
 }
@@ -120,8 +122,6 @@ const handleMenu = (item: any) => {
         display: flex;
         width: auto;
         column-gap: 40px;
-        .menu-item {
-        }
       }
       .right {
         flex: unset;

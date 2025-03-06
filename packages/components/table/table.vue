@@ -27,6 +27,9 @@
         </template>
       </el-table-column>
     </template>
+    <template #empty>
+      <slot name="empty">{{ $t('暂无数据') }}</slot>
+    </template>
   </el-table>
 </template>
 

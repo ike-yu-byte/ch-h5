@@ -60,11 +60,10 @@
 <script setup lang="ts">
 import { reactive, toRefs, h } from 'vue'
 import { Modal } from 'common-components'
-import { useClipboard } from '@vueuse/core'
-import { ElMessage } from 'element-plus'
 import { $t } from '@/i18n'
 import { useDeviceStore } from '@/store'
 import Poster from './poster.vue'
+import { useCopy } from 'common-assets'
 
 const { isPC } = toRefs(useDeviceStore())
 
@@ -73,47 +72,8 @@ const state = reactive({
   addr: 'https://www.faith-bit.com/user/register?intiveCode=QH9906',
 })
 
-// 注意：粘贴板由于浏览器安全限制，只有在https协议或者localhost下才能复制成功
-const { copy, isSupported } = useClipboard()
-
-const handleCopy = async (str: string) => {
-  if (!navigator.clipboard) {
-    // 兼容http协议
-    const input = document.createElement('input')
-    input.setAttribute('value', str)
-    document.body.appendChild(input)
-    input.select()
-    const flag = document.execCommand('copy')
-    document.body.removeChild(input)
-    if (flag) {
-      ElMessage({
-        type: 'success',
-        message: $t('复制成功'),
-      })
-    } else {
-      ElMessage({
-        type: 'error',
-        message: $t('复制失败'),
-      })
-    }
-  } else {
-    try {
-      await copy(str)
-      if (!isSupported.value) {
-        throw new Error()
-      }
-      ElMessage({
-        type: 'success',
-        message: $t('复制成功'),
-      })
-    } catch (err: any) {
-      console.log('err', err)
-      ElMessage({
-        type: 'error',
-        message: $t('复制失败'),
-      })
-    }
-  }
+const handleCopy = (str: string) => {
+  useCopy(str)
 }
 
 const handlePoster = () => {

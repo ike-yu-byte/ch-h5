@@ -4,18 +4,26 @@
       <slot>
         <div class="search-select" :style="{ backgroundColor: props.bg }">
           <span class="left"
-            ><img class="img" :src="props.modelValue[props.iconKey]" />
+            ><img
+              class="img"
+              :src="props.modelValue[props.iconKey]"
+              v-if="props.modelValue[props.iconKey]"
+            />
             <span class="text">{{
               props.modelValue[props.labelKey]
             }}</span></span
           >
-          <span class="icon iconfont icon-xia"></span>
+          <span :class="`icon iconfont ${props.expandIcon}`"></span>
         </div>
       </slot>
     </template>
     <slot name="content">
-      <div class="content">
-        <el-input v-model="state.inputVal" :placeholder="$t('搜索')"></el-input>
+      <div :class="`content ${props.contentName}`">
+        <el-input
+          v-model="state.inputVal"
+          :placeholder="$t('搜索')"
+          :suffix-icon="Search"
+        ></el-input>
         <div class="options">
           <div
             class="item"
@@ -27,9 +35,11 @@
               <div
                 :class="`item-inner ${props.modelValue[props.labelKey] === item[props.labelKey] ? 'active' : ''}`"
               >
-                <img :src="item.icon" class="img" /><span>{{
-                  item.label
-                }}</span>
+                <img
+                  :src="item[props.iconKey]"
+                  class="img"
+                  v-if="item[props.iconKey]"
+                /><span>{{ item.label }}</span>
               </div>
             </slot>
           </div>
@@ -41,6 +51,8 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { Search } from '@element-plus/icons-vue'
+
 const props = defineProps({
   options: {
     type: Array as any,
@@ -63,6 +75,14 @@ const props = defineProps({
     default: 'label',
   },
   bg: {
+    type: String,
+    default: '',
+  },
+  expandIcon: {
+    type: String,
+    default: 'icon-xia',
+  },
+  contentName: {
     type: String,
     default: '',
   },
@@ -125,6 +145,7 @@ const handleClick = (item: any) => {
   .options {
     padding: 10px 0px;
     .item {
+      border-radius: 8px;
       .item-inner {
         font-family: Figtree-Regular;
         display: flex;
@@ -141,6 +162,7 @@ const handleClick = (item: any) => {
       }
       .active {
         background-color: #f7f7f7;
+        font-weight: bold;
       }
       &:hover {
         background-color: #f7f7f7;

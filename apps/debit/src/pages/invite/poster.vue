@@ -18,7 +18,7 @@
           <div class="tips">{{ $t('邀请你扫码加入，获高额交易返佣') }}</div>
         </div>
         <div class="right">
-          <canvas ref="dom"></canvas>
+          <Code :width="80" :text="state.addr"></Code>
         </div>
       </div>
     </div>
@@ -27,10 +27,8 @@
 
 <script setup lang="ts">
 import { $t } from '@/i18n'
-import { reactive, ref, onMounted } from 'vue'
-import qrcode from 'qrcode'
-
-const dom = ref()
+import { reactive } from 'vue'
+import Code from 'common-components/code/index.vue'
 
 const props = defineProps({
   code: {
@@ -41,22 +39,6 @@ const props = defineProps({
 
 const state = reactive({
   addr: location.origin + `/register?code=${props.code}`,
-})
-
-onMounted(() => {
-  const width = document.documentElement.clientWidth
-  let size = 0
-  if (width > 1200) {
-    size = (width / 1920) * 80
-  } else {
-    size = (width / 375) * 80
-  }
-  qrcode.toCanvas(dom.value, state.addr, {
-    width: size,
-    height: size,
-    padding: 0,
-    margin: 0,
-  })
 })
 </script>
 

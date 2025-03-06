@@ -189,3 +189,37 @@ input[type='number'] {
   background-color: var(--dark-color) !important;
   border: none !important;
 }
+
+.select-content {
+  width: 256px !important;
+}
+
+.el-tabs__nav-wrap {
+  padding: 0 70px;
+  .el-tabs__item {
+    height: 50px;
+    font-family: Figtree-Regular;
+    font-size: 16px;
+    color: var(--menu-color);
+    &:hover {
+      color: var(--menu-color);
+    }
+  }
+  .is-active {
+    color: var(--dark-color) !important;
+  }
+  .el-tabs__active-bar {
+    background-color: var(--dark-color) !important;
+  }
+}
+.mobile {
+  .el-tabs__nav-wrap {
+    padding: 0px;
+  }
+}
+.el-tabs__nav-wrap:after {
+  height: 1px !important;
+}
+.el-table__empty-text {
+  line-height: 40px;
+}
