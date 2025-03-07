@@ -1,14 +1,15 @@
 {
-    "name": "@packages/assets",
-    "version": "1.0.0",
-    "description": "",
-    "private": true,
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "main": "index.js",
-    "dependencies": {
-        "vue": "^3.4.19",
-        "prop-types": "^15.8.1"
-    }
+  "name": "common-assets",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "vue": "^3.4.19",
+    "prop-types": "^15.8.1",
+    "dayjs": "^1.11.13"
+  }
 }

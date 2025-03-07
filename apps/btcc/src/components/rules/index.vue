@@ -1,22 +1,21 @@
 <template>
   <div class="rule">
     <div class="header">
-      <div class="left">{{ $t("rules.huodongguize") }}</div>
+      <div class="left">{{ $t('rules.huodongguize') }}</div>
       <div class="right"></div>
     </div>
     <div v-html="props.content" class="content"></div>
   </div>
 </template>
 
-<script setup>
-import { defineProps } from "vue";
-import { rules } from "@/assets/config/index.ts";
+<script setup lang="ts">
+import { rules } from '@/assets/config/index.ts'
 const props = defineProps({
   content: {
     type: String,
     default: rules,
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>

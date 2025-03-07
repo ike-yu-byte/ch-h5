@@ -4,18 +4,17 @@
     <slot name="right">
       <div class="lang-wrap" @click="handleLang">
         <img src="@/assets/img/lang-change.svg" class="lang" />
-        <span class="text">{{ $t("lang") }}</span>
+        <span class="text">{{ $t('lang') }}</span>
       </div>
     </slot>
   </div>
 </template>
 
-<script setup>
-import { defineEmits } from "vue";
-const emit = defineEmits(["right"]);
+<script setup lang="ts">
+const emit = defineEmits(['right'])
 const handleLang = () => {
-  emit("right");
-};
+  emit('right')
+}
 </script>
 
 <style lang="scss" scoped>

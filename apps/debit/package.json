@@ -1,0 +1,40 @@
+{
+  "name": "btcc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "期货抽奖项目",
+  "scripts": {
+    "dev": "vite --host",
+    "dev:local": "vite --host",
+    "build": "vite build",
+    "build:local": "vite build",
+    "lint": "eslint --fix",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,vue,html,css,scss}\"",
+    "fix": "pnpm prettier && pnpm lint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dcloudio/uni-webview-js": "^0.0.3",
+    "common-assets": "workspace:***",
+    "common-components": "workspace:***",
+    "wujie-vue3": "^1.0.24",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.13.4",
+    "@types/postcss-pxtorem": "^6.1.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.31.0",
+    "globals": "^15.12.0",
+    "husky": "^9.1.7",
+    "mockjs": "^1.1.0",
+    "prettier": "^3.4.1",
+    "typescript-eslint": "^8.16.0",
+    "vite-plugin-mock": "^3.0.2",
+    "vite-plugin-style-to-vw": "^1.8.11"
+  }
+}

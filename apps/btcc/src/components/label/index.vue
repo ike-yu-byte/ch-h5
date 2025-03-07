@@ -13,30 +13,30 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted, reactive, toRefs } from "vue";
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+import { onMounted, reactive, toRefs } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 const props = defineProps({
   arg1: {
     type: String,
-    default: "1BTC",
+    default: '1BTC',
   },
   arg2: {
     type: String,
-    default: "10,000USDT",
+    default: '10,000USDT',
   },
   pretext: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 const data = reactive({
-  defaultText: "",
-});
-const { defaultText } = toRefs(data);
+  defaultText: '',
+})
+const { defaultText } = toRefs(data)
 onMounted(() => {
-  data.defaultText = t("poster.meitiansong");
-});
+  data.defaultText = t('poster.meitiansong')
+})
 </script>
 
 <style lang="scss" scoped>
@@ -55,7 +55,7 @@ onMounted(() => {
     &::before,
     &::after {
       position: absolute;
-      content: "";
+      content: '';
       width: 20px;
       height: 26px;
       display: inline-block;

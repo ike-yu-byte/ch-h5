@@ -1,13 +1,17 @@
 {
-    "name": "@packages/components",
-    "version": "1.0.0",
-    "description": "pnpm-workspace-common-components",
-    "private": true,
-    "keywords": [],
-    "author": "",
-    "license": "MIT",
-    "main": "index.js",
-    "dependencies": {
-        "@packages/assets": "workspace:***"
-    }
+  "name": "common-components",
+  "version": "1.0.0",
+  "description": "pnpm-workspace-common-components",
+  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "main": "index.ts",
+  "dependencies": {
+    "common-assets": "workspace:***",
+    "echarts": "^5.6.0",
+    "dayjs": "^1.11.13",
+    "qrcode": "^1.4.4",
+    "vue": "^3.5.13"
+  }
 }

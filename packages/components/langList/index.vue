@@ -1,8 +1,8 @@
 <template>
   <div class="list-wrap">
     <div class="header">
-      <span class="title">{{ $t("title.lang") }}</span>
-      <Icon name="cross" class="close" @click.native="handleClose"></Icon>
+      <span class="title">{{ $t('title.lang') }}</span>
+      <Icon name="cross" class="close" @click="handleClose"></Icon>
     </div>
     <div class="lang-items">
       <Button
@@ -10,7 +10,7 @@
         plain
         :key="index"
         :color="item.value === props.currentVal ? '#2e4a9d' : null"
-        @click.native="handleClick(item)"
+        @click="handleClick(item)"
         class="btn-item"
       >
         {{ item.label }}
@@ -20,8 +20,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
-import { Button, Icon } from "vant";
+import { Button, Icon } from 'vant'
 const props = defineProps({
   lists: {
     type: Array,
@@ -29,19 +28,19 @@ const props = defineProps({
   },
   currentVal: {
     type: String,
-    default: "",
+    default: '',
   },
-});
-const { lists } = props;
+})
+const { lists } = props
 
-const emits = defineEmits(["close", "select"]);
+const emits = defineEmits(['close', 'select'])
 const handleClose = () => {
-  emits("close", false);
-};
+  emits('close', false)
+}
 
 const handleClick = (item) => {
-  emits("select", item);
-};
+  emits('select', item)
+}
 </script>
 
 <style lang="scss" scoped>

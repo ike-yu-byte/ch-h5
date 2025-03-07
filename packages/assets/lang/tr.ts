@@ -1,7 +1,7 @@
 export default {
-  lang: "Türkçe",
+  lang: 'Türkçe',
   title: {
-    lang: "dil",
+    lang: 'dil',
   },
-};
+}
 // 土耳其

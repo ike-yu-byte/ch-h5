@@ -1,10 +1,12 @@
-@import url('../fonts/iconfont.css');
-::-webkit-scrollbar {  
-    display: none; /* WebKit-based browsers */  
+@import '../fonts/iconfont.css';
+@import './element.scss';
+@import './font.scss';
+::-webkit-scrollbar {
+  display: none; // 隐藏滚动条
 }
 
 * {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
 }
