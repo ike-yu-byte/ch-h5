@@ -19,7 +19,9 @@
         <div class="card-box">
           <div class="header">
             <div class="label">{{ $t('闪兑') }}</div>
-            <div class="order" @click="handleTo('order')">{{ $t('订单') }}</div>
+            <div class="order" @click="handleTo('exchangeOrder')">
+              {{ $t('订单') }}
+            </div>
           </div>
           <div class="row">
             <div class="top">
@@ -231,7 +233,7 @@ const handleTo = (name: string) => {
 .wrap {
   font-family: Figtree-Regular;
   .contain {
-    height: 350px;
+    height: auto;
     width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -263,13 +265,12 @@ const handleTo = (name: string) => {
     }
   }
   .contain2 {
-    height: 422px;
     padding: 83px 0;
     display: flex;
     justify-content: center;
     .card-box {
       width: 510px;
-      height: 362px;
+      // height: 362px;
       padding: 30px;
       border-radius: 15px;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px 0px;
@@ -360,7 +361,7 @@ const handleTo = (name: string) => {
         }
       }
       .btn-box {
-        margin: 30px 0;
+        margin: 30px 0 0;
       }
     }
   }
@@ -393,6 +394,9 @@ const handleTo = (name: string) => {
           margin-top: 15px;
         }
       }
+    }
+    .contain2 {
+      margin: 0 16px;
     }
   }
 }

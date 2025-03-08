@@ -242,7 +242,7 @@ export const routes = [
   {
     path: '/exchangeOrder',
     name: 'exchangeOrder',
-    component: () => import('@/pages/order/index.vue'),
+    component: () => import('@/pages/order/exchangeOrder.vue'),
     meta: {
       title: $t('闪兑订单'),
     },
@@ -250,7 +250,7 @@ export const routes = [
   {
     path: '/sportOrder',
     name: 'sportOrder',
-    component: () => import('@/pages/order/index.vue'),
+    component: () => import('@/pages/order/sportOrder.vue'),
     meta: {
       title: $t('现货订单'),
     },

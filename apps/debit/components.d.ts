@@ -35,6 +35,7 @@ declare module 'vue' {
     Layout: typeof import('./src/components/layout/index.vue')['default']
     MustKnown: typeof import('./src/components/mustKnown/index.vue')['default']
     Notice: typeof import('./src/components/notice/index.vue')['default']
+    PlusSearch: typeof import('plus-pro-components/es')['PlusSearch']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchSelect: typeof import('./src/components/searchSelect/index.vue')['default']

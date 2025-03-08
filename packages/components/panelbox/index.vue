@@ -58,6 +58,7 @@ const props = defineProps({
     .content {
       flex-direction: column;
       padding: 16px;
+      width: auto;
       .left {
         width: auto;
         .item {
