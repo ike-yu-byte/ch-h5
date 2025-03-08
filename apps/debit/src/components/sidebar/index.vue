@@ -88,7 +88,7 @@
             :class="`menu-item`"
             v-for="item of langList"
             :key="item.label"
-            @click="handleMenuClick(item)"
+            @click="handleChangeLang(item)"
           >
             <div class="left">
               <span :class="`text ${locale === item.value ? 'active' : ''}`">{{
@@ -102,7 +102,7 @@
             :class="`menu-item`"
             v-for="item of coinList"
             :key="item.label"
-            @click="handleSelectCoin(item)"
+            @click="setNewCoin(item)"
           >
             <div class="left">
               <span
@@ -123,7 +123,9 @@ import { useI18n } from 'vue-i18n'
 import { langList } from '@/config'
 import router from '@/router'
 import { useCoin } from '@/hooks'
-import { useMemberStore } from '@/store'
+import { useMemberStore, useLocaleStore } from '@/store'
+
+const { setLocale } = useLocaleStore()
 
 const props = defineProps({
   type: {
@@ -138,7 +140,7 @@ const emits = defineEmits(['close'])
 
 const { locale } = useI18n()
 
-const { coinList, getCoinData, currentCoin } = useCoin()
+const { coinList, getCoinData, currentCoin, setNewCoin } = useCoin()
 getCoinData()
 
 const show = ref(false)
@@ -316,12 +318,6 @@ const handleMenuClick = (item: any) => {
   }
 }
 
-const handleSelectCoin = (item: any) => {
-  currentCoin.value = item.value
-  show.value = false
-  handleClose()
-}
-
 const handleClose = () => {
   emits('close')
 }
@@ -329,6 +325,11 @@ const handleClose = () => {
 const handleCloseLang = () => {
   show.value = false
   handleClose()
+}
+
+const handleChangeLang = (item: any) => {
+  locale.value = item.value
+  setLocale(item.value)
 }
 
 defineOptions({

@@ -138,12 +138,16 @@
       </template>
       <template v-else>
         <div style="color: var(--white-color)">
-          <span style="margin: 0 10px" @click="handleOpenMenu('profile')">
+          <span
+            style="margin: 0 10px"
+            @click="handleOpenMenu('profile')"
+            v-if="!!profile"
+          >
             <span
               class="icon iconfont icon-zhanghu1"
               style="margin-right: 2px"
             ></span>
-            <span>{{ profile.account }}</span>
+            <span>{{ profile?.account || '' }}</span>
           </span>
           <span
             class="menu iconfont icon-yidongduan_caidan"

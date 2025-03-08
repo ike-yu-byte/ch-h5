@@ -6,6 +6,7 @@
         :class="`lang-item ${locale === item.value ? 'active' : ''}`"
         v-for="item of langs"
         :key="item.value"
+        @click="handleChangeLang(item)"
       >
         {{ item.label }}
       </div>
@@ -16,6 +17,7 @@
         :class="`lang-item ${currentCoin === item.value ? 'active' : ''}`"
         v-for="item of coinList"
         :key="item.value"
+        @click="setNewCoin(item)"
       >
         {{ item.label }}
       </div>
@@ -29,11 +31,18 @@ import { cloneDeep } from 'common-assets/utils'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCoin } from '@/hooks'
+import { useLocaleStore } from '@/store'
 
+const { setLocale } = useLocaleStore()
 const { locale } = useI18n()
 const langs = ref(cloneDeep(langList))
-const { coinList, getCoinData, currentCoin } = useCoin()
+const { coinList, getCoinData, currentCoin, setNewCoin } = useCoin()
 getCoinData()
+
+const handleChangeLang = (item: any) => {
+  locale.value = item.value
+  setLocale(item.value)
+}
 </script>
 
 <style scoped lang="scss">
@@ -52,6 +61,7 @@ getCoinData()
       &:hover {
         color: var(--dark-color);
       }
+      cursor: pointer;
     }
     .active {
       color: var(--dark-color);
