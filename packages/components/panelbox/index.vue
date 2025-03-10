@@ -1,6 +1,8 @@
 <template>
   <div class="contain">
-    <div class="header">{{ props.title }}</div>
+    <div class="header">
+      <slot name="header">{{ props.title }}</slot>
+    </div>
     <div class="content">
       <slot></slot>
     </div>

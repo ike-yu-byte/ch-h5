@@ -16,6 +16,7 @@ html {
   --hover-bg: #f7f7f7;
   --red-color: #ff4d4f;
   --body-color: #f8f8f8;
+  --shallow-color: rgb(248, 248, 248);
 
   // Color Palette
   --van-black: #000;
@@ -249,4 +250,8 @@ input[type='number'] {
       }
     }
   }
+}
+
+.el-button--primary {
+  background-color: var(--dark-color);
 }
