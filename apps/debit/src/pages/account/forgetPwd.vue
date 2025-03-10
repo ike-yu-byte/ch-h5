@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, h } from 'vue'
+import { ref, reactive, h, toRefs } from 'vue'
 import { $t } from '@/i18n'
 import type { FormInstance } from 'element-plus'
 import SelectCountry from '@/components/selectCountry/index.vue'
@@ -92,6 +92,7 @@ import router from '@/router'
 const formRef = ref<FormInstance>()
 
 const { setProfile } = useMemberStore()
+const { profile } = toRefs(useMemberStore())
 
 const emailForm: Array<any> = [
   {
@@ -205,7 +206,9 @@ const submitForm = () => {
                   //   后端需要返回最新token等个人账号信息，之前token作废
                   // pinia存储个人信息
                   setProfile({
-                    account: '',
+                    ...profile.value,
+                    phone: '',
+                    email: '',
                     avatar: '',
                     token: '',
                   })

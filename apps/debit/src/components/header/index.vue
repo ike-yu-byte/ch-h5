@@ -79,7 +79,7 @@
                   class="iconfont icon-zhanghu1"
                   style="margin-right: 4px"
                 ></span
-                >{{ profile.account }}</span
+                >{{ profile.email || profile.phone }}</span
               >
             </template>
             <template #default>
@@ -147,7 +147,7 @@
               class="icon iconfont icon-zhanghu1"
               style="margin-right: 2px"
             ></span>
-            <span>{{ profile?.account || '' }}</span>
+            <span>{{ profile?.email || profile?.phone }}</span>
           </span>
           <span
             class="menu iconfont icon-yidongduan_caidan"

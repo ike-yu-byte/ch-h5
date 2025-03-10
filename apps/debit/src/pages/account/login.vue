@@ -171,11 +171,17 @@ const handleSuccess = () => {
           }
         }
         console.log('submit!', data)
+        // 调用登录接口后的
         // pinia存储个人信息
         setProfile({
-          account: 'test@qq.com',
-          avatar: '',
+          email: 'test@qq.com',
+          phone: '',
+          google: '', // 谷歌验证器
+          // 根据邮箱、手机号、谷歌验证器绑定了几个来确定来确定账号安全等级
+          id: '8282247', // 用户id，用于邀请好友
+          avatar: '', // 头像图片地址
           token: '',
+          time: window.$format(new Date(), 'YYYY-MM-DD HH:mm:ss'), // 最近登录时间，用于账户安全配置页面显示
         })
         localStorage.setItem('token', 'xxxxxxxxxx')
         ElMessage({
