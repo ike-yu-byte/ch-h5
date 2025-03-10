@@ -340,5 +340,6 @@ const obj = {
   '成交数量': '成交数量',
   '成交总额': '成交总额',
   '成交价格': '成交价格',
+  '确定退出登录': '确定退出登录',
 }
 export default Object.assign(obj, lang)

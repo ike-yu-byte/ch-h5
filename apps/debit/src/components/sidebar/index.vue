@@ -14,7 +14,7 @@
           class="icon iconfont icon-zhanghu1"
           style="margin-right: 4px"
         ></span>
-        <span>{{ profile.account }}</span>
+        <span>{{ profile?.account }}</span>
       </span>
       <span class="close iconfont icon-cha" @click="handleClose"></span>
     </div>
@@ -124,6 +124,8 @@ import { langList } from '@/config'
 import router from '@/router'
 import { useCoin } from '@/hooks'
 import { useMemberStore, useLocaleStore } from '@/store'
+import { Modal } from 'common-components'
+import { $t } from '@/i18n'
 
 const { setLocale } = useLocaleStore()
 
@@ -312,6 +314,18 @@ const handleMenuClick = (item: any) => {
   }
   if (item.value === 'lang') {
     show.value = true
+  } else if (item.value === 'login') {
+    Modal.open({
+      content: $t('确定退出登录') + '?',
+      draggable: false,
+      onConfirm: () => {
+        handleClose()
+        router.push({
+          name: item.value,
+        })
+        Modal.close()
+      },
+    })
   } else {
     handleClose()
     router.push({ name: item.value, query: item.query })

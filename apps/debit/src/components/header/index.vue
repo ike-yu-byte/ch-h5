@@ -170,6 +170,7 @@ import Notice from '@/components/notice/index.vue'
 import Lang from '@/components/lang/index.vue'
 import Sidebar from '@/components/sidebar/index.vue'
 import { $t } from '@/i18n'
+import { Modal } from 'common-components'
 
 const { profile } = toRefs(useMemberStore())
 
@@ -316,10 +317,23 @@ const handlePopClose = () => {
 }
 
 const handleTo = (name: string, query: any = {}) => {
-  router.push({
-    name,
-    query,
-  })
+  if (name === 'login') {
+    Modal.open({
+      content: $t('确定退出登录') + '?',
+      draggable: false,
+      onConfirm: () => {
+        router.push({
+          name: 'login',
+        })
+        Modal.close()
+      },
+    })
+  } else {
+    router.push({
+      name,
+      query,
+    })
+  }
 }
 
 defineOptions({
